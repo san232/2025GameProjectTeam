@@ -4,10 +4,11 @@ enum class Layer
 	DEFAULT,
 	BACKGROUND,
 	// 밑에 변경 가능
-	PLAYER,
 	EVIDENCE,
 	DEFAULTENEMY,
 	INVISIBLEENEMY,
+	CORE,
+	PLAYER,
 	END
 };
 
