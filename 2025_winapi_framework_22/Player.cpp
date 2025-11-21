@@ -11,13 +11,15 @@
 #include "Rigidbody.h"
 Player::Player()
 {
-
+	AddComponent<Collider>();
+	AddComponent<Rigidbody>();
 }
 
 Player::~Player()
 {
 	// DELETE
 }
+
 void Player::Render(HDC _hdc)
 {
 	Vec2 pos = GetPos();
@@ -30,15 +32,18 @@ void Player::Render(HDC _hdc)
 
 void Player::StayCollision(Collider* _other)
 {
+
 }
 
 void Player::EnterCollision(Collider* _other)
 {
+
 }
 
 
 void Player::ExitCollision(Collider* _other)
 {
+
 }
 
 

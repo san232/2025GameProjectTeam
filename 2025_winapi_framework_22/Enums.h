@@ -30,3 +30,13 @@ enum class PlayMode
 {
 	Once, Loop, Counted
 };
+
+enum class PlayerStateType 
+{
+	Idle, Move, Rolling, Dead
+};
+
+enum class EnemyStateType
+{
+	Idle, Move, Attack, Dead
+};
