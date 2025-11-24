@@ -133,6 +133,18 @@
     <ClInclude Include="LCMScene.h">
       <Filter>Engine\04. Scene</Filter>
     </ClInclude>
+    <ClInclude Include="SubWindow.h">
+      <Filter>Engine\08. Module</Filter>
+    </ClInclude>
+    <ClInclude Include="SubWindowController.h">
+      <Filter>Engine\08. Module</Filter>
+    </ClInclude>
+    <ClInclude Include="SubWindowRenderer.h">
+      <Filter>Engine\08. Module</Filter>
+    </ClInclude>
+    <ClInclude Include="LSScene.h">
+      <Filter>Engine\04. Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2025_winapi_framework_22.rc">
@@ -209,6 +221,18 @@
       <Filter>Engine\06. Component\Physics</Filter>
     </ClCompile>
     <ClCompile Include="LCMScene.cpp">
+      <Filter>Engine\04. Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SubWindow.cpp">
+      <Filter>Engine\08. Module</Filter>
+    </ClCompile>
+    <ClCompile Include="SubWindowController.cpp">
+      <Filter>Engine\08. Module</Filter>
+    </ClCompile>
+    <ClCompile Include="SubWindowRenderer.cpp">
+      <Filter>Engine\08. Module</Filter>
+    </ClCompile>
+    <ClCompile Include="LSScene.cpp">
       <Filter>Engine\04. Scene</Filter>
     </ClCompile>
   </ItemGroup>

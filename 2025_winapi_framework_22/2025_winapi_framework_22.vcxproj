@@ -172,6 +172,7 @@
     <ClInclude Include="GDISelector.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="LCMScene.h" />
+    <ClInclude Include="LSScene.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
@@ -202,6 +203,7 @@
     <ClCompile Include="GDISelector.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="LCMScene.cpp" />
+    <ClCompile Include="LSScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Player.cpp" />
