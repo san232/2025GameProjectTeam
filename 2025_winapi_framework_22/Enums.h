@@ -9,6 +9,7 @@ enum class Layer
 	INVISIBLEENEMY,
 	CORE,
 	PLAYER,
+	VFX,
 	END
 };
 
