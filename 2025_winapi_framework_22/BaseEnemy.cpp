@@ -1,22 +1,22 @@
 #include "pch.h"
-#include "Enemy.h"
+#include "BaseEnemy.h"
 #include "Collider.h"
 #include "SceneManager.h"
 #include "Rigidbody.h"
-Enemy::Enemy()
+BaseEnemy::BaseEnemy()
 {
 	AddComponent<Collider>();
 }
-Enemy::~Enemy()
+BaseEnemy::~BaseEnemy()
 {
 
 }
-void Enemy::Update()
+void BaseEnemy::Update()
 {
 
 }
 
-void Enemy::Render(HDC _hdc)
+void BaseEnemy::Render(HDC _hdc)
 {
 	//HBRUSH hbrush = ::CreateSolidBrush(RGB(rand() % 255, rand() % 255, rand() % 255));
 	//HBRUSH holdbrush = (HBRUSH)::SelectObject(_hdc, hbrush);
@@ -31,7 +31,7 @@ void Enemy::Render(HDC _hdc)
 	ComponentRender(_hdc);
 }
 
-void Enemy::EnterCollision(Collider* _other)
+void BaseEnemy::EnterCollision(Collider* _other)
 {
 	cout << "Enter" << endl;
 	if (_other->IsTrigger())
@@ -51,10 +51,10 @@ void Enemy::EnterCollision(Collider* _other)
 	}
 }
 
-void Enemy::StayCollision(Collider* _other)
+void BaseEnemy::StayCollision(Collider* _other)
 {
 }
 
-void Enemy::ExitCollision(Collider* _other)
+void BaseEnemy::ExitCollision(Collider* _other)
 {
 }

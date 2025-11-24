@@ -167,7 +167,7 @@
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Core.h" />
-    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="BaseEnemy.h" />
     <ClInclude Include="Enums.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GDISelector.h" />
@@ -201,7 +201,7 @@
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Core.cpp" />
-    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="BaseEnemy.cpp" />
     <ClCompile Include="GDISelector.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="JewelryBox.cpp" />

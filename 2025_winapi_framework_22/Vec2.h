@@ -43,6 +43,14 @@ public:
 		x -= _other.x;
 		y -= _other.y;
 	}
+	bool operator==(const Vec2& _other)
+	{
+		return (x == _other.x && y == _other.y);
+	}
+	bool operator!=(const Vec2& _other)
+	{
+		return !(x == _other.x && y == _other.y);
+	}
 	float LengthSquared()
 	{
 		return x * x + y * y;
