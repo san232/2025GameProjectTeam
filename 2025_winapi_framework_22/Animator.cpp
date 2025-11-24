@@ -2,6 +2,8 @@
 #include "Animator.h"
 #include "Animation.h"
 #include "Texture.h"
+#undef max;
+#undef min;
 
 Animator::Animator()
     : m_curAnimation(nullptr)

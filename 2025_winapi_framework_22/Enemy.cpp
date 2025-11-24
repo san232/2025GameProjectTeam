@@ -9,9 +9,11 @@ Enemy::Enemy()
 }
 Enemy::~Enemy()
 {
+
 }
 void Enemy::Update()
 {
+
 }
 
 void Enemy::Render(HDC _hdc)
@@ -51,10 +53,8 @@ void Enemy::EnterCollision(Collider* _other)
 
 void Enemy::StayCollision(Collider* _other)
 {
-	cout << "Stay" << endl;
 }
 
 void Enemy::ExitCollision(Collider* _other)
 {
-	cout << "Exit" << endl;
 }

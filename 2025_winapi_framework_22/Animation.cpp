@@ -45,7 +45,7 @@ void Animation::Create(Texture* _tex, Vec2 _lt, Vec2 _sliceSize,
 void Animation::ConfigurePlayback(PlayMode _mode, int _loopCount, float _speed)
 {
     m_mode = _mode;
-    m_loopCount = (_mode == PlayMode::Counted) ? std::max(1, _loopCount) : 1;
+    m_loopCount = (_mode == PlayMode::Counted) ? max(1, _loopCount) : 1;
     m_speed = _speed;
     m_finished = false;
 }

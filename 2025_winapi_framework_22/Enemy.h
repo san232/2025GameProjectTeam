@@ -14,6 +14,9 @@ public:
     void EnterCollision(Collider* _other)override;
     void StayCollision(Collider* _other) override;
     void ExitCollision(Collider* _other) override;
-
+private:
+    int hp;
+    float movementSpeed;
+    float attackCooltime;
 };
 
