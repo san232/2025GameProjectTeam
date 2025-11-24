@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "SubWindowRenderer.h"
 #include "Scene.h"
+#include "Object.h"
 
 SubWindowRenderer::SubWindowRenderer(HWND mainWindow, Scene* scene)
 	: mainWindow(mainWindow), scene(scene) {
@@ -18,7 +19,7 @@ void SubWindowRenderer::Render(HDC hdc, const POINT& globalPos) {
 
 
 	if (scene != nullptr) {
-		const auto& objects = scene->GetObjectsByLayer(Layer::INVISIBLEENEMY);
+		const auto& objects = scene->GetLayerObjects(Layer::INVISIBLEENEMY);
 		for (auto obj : objects) {
 			obj->Render(hdc);
 		}
