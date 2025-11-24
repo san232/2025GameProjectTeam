@@ -1,14 +1,14 @@
 #pragma once
+#include <Windows.h>
+
+
 class SubWindowController {
+public:
+	SubWindowController(HWND subWindow, SIZE windowSize);
+	void Update();
+
+
 private:
-    HWND subWindow;
-    SIZE windowSize;
-
-public:
-    SubWindowController(HWND hWnd, SIZE size)
-        : subWindow(hWnd), windowSize(size) {
-    }
-public:
-    void Update();
+	HWND subWindow;
+	SIZE size;
 };
-
