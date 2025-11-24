@@ -111,8 +111,6 @@ void Scene::Render(HDC _hdc)
 {
 	for (UINT i = 0; i < (UINT)Layer::END; ++i)
 	{
-		if(i == (UINT)Layer::INVISIBLEENEMY)
-			continue;
 		auto& vec = m_vecObj[i];
 		for (auto* obj : vec)
 			if (!obj->GetIsDead())
