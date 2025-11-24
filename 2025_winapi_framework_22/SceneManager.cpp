@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "SceneManager.h"
+#include "LCMScene.h"
 #include "Collider.h"
 #include "Object.h"
 void SceneManager::Init()
@@ -9,6 +10,12 @@ void SceneManager::Init()
 	// todo
 	//dynamic_cast<> 
 	//std::dynamic_pointer_cast<>
+
+	// ¾À µî·Ï
+	RegisterScene(L"LCMScene", std::make_shared<LCMScene>());
+
+	// ¾À ·Îµå
+	LoadScene(L"LCMScene");
 }
 
 void SceneManager::RegisterScene(const wstring& _name, std::shared_ptr<Scene> _scene)
