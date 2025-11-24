@@ -4,11 +4,13 @@ enum class Layer
 	DEFAULT,
 	BACKGROUND,
 	// 밑에 변경 가능
-	PLAYER,
 	EVIDENCE,
 	DEFAULTENEMY,
-	INVISIBLEENEMY,
-	END
+	CORE,
+	PLAYER,
+	VFX,
+	END,
+	INVISIBLEENEMY
 };
 
 enum class PenType
