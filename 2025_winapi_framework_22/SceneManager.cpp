@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "SceneManager.h"
 #include "LCMScene.h"
+#include "LSScene.h"
 #include "Collider.h"
 #include "Object.h"
 void SceneManager::Init()
@@ -13,9 +14,11 @@ void SceneManager::Init()
 
 	// ¾À µî·Ï
 	RegisterScene(L"LCMScene", std::make_shared<LCMScene>());
+	RegisterScene(L"LSScene", std::make_shared<LSScene>());
 
 	// ¾À ·Îµå
 	LoadScene(L"LCMScene");
+	//LoadScene(L"LSScene");
 }
 
 void SceneManager::RegisterScene(const wstring& _name, std::shared_ptr<Scene> _scene)
