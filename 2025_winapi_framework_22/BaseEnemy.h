@@ -22,13 +22,14 @@ public:
 	void SetMoveSpeed(float _speed) { m_moveSpeed = _speed; }
 	void SetAttackSpeed(float _speed) { m_attackSpeed = _speed; }
 	void SetAttackPower(int _power) { m_attackPower = _power; }
+	void SetDeltaTime(float _deltaTime) { m_deltaTime = _deltaTime; }
+	void SetTargetPosition(const Vec2& _targetPos) { m_targetPosition = _targetPos; }
 	int GetHealth() const { return m_health; }
 	float GetMoveSpeed() const { return m_moveSpeed; }
 	float GetAttackSpeed() const { return m_attackSpeed; }
 	int GetAttackPower() const { return m_attackPower; }
 	float GetAttackRange() const { return m_attackRange; }
 	const Vec2& GetTargetPosition() const { return m_targetPosition; }
-	void SetTargetPosition(const Vec2& _targetPos) { m_targetPosition = _targetPos; }
 protected:
 	virtual void Death();
 	void MoveToTarget(float deltaTime);
@@ -43,5 +44,6 @@ private:
     float m_timeSinceLastAttack;
     int m_attackPower;
 	float m_attackRange;
+	float m_deltaTime;
 };
 

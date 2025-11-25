@@ -11,9 +11,10 @@ BaseEnemy::~BaseEnemy()
 {
 
 }
-void BaseEnemy::Update()
-{
-
+void BaseEnemy::Update() {
+	MoveToTarget(m_deltaTime);       // 목표 지점을 향해 이동
+	TryAttack(m_deltaTime);          // 공격 시도 (조건 충족 시 공격)
+	m_timeSinceLastAttack += m_deltaTime;  // 공격 쿨타임 경과 시간 누적
 }
 
 void BaseEnemy::Render(HDC _hdc)
@@ -56,5 +57,9 @@ void BaseEnemy::StayCollision(Collider* _other)
 }
 
 void BaseEnemy::ExitCollision(Collider* _other)
+{
+}
+
+void BaseEnemy::TakeDamage(int damage)
 {
 }
