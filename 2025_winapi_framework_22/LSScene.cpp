@@ -1,14 +1,42 @@
 #include "pch.h"
 #include "LSScene.h"
-#include "BaseEnemy.h"
+#include "WindowManager.h"
+#include "SubWindowRenderer.h"
+#include "SubWindow.h"
+#include "SubWindowController.h"
 
 void LSScene::Init()
 {
-    Spawn<BaseEnemy>(Layer::DEFAULTENEMY, { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 }, { 100.f, 100.f });
-    Spawn<BaseEnemy>(Layer::INVISIBLEENEMY, { WINDOW_WIDTH / 2 + 150, WINDOW_HEIGHT / 2 }, { 100.f, 100.f });
+    HWND mainWindowHwnd = GET_SINGLE(WindowManager)->GetMainWindowHandle();
+
+    subWindowRenderer = new SubWindowRenderer(mainWindowHwnd, this);
+
+    subWindow = new SubWindow();
+    if (subWindow->Create(mainWindowHwnd, subWindowRenderer))
+    {
+        HWND subHwnd = subWindow->GetHWnd();
+
+        RECT clientRect;
+        GetClientRect(subHwnd, &clientRect);
+        SIZE windowSize;
+        windowSize.cx = clientRect.right - clientRect.left;
+        windowSize.cy = clientRect.bottom - clientRect.top;
+
+        subWindowController = new SubWindowController(subHwnd, windowSize);
+    }
 }
 
 void LSScene::Update()
 {
+    if (subWindowController)
+    {
+        subWindowController->Update();
+    }
+}
 
+LSScene::~LSScene()
+{
+    SAFE_DELETE(subWindowController);
+    SAFE_DELETE(subWindow);
+    SAFE_DELETE(subWindowRenderer);
 }
