@@ -54,10 +54,10 @@ bool SubWindow::Create(HWND parent, SubWindowRenderer* renderer)
         return false;
 
     m_hWnd = ::CreateWindowExW(
-        WS_EX_TOOLWINDOW,
+        WS_EX_WINDOWEDGE,
         kSubWindowClass,
         L"",
-        WS_CHILD | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_VISIBLE,
+        WS_CHILD | WS_CLIPSIBLINGS | WS_VISIBLE,
         0, 0, 160, 160,
         parent, nullptr, hInst, nullptr);
 
