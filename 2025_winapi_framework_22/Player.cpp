@@ -14,10 +14,13 @@
 
 Player::Player()
 	: m_pTex(nullptr)
-	, movementSpeed(200.f)
-	, rollingSpeed(400.f)
-	, isRolling(false)
 	, rigidCompo(nullptr)
+	, movementSpeed(200.f)
+	, rollingSpeed(500.f)
+	, isRolling(false)
+	, rollingCooltime(3.f)
+	, curTime(0.f)
+	, isCanRolling(true)
 {
 	AddComponent<Collider>();
 	AddComponent<Rigidbody>();
@@ -61,6 +64,7 @@ void Player::ExitCollision(Collider* _other)
 void Player::Update()
 {
 	UpdateInput();
+	CooldownRollingTime();
 }
 
 
@@ -86,9 +90,21 @@ void Player::UpdateInput()
 	Translate({ fDT * dir.x * movementSpeed, fDT * dir.y * movementSpeed });
 
 	isRolling = GET_KEYDOWN(KEY_TYPE::SPACE);
-	if (isRolling && hasInput)
+	if (isRolling && hasInput && isCanRolling)
 	{
 		rigidCompo->AddImpulse(dir * rollingSpeed);
+		isCanRolling = false;
 	}
 }
 
+void Player::CooldownRollingTime()
+{
+	if (isCanRolling == false)
+		curTime += fDT;
+
+	if (curTime >= rollingCooltime)
+	{
+		isCanRolling = true;
+		curTime = 0;
+	}
+}

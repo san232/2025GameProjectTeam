@@ -20,11 +20,15 @@ public:
 	void ExitCollision(Collider* _other) override;
 private:
 	void UpdateInput();
+	void CooldownRollingTime();
 
 private:
 	Texture* m_pTex;
+	Rigidbody* rigidCompo;
 	float movementSpeed;
 	float rollingSpeed;
 	bool isRolling;
-	Rigidbody* rigidCompo;
+	float rollingCooltime;
+	float curTime;
+	bool isCanRolling;
 };

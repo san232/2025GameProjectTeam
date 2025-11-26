@@ -125,20 +125,3 @@ bool BaseEnemy::IsInAttackRange() const
 void BaseEnemy::Death()
 {
 }
-
-void BaseEnemy::Death()
-{
-}
-
-void BaseEnemy::MoveToTarget(float deltaTime)
-{
-}
-
-void BaseEnemy::TryAttack(float deltaTime)
-{
-}
-
-bool BaseEnemy::IsInAttackRange() const
-{
-	return false;
-}

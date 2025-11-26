@@ -135,6 +135,9 @@
     </ClInclude>
     <ClInclude Include="BaseEnemy.h" />
     <ClInclude Include="LSScene.h" />
+    <ClInclude Include="WindowManager.h">
+      <Filter>Engine\02. Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2025_winapi_framework_22.rc">
@@ -215,5 +218,8 @@
     </ClCompile>
     <ClCompile Include="BaseEnemy.cpp" />
     <ClCompile Include="LSScene.cpp" />
+    <ClCompile Include="WindowManager.cpp">
+      <Filter>Engine\02. Manager</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

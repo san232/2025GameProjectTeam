@@ -5,7 +5,7 @@ class WindowManager
 public:
 	void Init(HWND _mainHWnd);
 public:
-	void RegisterSubWindow(HWND _hWnd);
+	void RegisterSubWindow(HWND _subHWnd);
 public:
 	HWND GetMainHWnd() const { return m_hMainWnd; }
 	HWND GetSubHWnd() const { return m_hSubWnd; }
