@@ -17,8 +17,8 @@ void SceneManager::Init()
 	RegisterScene(L"LSScene", std::make_shared<LSScene>());
 
 	// ¾À ·Îµå
-	LoadScene(L"LCMScene");
-	//LoadScene(L"LSScene");
+	//LoadScene(L"LCMScene");
+	LoadScene(L"LSScene");
 }
 
 void SceneManager::RegisterScene(const wstring& _name, std::shared_ptr<Scene> _scene)
@@ -46,7 +46,7 @@ void SceneManager::FixedUpdate(float _fixedDT)
 }
 void SceneManager::PhysicsSyncColliders()
 {
-	for (UINT i = 0; i < (UINT)Layer::END; ++i)
+	for (UINT i = 0; i < (UINT)Layer::DEFAULTEND; ++i)
 	{
 		const auto& objects = m_curScene->GetLayerObjects((Layer)i);
 		for (Object* obj : objects)

@@ -22,10 +22,6 @@ void Collider::LateUpdate()
 
 void Collider::Render(HDC _hDC)
 {
-	::TextOut(_hDC, 0, 0, L"안녕", 2);
-	GDISelector font(_hDC, FontType::TITLE);
-	::TextOut(_hDC, 10, 10, L"하세요", 3);
-
 	//// 기즈모?
 	//GET_SINGLE(ResourceManager)->GetPen();
 

@@ -42,7 +42,7 @@ void BaseEnemy::Update()
 
 void BaseEnemy::Render(HDC _hdc)
 {
-    BrushType brush = BrushType::HOLLOW;
+    BrushType brush = BrushType::RED;
     PenType pen = PenType::RED;
 
     GDISelector brushSelector(_hdc, brush);
