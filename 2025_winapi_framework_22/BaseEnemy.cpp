@@ -1,55 +1,62 @@
 #include "pch.h"
 #include "BaseEnemy.h"
-#include "Collider.h"
-#include "SceneManager.h"
 #include "Rigidbody.h"
+#include "Collider.h"
+#include "GDISelector.h"
+#include "Defines.h"
+
 BaseEnemy::BaseEnemy()
+    : m_position{}
+    , m_targetPosition{}
+    , m_health(100)
+    , m_moveSpeed(100.f)
+    , m_attackSpeed(1.f)
+    , m_timeSinceLastAttack(0.f)
+    , m_attackPower(10)
+    , m_attackRange(50.f)
+    , m_deltaTime(0.f)
 {
-	AddComponent<Collider>();
+    AddComponent<Rigidbody>();
+    AddComponent<Collider>();
 }
+
 BaseEnemy::~BaseEnemy()
 {
-
 }
-void BaseEnemy::Update() {
-	MoveToTarget(m_deltaTime);       // 목표 지점을 향해 이동
-	TryAttack(m_deltaTime);          // 공격 시도 (조건 충족 시 공격)
-	m_timeSinceLastAttack += m_deltaTime;  // 공격 쿨타임 경과 시간 누적
+
+void BaseEnemy::Update()
+{
+    float deltaTime = fDT;
+    m_deltaTime = deltaTime;
+    m_timeSinceLastAttack += deltaTime;
+
+    m_position = GetPos();
+
+    MoveToTarget(deltaTime);
+    TryAttack(deltaTime);
+
+    if (m_health <= 0) {
+        Death();
+    }
 }
 
 void BaseEnemy::Render(HDC _hdc)
 {
-	//HBRUSH hbrush = ::CreateSolidBrush(RGB(rand() % 255, rand() % 255, rand() % 255));
-	//HBRUSH holdbrush = (HBRUSH)::SelectObject(_hdc, hbrush);
-	
-	Vec2 pos = GetPos();
-	Vec2 size = GetSize();
-	RECT_RENDER(_hdc, pos.x, pos.y
-		, size.x, size.y);
+    BrushType brush = BrushType::HOLLOW;
+    PenType pen = PenType::RED;
 
-	//::SelectObject(_hdc, holdbrush);
-	//::DeleteObject(hbrush);
-	ComponentRender(_hdc);
+    GDISelector brushSelector(_hdc, brush);
+    GDISelector penSelector(_hdc, pen);
+
+    Vec2 pos = GetPos();
+    Vec2 size = GetSize();
+    RECT_RENDER(_hdc, pos.x, pos.y, size.x, size.y);
+
+    ComponentRender(_hdc);
 }
 
 void BaseEnemy::EnterCollision(Collider* _other)
 {
-	cout << "Enter" << endl;
-	if (_other->IsTrigger())
-	{
-		if (_other->GetName() == L"")
-		{
-			// 뭔지 확인하고 삭제.
-			//GET_SINGLE(SceneManager)->RequestDestroy(this);
-			//GET_SINGLE(SceneManager)->RequestDestroy(_other->GetOwner());
-		}
-	}
-	// 물리충돌
-	else
-	{
-
-
-	}
 }
 
 void BaseEnemy::StayCollision(Collider* _other)
@@ -61,6 +68,61 @@ void BaseEnemy::ExitCollision(Collider* _other)
 }
 
 void BaseEnemy::TakeDamage(int damage)
+{
+    //이거 인터페이스로 분리 해야할듯.
+    m_health -= damage;
+    if (m_health <= 0) {
+        Death();
+    }
+}
+
+void BaseEnemy::MoveToTarget(float deltaTime)
+{
+    Vec2 currentPos = m_position;
+    Vec2 targetPos = m_targetPosition;
+    Vec2 direction = { targetPos.x - currentPos.x, targetPos.y - currentPos.y };
+
+    if (IsInAttackRange() || (direction.x == 0.f && direction.y == 0.f)) {
+        Rigidbody* rigidbody = GetComponent<Rigidbody>();
+        if (rigidbody != nullptr) {
+            rigidbody->SetVelocity({ 0.f, 0.f });
+        }
+        return;
+    }
+
+    float dist = sqrt(direction.x * direction.x + direction.y * direction.y);
+    if (dist > 0.f) {
+        direction.x /= dist;
+        direction.y /= dist;
+    }
+
+    Vec2 velocity = { direction.x * m_moveSpeed, direction.y * m_moveSpeed };
+    Rigidbody* rigidbody = GetComponent<Rigidbody>();
+    if (rigidbody != nullptr) {
+        rigidbody->SetVelocity(velocity);
+    }
+}
+
+void BaseEnemy::TryAttack(float deltaTime)
+{
+    if (IsInAttackRange()) {
+        float attackInterval = (m_attackSpeed > 0.f) ? (1.0f / m_attackSpeed) : FLT_MAX;
+        if (m_timeSinceLastAttack >= attackInterval) {
+            m_timeSinceLastAttack = 0.f;
+        }
+    }
+}
+
+bool BaseEnemy::IsInAttackRange() const
+{
+    float dx = m_targetPosition.x - m_position.x;
+    float dy = m_targetPosition.y - m_position.y;
+    float distanceSq = dx * dx + dy * dy;
+
+    return distanceSq <= (m_attackRange * m_attackRange);
+}
+
+void BaseEnemy::Death()
 {
 }
 
