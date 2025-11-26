@@ -184,6 +184,9 @@
     <ClInclude Include="Rigidbody.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="SubWindow.h" />
+    <ClInclude Include="SubWindowController.h" />
+    <ClInclude Include="SubWindowRenderer.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="Texture.h" />
@@ -213,6 +216,9 @@
     <ClCompile Include="Rigidbody.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="SubWindow.cpp" />
+    <ClCompile Include="SubWindowController.cpp" />
+    <ClCompile Include="SubWindowRenderer.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="WindowManager.cpp" />

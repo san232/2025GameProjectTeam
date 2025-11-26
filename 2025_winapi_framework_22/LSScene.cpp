@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "LSScene.h"
 #include "WindowManager.h"
-#include "SubWindowRenderer.h"
+#include "SubWindowRenderer.h"  
 #include "SubWindow.h"
 #include "SubWindowController.h"
 #include "Player.h"
