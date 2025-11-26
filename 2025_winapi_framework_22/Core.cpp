@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Core.h"
 #include "TimeManager.h"
+#include "WindowManager.h"
 #include "InputManager.h"
 #include "SceneManager.h"
 #include "ResourceManager.h"
@@ -27,6 +28,7 @@ bool Core::Init(HWND _hWnd)
     // 2
     GET_SINGLE(InputManager)->Init();
     // 3
+	GET_SINGLE(WindowManager)->Init(_hWnd);
  
     if (!GET_SINGLE(ResourceManager)->Init())
         return false;
