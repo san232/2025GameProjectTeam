@@ -13,6 +13,7 @@ public:
 	void CleanUp();
 public:
 	const HDC& GetMainDC() const { return m_hDC; }
+	const HDC& GetBackDC() const { return m_hBackDC; }
 	const HWND& GetHwnd() const { return m_hWnd; }
 private:
 	void MainUpdate();

@@ -9,8 +9,9 @@ enum class Layer
 	CORE,
 	PLAYER,
 	VFX,
-	END,
-	INVISIBLEENEMY
+	DEFAULTEND,
+	INVISIBLEENEMY,
+	END
 };
 
 enum class PenType

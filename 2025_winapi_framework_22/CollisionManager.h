@@ -22,6 +22,6 @@ private:
 	ULONGLONG MakePairKey(UINT a, UINT b);
 private:
 	// 그룹 간의 충돌체크 배열
-	UINT m_objectLayer[(UINT)Layer::END];
+	UINT m_objectLayer[(UINT)Layer::DEFAULTEND];
 	std::unordered_map<ULONGLONG, bool> m_mapCollisionInfo;
 };
