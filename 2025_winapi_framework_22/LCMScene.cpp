@@ -9,5 +9,5 @@ void LCMScene::Init()
 
 void LCMScene::Update()
 {
-
+	Scene::Update();
 }

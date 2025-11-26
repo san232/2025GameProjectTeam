@@ -63,3 +63,20 @@ void BaseEnemy::ExitCollision(Collider* _other)
 void BaseEnemy::TakeDamage(int damage)
 {
 }
+
+void BaseEnemy::Death()
+{
+}
+
+void BaseEnemy::MoveToTarget(float deltaTime)
+{
+}
+
+void BaseEnemy::TryAttack(float deltaTime)
+{
+}
+
+bool BaseEnemy::IsInAttackRange() const
+{
+	return false;
+}

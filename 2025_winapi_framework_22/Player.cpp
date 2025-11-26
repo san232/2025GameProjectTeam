@@ -13,18 +13,17 @@
 #include "Defines.h"
 
 Player::Player()
-    : m_pTex(nullptr)
-    , m_stateMachine(*this)
+	: m_pTex(nullptr)
+	, movementSpeed(200.f)
+	, rollingSpeed(400.f)
+	, isRolling(false)
+	, rigidCompo(nullptr)
 {
-    AddComponent<Collider>();
-    AddComponent<Rigidbody>();
-    AddComponent<Animator>();
+	AddComponent<Collider>();
+	AddComponent<Rigidbody>();
+	AddComponent<Animator>();
 
-    m_stateMachine.AddState(PlayerStateType::Idle, &m_idleState);
-    m_stateMachine.AddState(PlayerStateType::Move, &m_moveState);
-    m_stateMachine.AddState(PlayerStateType::Rolling, &m_rollingState);
-    m_stateMachine.AddState(PlayerStateType::Dead, &m_deadState);
-    m_stateMachine.ChangeState(PlayerStateType::Idle);
+	rigidCompo = GetComponent<Rigidbody>();
 }
 
 Player::~Player()
@@ -33,42 +32,18 @@ Player::~Player()
 
 void Player::Render(HDC _hdc)
 {
-    Vec2 pos = GetPos();
-    Vec2 size = GetSize();
+	Vec2 pos = GetPos();
+	Vec2 size = GetSize();
 
-    PlayerStateType stateType = m_stateMachine.GetCurrentId();
+	BrushType brush = BrushType::HOLLOW;
+	PenType pen = PenType::RED;
 
-    BrushType brush = BrushType::HOLLOW;
-    PenType pen = PenType::GREEN;
+	GDISelector brushSelector(_hdc, brush);
+	GDISelector penSelector(_hdc, pen);
 
-    switch (stateType)
-    {
-    case PlayerStateType::Idle:
-        brush = BrushType::GREEN;
-        pen = PenType::GREEN;
-        break;
-    case PlayerStateType::Move:
-        brush = BrushType::RED;
-        pen = PenType::RED;
-        break;
-    case PlayerStateType::Rolling:
-        brush = BrushType::GREEN;
-        pen = PenType::RED;
-        break;
-    case PlayerStateType::Dead:
-        brush = BrushType::HOLLOW;
-        pen = PenType::RED;
-        break;
-    default:
-        break;
-    }
+	RECT_RENDER(_hdc, pos.x, pos.y, size.x, size.y);
 
-    GDISelector brushSelector(_hdc, brush);
-    GDISelector penSelector(_hdc, pen);
-
-    RECT_RENDER(_hdc, pos.x, pos.y, size.x, size.y);
-
-    ComponentRender(_hdc);
+	ComponentRender(_hdc);
 }
 
 void Player::EnterCollision(Collider* _other)
@@ -85,10 +60,35 @@ void Player::ExitCollision(Collider* _other)
 
 void Player::Update()
 {
-    m_stateMachine.Update();
+	UpdateInput();
 }
 
-void Player::ChangeState(PlayerStateType stateType)
+
+void Player::UpdateInput()
 {
-    m_stateMachine.ChangeState(stateType);
+	if (rigidCompo == nullptr)
+		return;
+
+	Vec2 dir = {};
+	if (GET_KEY(KEY_TYPE::A)) dir.x -= 1.f;
+	if (GET_KEY(KEY_TYPE::D)) dir.x += 1.f;
+	if (GET_KEY(KEY_TYPE::W)) dir.y -= 1.f;
+	if (GET_KEY(KEY_TYPE::S)) dir.y += 1.f;
+
+	bool hasInput = (dir.x != 0.f || dir.y != 0.f);
+	if (hasInput)
+	{
+		float len = sqrtf(dir.x * dir.x + dir.y * dir.y);
+		dir.x /= len;
+		dir.y /= len;
+	}
+
+	Translate({ fDT * dir.x * movementSpeed, fDT * dir.y * movementSpeed });
+
+	isRolling = GET_KEYDOWN(KEY_TYPE::SPACE);
+	if (isRolling && hasInput)
+	{
+		rigidCompo->AddImpulse(dir * rollingSpeed);
+	}
 }
+

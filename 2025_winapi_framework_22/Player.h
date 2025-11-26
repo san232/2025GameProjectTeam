@@ -1,11 +1,10 @@
 #pragma once
 #include "Object.h"
-#include "StateMachine.h"
-#include "PlayerState.h"
 #include "Enums.h"
 
 class Texture;
 class Collider;
+class Rigidbody;
 
 class Player : public Object
 {
@@ -19,15 +18,13 @@ public:
 	void EnterCollision(Collider* _other) override;
 	void StayCollision(Collider* _other) override;
 	void ExitCollision(Collider* _other) override;
-
-	void ChangeState(PlayerStateType stateType);
+private:
+	void UpdateInput();
 
 private:
 	Texture* m_pTex;
-
-	StateMachine<Player, PlayerStateType> m_stateMachine;
-	PlayerIdleState m_idleState;
-	PlayerMoveState m_moveState;
-	PlayerRollingState m_rollingState;
-	PlayerDeadState m_deadState;
+	float movementSpeed;
+	float rollingSpeed;
+	bool isRolling;
+	Rigidbody* rigidCompo;
 };

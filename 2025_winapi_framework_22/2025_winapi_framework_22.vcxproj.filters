@@ -47,15 +47,6 @@
     <Filter Include="Engine\02. Manager\Framework">
       <UniqueIdentifier>{b4df280d-99d4-4098-9967-569d0836c34f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\03. Object\State">
-      <UniqueIdentifier>{26363a6c-48f8-411e-a9d6-069040d7f92d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\03. Object\State\PlayerState">
-      <UniqueIdentifier>{1b1d9395-c066-4c8e-9f05-8a011708d434}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\03. Object\State\EnemyState">
-      <UniqueIdentifier>{3e77d5e9-1540-4ace-af49-0515435d01ca}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="2025_winapi_framework_22.h">
@@ -100,9 +91,6 @@
     <ClInclude Include="Player.h">
       <Filter>Engine\03. Object</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Engine\03. Object</Filter>
-    </ClInclude>
     <ClInclude Include="ResourceBase.h">
       <Filter>Engine\05. Resource</Filter>
     </ClInclude>
@@ -142,18 +130,11 @@
     <ClInclude Include="LCMScene.h">
       <Filter>Engine\04. Scene</Filter>
     </ClInclude>
-    <ClInclude Include="StateMachine.h">
-      <Filter>Engine\99. Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="State.h">
-      <Filter>Engine\99. Headers</Filter>
-    </ClInclude>
     <ClInclude Include="JewelryBox.h">
       <Filter>Engine\03. Object</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerState.h">
-      <Filter>Engine\03. Object\State\PlayerState</Filter>
-    </ClInclude>
+    <ClInclude Include="BaseEnemy.h" />
+    <ClInclude Include="LSScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2025_winapi_framework_22.rc">
@@ -188,9 +169,6 @@
       <Filter>Engine\02. Manager</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>Engine\03. Object</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
       <Filter>Engine\03. Object</Filter>
     </ClCompile>
     <ClCompile Include="ResourceBase.cpp">
@@ -235,8 +213,7 @@
     <ClCompile Include="JewelryBox.cpp">
       <Filter>Engine\03. Object</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerState.cpp">
-      <Filter>Engine\03. Object\State\PlayerState</Filter>
-    </ClCompile>
+    <ClCompile Include="BaseEnemy.cpp" />
+    <ClCompile Include="LSScene.cpp" />
   </ItemGroup>
 </Project>
