@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "SubWindow.h"
 #include "SubWindowRenderer.h"
-#include <unordered_map>
 
 static std::unordered_map<HWND, SubWindow*> g_subWindows;
 static const wchar_t* kSubWindowClass = L"SubWindowClass";
