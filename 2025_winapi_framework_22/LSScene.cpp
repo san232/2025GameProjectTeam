@@ -4,6 +4,7 @@
 #include "SubWindowRenderer.h"
 #include "SubWindow.h"
 #include "SubWindowController.h"
+#include "Player.h"
 
 void LSScene::Init()
 {
@@ -24,6 +25,7 @@ void LSScene::Init()
 
         subWindowController = new SubWindowController(subHwnd, windowSize);
     }
+    //Spawn<Player>(Layer::PLAYER, { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 4 }, { 100.f,100.f });
 }
 
 void LSScene::Update()

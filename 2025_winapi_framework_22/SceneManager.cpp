@@ -17,8 +17,8 @@ void SceneManager::Init()
 	RegisterScene(L"LSScene", std::make_shared<LSScene>());
 
 	// ¾À ·Îµå
-	LoadScene(L"LCMScene");
-	//LoadScene(L"LSScene");
+	//LoadScene(L"LCMScene");
+	LoadScene(L"LSScene");
 }
 
 void SceneManager::RegisterScene(const wstring& _name, std::shared_ptr<Scene> _scene)
