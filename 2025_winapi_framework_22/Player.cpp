@@ -14,19 +14,19 @@
 
 Player::Player()
 	: m_pTex(nullptr)
-	, rigidCompo(nullptr)
-	, movementSpeed(200.f)
-	, rollingSpeed(500.f)
-	, isRolling(false)
-	, rollingCooltime(3.f)
-	, curTime(0.f)
-	, isCanRolling(true)
+	, m_rigidCompo(nullptr)
+	, m_movementSpeed(200.f)
+	, m_rollingSpeed(500.f)
+	, m_isRolling(false)
+	, m_rollingCooltime(3.f)
+	, m_curTime(0.f)
+	, m_isCanRolling(true)
 {
 	AddComponent<Collider>();
 	AddComponent<Rigidbody>();
 	AddComponent<Animator>();
 
-	rigidCompo = GetComponent<Rigidbody>();
+	m_rigidCompo = GetComponent<Rigidbody>();
 }
 
 Player::~Player()
@@ -70,7 +70,7 @@ void Player::Update()
 
 void Player::UpdateInput()
 {
-	if (rigidCompo == nullptr)
+	if (m_rigidCompo == nullptr)
 		return;
 
 	Vec2 dir = {};
@@ -87,24 +87,23 @@ void Player::UpdateInput()
 		dir.y /= len;
 	}
 
-	Translate({ fDT * dir.x * movementSpeed, fDT * dir.y * movementSpeed });
+	Translate({ fDT * dir.x * m_movementSpeed, fDT * dir.y * m_movementSpeed });
 
-	isRolling = GET_KEYDOWN(KEY_TYPE::SPACE);
-	if (isRolling && hasInput && isCanRolling)
+	if (GET_KEYDOWN(KEY_TYPE::SPACE) && dir != Vec2{0.f,0.f} && m_isCanRolling)
 	{
-		rigidCompo->AddImpulse(dir * rollingSpeed);
-		isCanRolling = false;
+		m_rigidCompo->AddImpulse(dir * m_rollingSpeed);
+		m_isCanRolling = false;
 	}
 }
 
 void Player::CooldownRollingTime()
 {
-	if (isCanRolling == false)
-		curTime += fDT;
+	if (m_isCanRolling == false)
+		m_curTime += fDT;
 
-	if (curTime >= rollingCooltime)
+	if (m_curTime >= m_rollingCooltime)
 	{
-		isCanRolling = true;
-		curTime = 0;
+		m_isCanRolling = true;
+		m_curTime = 0;
 	}
 }

@@ -24,11 +24,11 @@ private:
 
 private:
 	Texture* m_pTex;
-	Rigidbody* rigidCompo;
-	float movementSpeed;
-	float rollingSpeed;
-	bool isRolling;
-	float rollingCooltime;
-	float curTime;
-	bool isCanRolling;
+	Rigidbody* m_rigidCompo;
+	float m_movementSpeed;
+	float m_rollingSpeed;
+	bool m_isRolling;
+	float m_rollingCooltime;
+	float m_curTime;
+	bool m_isCanRolling;
 };

@@ -25,11 +25,13 @@ void LSScene::Init()
 
         subWindowController = new SubWindowController(subHwnd, windowSize);
     }
-    //Spawn<Player>(Layer::PLAYER, { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 4 }, { 100.f,100.f });
+
+    Spawn<Player>(Layer::PLAYER, { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 4 }, { 100.f,100.f });
 }
 
 void LSScene::Update()
 {
+    Scene::Update();
     if (subWindowController)
     {
         subWindowController->Update();

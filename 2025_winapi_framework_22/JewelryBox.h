@@ -1,5 +1,7 @@
 #pragma once
 #include "Object.h"
+
+class Texture;
 class JewelryBox : public Object
 {
 public:
@@ -13,6 +15,7 @@ public:
 	void StayCollision(Collider* _other) override;
 	void ExitCollision(Collider* _other) override;
 private:
-	int hp;
+	Texture* m_pTex;
+	int m_hp;
 };
 
