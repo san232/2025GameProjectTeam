@@ -15,7 +15,7 @@ Scene::~Scene()
 void Scene::Release()
 {
 	FlushEvent();
-	for (UINT i = 0; i < (UINT)Layer::END; ++i)
+	for (UINT i = 0; i < (UINT)Layer::DEFAULTEND; ++i)
 	{
 		auto& vec = m_vecObj[i];
 		for (auto* obj : vec)
@@ -61,7 +61,7 @@ void Scene::RequestSpawn(Object* obj, Layer _type)
 
 void Scene::RemoveObject(Object* _obj)
 {
-	for (UINT i = 0; i < (UINT)Layer::END; ++i)
+	for (UINT i = 0; i < (UINT)Layer::DEFAULTEND; ++i)
 	{
 		auto& v = m_vecObj[i];
 		v.erase(std::remove(v.begin(), v.end(), _obj), v.end());
@@ -72,7 +72,7 @@ void Scene::RemoveObject(Object* _obj)
 void Scene::Update()
 {
 	//Scene* pScene = new DevScene;
-	for (UINT i = 0; i < (UINT)Layer::END; ++i)
+	for (UINT i = 0; i < (UINT)Layer::DEFAULTEND; ++i)
 	{
 		auto& vec = m_vecObj[i];
 		for (auto* obj : vec)
@@ -83,7 +83,7 @@ void Scene::Update()
 
 void Scene::FixedUpdate(float _fixedDT)
 {
-	for (UINT i = 0; i < (UINT)Layer::END; ++i)
+	for (UINT i = 0; i < (UINT)Layer::DEFAULTEND; ++i)
 	{
 		auto& vec = m_vecObj[i];
 		for (auto* obj : vec)
@@ -99,7 +99,7 @@ void Scene::FixedUpdate(float _fixedDT)
 
 void Scene::LateUpdate()
 {
-	for (UINT i = 0; i < (UINT)Layer::END; ++i)
+	for (UINT i = 0; i < (UINT)Layer::DEFAULTEND; ++i)
 	{
 		auto& vec = m_vecObj[i];
 		for (auto* obj : vec)
@@ -109,7 +109,7 @@ void Scene::LateUpdate()
 }
 void Scene::Render(HDC _hdc)
 {
-	for (UINT i = 0; i < (UINT)Layer::END; ++i)
+	for (UINT i = 0; i < (UINT)Layer::DEFAULTEND; ++i)
 	{
 		auto& vec = m_vecObj[i];
 		for (auto* obj : vec)

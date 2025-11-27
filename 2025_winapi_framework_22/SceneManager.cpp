@@ -46,7 +46,7 @@ void SceneManager::FixedUpdate(float _fixedDT)
 }
 void SceneManager::PhysicsSyncColliders()
 {
-	for (UINT i = 0; i < (UINT)Layer::END; ++i)
+	for (UINT i = 0; i < (UINT)Layer::DEFAULTEND; ++i)
 	{
 		const auto& objects = m_curScene->GetLayerObjects((Layer)i);
 		for (Object* obj : objects)

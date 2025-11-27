@@ -6,9 +6,9 @@
 #include "Collider.h"
 void CollisionManager::Update()
 {
-	for (UINT Row = 0; Row < (UINT)Layer::END; ++Row)
+	for (UINT Row = 0; Row < (UINT)Layer::DEFAULTEND; ++Row)
 	{
-		for (UINT Col = Row; Col < (UINT)Layer::END; ++Col)
+		for (UINT Col = Row; Col < (UINT)Layer::DEFAULTEND; ++Col)
 		{
 			if (m_objectLayer[Row] & (1 << Col))
 			{
@@ -49,7 +49,7 @@ void CollisionManager::CheckLayer(Layer _left, Layer _right)
 void CollisionManager::CheckReset()
 {
 	// 메모리 초기화
-	memset(m_objectLayer, 0, sizeof(UINT) * (UINT)Layer::END);
+	memset(m_objectLayer, 0, sizeof(UINT) * (UINT)Layer::DEFAULTEND);
 }
 
 void CollisionManager::CollisionLayerUpdate(Layer _left, Layer _right)
