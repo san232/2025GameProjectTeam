@@ -47,6 +47,9 @@
     <Filter Include="Engine\02. Manager\Framework">
       <UniqueIdentifier>{b4df280d-99d4-4098-9967-569d0836c34f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\09.Window">
+      <UniqueIdentifier>{1b461880-075b-4003-a167-0a8e090146a5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="2025_winapi_framework_22.h">
@@ -133,10 +136,23 @@
     <ClInclude Include="JewelryBox.h">
       <Filter>Engine\03. Object</Filter>
     </ClInclude>
-    <ClInclude Include="BaseEnemy.h" />
-    <ClInclude Include="LSScene.h" />
     <ClInclude Include="WindowManager.h">
       <Filter>Engine\02. Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseEnemy.h">
+      <Filter>Engine\03. Object</Filter>
+    </ClInclude>
+    <ClInclude Include="LSScene.h">
+      <Filter>Engine\04. Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SubWindow.h">
+      <Filter>Engine\09.Window</Filter>
+    </ClInclude>
+    <ClInclude Include="SubWindowController.h">
+      <Filter>Engine\09.Window</Filter>
+    </ClInclude>
+    <ClInclude Include="SubWindowRenderer.h">
+      <Filter>Engine\09.Window</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -216,10 +232,23 @@
     <ClCompile Include="JewelryBox.cpp">
       <Filter>Engine\03. Object</Filter>
     </ClCompile>
-    <ClCompile Include="BaseEnemy.cpp" />
-    <ClCompile Include="LSScene.cpp" />
     <ClCompile Include="WindowManager.cpp">
       <Filter>Engine\02. Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseEnemy.cpp">
+      <Filter>Engine\03. Object</Filter>
+    </ClCompile>
+    <ClCompile Include="LSScene.cpp">
+      <Filter>Engine\04. Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="SubWindow.cpp">
+      <Filter>Engine\09.Window</Filter>
+    </ClCompile>
+    <ClCompile Include="SubWindowController.cpp">
+      <Filter>Engine\09.Window</Filter>
+    </ClCompile>
+    <ClCompile Include="SubWindowRenderer.cpp">
+      <Filter>Engine\09.Window</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -21,6 +21,7 @@ public:
 private:
 	void UpdateInput();
 	void CooldownRollingTime();
+	void BlockPlayer();
 
 private:
 	Texture* m_pTex;

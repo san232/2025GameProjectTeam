@@ -69,7 +69,6 @@ void BaseEnemy::ExitCollision(Collider* _other)
 
 void BaseEnemy::TakeDamage(int damage)
 {
-    //이거 인터페이스로 분리 해야할듯.
     m_health -= damage;
     if (m_health <= 0) {
         Death();

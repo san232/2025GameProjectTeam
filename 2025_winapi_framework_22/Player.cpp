@@ -31,6 +31,7 @@ Player::Player()
 
 Player::~Player()
 {
+
 }
 
 void Player::Render(HDC _hdc)
@@ -65,6 +66,7 @@ void Player::Update()
 {
 	UpdateInput();
 	CooldownRollingTime();
+	BlockPlayer();
 }
 
 
@@ -106,4 +108,23 @@ void Player::CooldownRollingTime()
 		m_isCanRolling = true;
 		m_curTime = 0;
 	}
+}
+
+void Player::BlockPlayer()
+{
+	Vec2 pos = GetPos();
+	Vec2 size = GetSize();
+
+	float x = size.x * 0.5f;
+	float y = size.y * 0.5f;
+
+	float minX = x;
+	float maxX = WINDOW_WIDTH - x;
+	float minY = y;
+	float maxY = WINDOW_HEIGHT - y;
+
+	pos.x = std::clamp(pos.x, minX, maxX);
+	pos.y = std::clamp(pos.y, minY, maxY);
+
+	SetPos(pos);
 }
