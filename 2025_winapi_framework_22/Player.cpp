@@ -11,6 +11,8 @@
 #include "Rigidbody.h"
 #include "GDISelector.h"
 #include "Defines.h"
+#include "PlayerIdleState.h"
+#include "PlayerMoveState.h"
 
 Player::Player()
 	: m_pTex(nullptr)
@@ -27,6 +29,11 @@ Player::Player()
 	AddComponent<Animator>();
 
 	m_rigidCompo = GetComponent<Rigidbody>();
+
+	idleState = new PlayerIdleState(this);
+	moveState = new PlayerMoveState(this);
+
+	m_stateMachine->ChangeState(idleState);
 }
 
 Player::~Player()
@@ -64,6 +71,9 @@ void Player::ExitCollision(Collider* _other)
 
 void Player::Update()
 {
+	Entity::Update();
+	m_stateMachine->Update();
+
 	UpdateInput();
 	CooldownRollingTime();
 	BlockPlayer();
@@ -127,4 +137,19 @@ void Player::BlockPlayer()
 	pos.y = std::clamp(pos.y, minY, maxY);
 
 	SetPos(pos);
+}
+
+void Player::Attack()
+{
+
+}
+
+void Player::Dead()
+{
+
+}
+
+void Player::Move()
+{
+
 }

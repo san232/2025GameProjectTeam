@@ -50,6 +50,9 @@
     <Filter Include="Engine\09.Window">
       <UniqueIdentifier>{1b461880-075b-4003-a167-0a8e090146a5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\PlayerState">
+      <UniqueIdentifier>{71d36735-6f77-4752-86c0-6618fd1d6917}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="2025_winapi_framework_22.h">
@@ -154,6 +157,17 @@
     <ClInclude Include="SubWindowRenderer.h">
       <Filter>Engine\09.Window</Filter>
     </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Engine\03. Object</Filter>
+    </ClInclude>
+    <ClInclude Include="StateMachine.h" />
+    <ClInclude Include="State.h" />
+    <ClInclude Include="PlayerIdleState.h">
+      <Filter>Engine\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerMoveState.h">
+      <Filter>Engine\PlayerState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2025_winapi_framework_22.rc">
@@ -249,6 +263,17 @@
     </ClCompile>
     <ClCompile Include="SubWindowRenderer.cpp">
       <Filter>Engine\09.Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Engine\03. Object</Filter>
+    </ClCompile>
+    <ClCompile Include="StateMachine.cpp" />
+    <ClCompile Include="State.cpp" />
+    <ClCompile Include="PlayerIdleState.cpp">
+      <Filter>Engine\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerMoveState.cpp">
+      <Filter>Engine\PlayerState</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

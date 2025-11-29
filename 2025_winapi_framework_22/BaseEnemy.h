@@ -1,10 +1,10 @@
 #pragma once
-#include "Object.h"
+#include "Entity.h"
 
 struct Vec2;
 class Collider;
 class Rigidbody;
-class BaseEnemy : public Object
+class BaseEnemy : public Entity
 {
 public:
     BaseEnemy();
