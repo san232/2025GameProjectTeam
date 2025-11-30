@@ -13,16 +13,17 @@
 #include "Defines.h"
 #include "PlayerIdleState.h"
 #include "PlayerMoveState.h"
+#include "PlayerAttackState.h"
 
 Player::Player()
 	: m_pTex(nullptr)
 	, m_rigidCompo(nullptr)
+	, m_moveDirection({0.f,0.f})
 	, m_movementSpeed(200.f)
-	, m_rollingSpeed(500.f)
-	, m_isRolling(false)
-	, m_rollingCooltime(3.f)
+	, m_attackSpeed(500.f)
+	, m_attackCooltime(3.f)
 	, m_curTime(0.f)
-	, m_isCanRolling(true)
+	, m_isCanAttack(true)
 {
 	AddComponent<Collider>();
 	AddComponent<Rigidbody>();
@@ -32,6 +33,7 @@ Player::Player()
 
 	idleState = new PlayerIdleState(this);
 	moveState = new PlayerMoveState(this);
+	attackState = new PlayerAttackState(this);
 
 	m_stateMachine->ChangeState(idleState);
 }
@@ -85,37 +87,41 @@ void Player::UpdateInput()
 	if (m_rigidCompo == nullptr)
 		return;
 
-	Vec2 dir = {};
-	if (GET_KEY(KEY_TYPE::A)) dir.x -= 1.f;
-	if (GET_KEY(KEY_TYPE::D)) dir.x += 1.f;
-	if (GET_KEY(KEY_TYPE::W)) dir.y -= 1.f;
-	if (GET_KEY(KEY_TYPE::S)) dir.y += 1.f;
+	m_moveDirection = { 0.f,0.f };
+	if (GET_KEY(KEY_TYPE::A)) m_moveDirection.x -= 1.f;
+	if (GET_KEY(KEY_TYPE::D)) m_moveDirection.x += 1.f;
+	if (GET_KEY(KEY_TYPE::W)) m_moveDirection.y -= 1.f;
+	if (GET_KEY(KEY_TYPE::S)) m_moveDirection.y += 1.f;
 
-	bool hasInput = (dir.x != 0.f || dir.y != 0.f);
+	bool hasInput = m_moveDirection != Vec2{ 0.f,0.f };
 	if (hasInput)
 	{
-		float len = sqrtf(dir.x * dir.x + dir.y * dir.y);
-		dir.x /= len;
-		dir.y /= len;
+		float len = sqrtf(m_moveDirection.x * m_moveDirection.x + m_moveDirection.y * m_moveDirection.y);
+		m_moveDirection.x /= len;
+		m_moveDirection.y /= len;
+		m_stateMachine->ChangeState(moveState);
+	}
+	else
+	{
+		m_stateMachine->ChangeState(idleState);
 	}
 
-	Translate({ fDT * dir.x * m_movementSpeed, fDT * dir.y * m_movementSpeed });
 
-	if (GET_KEYDOWN(KEY_TYPE::SPACE) && dir != Vec2{0.f,0.f} && m_isCanRolling)
+	if (GET_KEYDOWN(KEY_TYPE::SPACE) && hasInput && m_isCanAttack)
 	{
-		m_rigidCompo->AddImpulse(dir * m_rollingSpeed);
-		m_isCanRolling = false;
+		m_stateMachine->ChangeState(attackState);
+		m_isCanAttack = false;
 	}
 }
 
 void Player::CooldownRollingTime()
 {
-	if (m_isCanRolling == false)
+	if (m_isCanAttack == false)
 		m_curTime += fDT;
 
-	if (m_curTime >= m_rollingCooltime)
+	if (m_curTime >= m_attackCooltime)
 	{
-		m_isCanRolling = true;
+		m_isCanAttack = true;
 		m_curTime = 0;
 	}
 }
@@ -139,9 +145,14 @@ void Player::BlockPlayer()
 	SetPos(pos);
 }
 
+void Player::StopMoving()
+{
+	m_rigidCompo->SetVelocity({ 0.f,0.f });
+}
+
 void Player::Attack()
 {
-
+	m_rigidCompo->AddImpulse(m_moveDirection * m_attackSpeed);
 }
 
 void Player::Dead()
@@ -151,5 +162,5 @@ void Player::Dead()
 
 void Player::Move()
 {
-
+	Translate({ fDT * m_moveDirection.x * m_movementSpeed, fDT * m_moveDirection.y * m_movementSpeed });
 }

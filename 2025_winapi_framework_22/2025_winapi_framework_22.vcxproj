@@ -181,6 +181,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerMoveState.h" />
+    <ClInclude Include="PlayerAttackState.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceBase.h" />
     <ClInclude Include="ResourceManager.h" />
@@ -219,6 +220,7 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerMoveState.cpp" />
+    <ClCompile Include="PlayerAttackState.cpp" />
     <ClCompile Include="ResourceBase.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Rigidbody.cpp" />

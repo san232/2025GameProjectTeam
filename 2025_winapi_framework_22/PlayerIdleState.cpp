@@ -9,7 +9,8 @@ PlayerIdleState::PlayerIdleState(Player* owner)
 
 void PlayerIdleState::Enter(StateMachine& owner)
 {
-	player->m_rigidCompo->SetVelocity({ 0.f,0.f });
+	cout << "Idle";
+	player->StopMoving();
 }
 
 void PlayerIdleState::Update(StateMachine& owner)

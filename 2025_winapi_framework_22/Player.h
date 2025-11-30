@@ -8,6 +8,7 @@ class Collider;
 class Rigidbody;
 class PlayerIdleState;
 class PlayerMoveState;
+class PlayerAttackState;
 
 class Player : public Entity
 {
@@ -26,26 +27,26 @@ private:
 	void CooldownRollingTime();
 	void BlockPlayer();
 
-public:
-	Rigidbody* m_rigidCompo;
-
 private:
 	PlayerIdleState* idleState;
 	PlayerMoveState* moveState;
+	PlayerAttackState* attackState;
 
 
 private:
 	StateMachine* m_stateMachine = new StateMachine;
 	Texture* m_pTex;
+	Rigidbody* m_rigidCompo;
+	Vec2 m_moveDirection;
 	float m_movementSpeed;
-	float m_rollingSpeed;
-	bool m_isRolling;
-	float m_rollingCooltime;
+	float m_attackSpeed;
+	float m_attackCooltime;
 	float m_curTime;
-	bool m_isCanRolling;
+	bool m_isCanAttack;
 
-	// Entity을(를) 통해 상속됨
+public:
 	void Attack() override;
 	void Dead() override;
 	void Move() override;
+	void StopMoving();
 };
