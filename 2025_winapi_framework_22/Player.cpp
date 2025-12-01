@@ -14,33 +14,42 @@
 #include "PlayerIdleState.h"
 #include "PlayerMoveState.h"
 #include "PlayerAttackState.h"
+#include "PlayerDeadState.h"
 
 Player::Player()
 	: m_pTex(nullptr)
-	, m_rigidCompo(nullptr)
-	, m_moveDirection({0.f,0.f})
-	, m_movementSpeed(200.f)
-	, m_attackSpeed(500.f)
-	, m_attackCooltime(3.f)
-	, m_curTime(0.f)
-	, m_isCanAttack(true)
+	, rigidCompo(nullptr)
+	, moveDirection({0.f,0.f})
+	, dashPower(500.f)
+	, curTime(0.f)
+	, isCanAttack(true)
 {
 	AddComponent<Collider>();
 	AddComponent<Rigidbody>();
 	AddComponent<Animator>();
 
-	m_rigidCompo = GetComponent<Rigidbody>();
+	rigidCompo = GetComponent<Rigidbody>();
 
 	idleState = new PlayerIdleState(this);
 	moveState = new PlayerMoveState(this);
 	attackState = new PlayerAttackState(this);
+	deadState = new PlayerDeadState(this);
 
-	m_stateMachine->ChangeState(idleState);
+	stateMachine->ChangeState(idleState);
+
+	SetHp(10);
+	SetMoveSpeed(200.0f);
+	SetAttackCooltime(3.f);
+	SetAttackPower(2);
 }
 
 Player::~Player()
 {
-
+	SAFE_DELETE(idleState);
+	SAFE_DELETE(moveState);
+	SAFE_DELETE(attackState);
+	SAFE_DELETE(deadState);
+	SAFE_DELETE(stateMachine);
 }
 
 void Player::Render(HDC _hdc)
@@ -74,7 +83,7 @@ void Player::ExitCollision(Collider* _other)
 void Player::Update()
 {
 	Entity::Update();
-	m_stateMachine->Update();
+	stateMachine->Update();
 
 	UpdateInput();
 	CooldownRollingTime();
@@ -84,45 +93,45 @@ void Player::Update()
 
 void Player::UpdateInput()
 {
-	if (m_rigidCompo == nullptr)
+	if (rigidCompo == nullptr)
 		return;
 
-	m_moveDirection = { 0.f,0.f };
-	if (GET_KEY(KEY_TYPE::A)) m_moveDirection.x -= 1.f;
-	if (GET_KEY(KEY_TYPE::D)) m_moveDirection.x += 1.f;
-	if (GET_KEY(KEY_TYPE::W)) m_moveDirection.y -= 1.f;
-	if (GET_KEY(KEY_TYPE::S)) m_moveDirection.y += 1.f;
+	moveDirection = { 0.f,0.f };
+	if (GET_KEY(KEY_TYPE::A)) moveDirection.x -= 1.f;
+	if (GET_KEY(KEY_TYPE::D)) moveDirection.x += 1.f;
+	if (GET_KEY(KEY_TYPE::W)) moveDirection.y -= 1.f;
+	if (GET_KEY(KEY_TYPE::S)) moveDirection.y += 1.f;
 
-	bool hasInput = m_moveDirection != Vec2{ 0.f,0.f };
+	bool hasInput = moveDirection != Vec2{ 0.f,0.f };
 	if (hasInput)
 	{
-		float len = sqrtf(m_moveDirection.x * m_moveDirection.x + m_moveDirection.y * m_moveDirection.y);
-		m_moveDirection.x /= len;
-		m_moveDirection.y /= len;
-		m_stateMachine->ChangeState(moveState);
+		float len = sqrtf(moveDirection.x * moveDirection.x + moveDirection.y * moveDirection.y);
+		moveDirection.x /= len;
+		moveDirection.y /= len;
+		stateMachine->ChangeState(moveState);
 	}
 	else
 	{
-		m_stateMachine->ChangeState(idleState);
+		stateMachine->ChangeState(idleState);
 	}
 
 
-	if (GET_KEYDOWN(KEY_TYPE::SPACE) && hasInput && m_isCanAttack)
+	if (GET_KEYDOWN(KEY_TYPE::SPACE) && hasInput && isCanAttack)
 	{
-		m_stateMachine->ChangeState(attackState);
-		m_isCanAttack = false;
+		stateMachine->ChangeState(attackState);
+		isCanAttack = false;
 	}
 }
 
 void Player::CooldownRollingTime()
 {
-	if (m_isCanAttack == false)
-		m_curTime += fDT;
+	if (isCanAttack == false)
+		curTime += fDT;
 
-	if (m_curTime >= m_attackCooltime)
+	if (curTime >= m_attackCooltime)
 	{
-		m_isCanAttack = true;
-		m_curTime = 0;
+		isCanAttack = true;
+		curTime = 0;
 	}
 }
 
@@ -147,12 +156,12 @@ void Player::BlockPlayer()
 
 void Player::StopMoving()
 {
-	m_rigidCompo->SetVelocity({ 0.f,0.f });
+	rigidCompo->SetVelocity({ 0.f,0.f });
 }
 
 void Player::Attack()
 {
-	m_rigidCompo->AddImpulse(m_moveDirection * m_attackSpeed);
+	rigidCompo->AddImpulse(moveDirection * dashPower);
 }
 
 void Player::Dead()
@@ -162,5 +171,5 @@ void Player::Dead()
 
 void Player::Move()
 {
-	Translate({ fDT * m_moveDirection.x * m_movementSpeed, fDT * m_moveDirection.y * m_movementSpeed });
+	Translate({ fDT * moveDirection.x * m_moveSpeed, fDT * moveDirection.y * m_moveSpeed });
 }

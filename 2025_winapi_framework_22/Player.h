@@ -9,6 +9,7 @@ class Rigidbody;
 class PlayerIdleState;
 class PlayerMoveState;
 class PlayerAttackState;
+class PlayerDeadState;
 
 class Player : public Entity
 {
@@ -31,18 +32,17 @@ private:
 	PlayerIdleState* idleState;
 	PlayerMoveState* moveState;
 	PlayerAttackState* attackState;
+	PlayerDeadState* deadState;
 
 
 private:
-	StateMachine* m_stateMachine = new StateMachine;
+	StateMachine* stateMachine = new StateMachine;
 	Texture* m_pTex;
-	Rigidbody* m_rigidCompo;
-	Vec2 m_moveDirection;
-	float m_movementSpeed;
-	float m_attackSpeed;
-	float m_attackCooltime;
-	float m_curTime;
-	bool m_isCanAttack;
+	Rigidbody* rigidCompo;
+	Vec2 moveDirection;
+	float dashPower;
+	float curTime;
+	bool isCanAttack;
 
 public:
 	void Attack() override;

@@ -172,6 +172,7 @@
     <ClInclude Include="Enums.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GDISelector.h" />
+    <ClInclude Include="PlayerDeadState.h" />
     <ClInclude Include="PlayerIdleState.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="JewelryBox.h" />
@@ -211,6 +212,7 @@
     <ClCompile Include="BaseEnemy.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="GDISelector.cpp" />
+    <ClCompile Include="PlayerDeadState.cpp" />
     <ClCompile Include="PlayerIdleState.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="JewelryBox.cpp" />

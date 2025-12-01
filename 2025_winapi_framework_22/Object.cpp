@@ -2,6 +2,7 @@
 #include "Object.h"
 #include "InputManager.h"
 #include "Component.h"
+
 Object::Object()
 	: m_pos{}
 	, m_size{}

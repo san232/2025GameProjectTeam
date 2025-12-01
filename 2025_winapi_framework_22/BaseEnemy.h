@@ -1,9 +1,9 @@
 #pragma once
 #include "Entity.h"
 
-struct Vec2;
 class Collider;
 class Rigidbody;
+
 class BaseEnemy : public Entity
 {
 public:
