@@ -178,6 +178,10 @@
     <ClInclude Include="StateMachine.h">
       <Filter>Engine\10.State</Filter>
     </ClInclude>
+    <ClInclude Include="SubWindowManager.h" />
+    <ClInclude Include="BuffEffects.h" />
+    <ClInclude Include="InvisibleEnemyOverlayRenderer.h" />
+    <ClInclude Include="ISubWindowEffect.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2025_winapi_framework_22.rc">
@@ -292,5 +296,6 @@
     <ClCompile Include="StateMachine.cpp">
       <Filter>Engine\10.State</Filter>
     </ClCompile>
+    <ClCompile Include="SubWindowManager.cpp" />
   </ItemGroup>
 </Project>

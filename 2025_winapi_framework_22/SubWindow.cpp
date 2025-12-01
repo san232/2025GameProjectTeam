@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "SubWindow.h"
 #include "SubWindowRenderer.h"
+#include "Core.h"
 
 static std::unordered_map<HWND, SubWindow*> g_subWindows;
 static const wchar_t* kSubWindowClass = L"SubWindowClass";
@@ -8,6 +9,11 @@ static const wchar_t* kSubWindowClass = L"SubWindowClass";
 SubWindow::SubWindow()
     : m_hWnd(nullptr)
     , m_renderer(nullptr)
+    , m_tintColor(RGB(255, 255, 255))
+    , m_alpha(0.3f)
+    , m_effect(nullptr)
+    , m_isActive(true)
+    , m_isRevealLens(false)
 {
 }
 
@@ -45,7 +51,7 @@ ATOM SubWindow::RegisterClassOnce(HINSTANCE hInst)
     return s_atom;
 }
 
-bool SubWindow::Create(HWND parent, SubWindowRenderer* renderer)
+bool SubWindow::Create(HWND parent, SubWindowRenderer* renderer, int width, int height)
 {
     m_renderer = renderer;
 
@@ -58,7 +64,7 @@ bool SubWindow::Create(HWND parent, SubWindowRenderer* renderer)
         kSubWindowClass,
         L"",
         WS_CHILD | WS_CLIPSIBLINGS | WS_VISIBLE,
-        0, 0, 160, 160,
+        0, 0, width, height,
         parent, nullptr, hInst, nullptr);
 
     if (m_hWnd == nullptr)
@@ -70,6 +76,25 @@ bool SubWindow::Create(HWND parent, SubWindowRenderer* renderer)
     ::ShowWindow(m_hWnd, SW_SHOW);
     ::UpdateWindow(m_hWnd);
     return true;
+}
+
+void SubWindow::SetActive(bool active)
+{
+    m_isActive = active;
+    if (m_hWnd)
+    {
+        ::ShowWindow(m_hWnd, active ? SW_SHOW : SW_HIDE);
+    }
+}
+
+RECT SubWindow::GetRect() const
+{
+    RECT rc = {};
+    if (m_hWnd)
+    {
+        ::GetWindowRect(m_hWnd, &rc);
+    }
+    return rc;
 }
 
 LRESULT CALLBACK SubWindow::WndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
@@ -91,16 +116,35 @@ LRESULT CALLBACK SubWindow::WndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
 
         if (self != nullptr && self->m_renderer != nullptr)
         {
-            POINT pt = {};
-            ::GetCursorPos(&pt);
-
-            HWND parent = ::GetParent(hWnd);
-            if (parent != nullptr)
+            HDC mainBackDC = GET_SINGLE(Core)->GetBackDC();
+            
+            HWND hParent = ::GetParent(hWnd);
+            RECT mainRect = {};
+            if (hParent)
             {
-                ::ScreenToClient(parent, &pt);
+                POINT ptTL = { 0, 0 };
+                ::ClientToScreen(hParent, &ptTL);
+                ::GetClientRect(hParent, &mainRect);
+                ::OffsetRect(&mainRect, ptTL.x, ptTL.y);
             }
 
-            self->m_renderer->Render(hdc, pt);
+            self->m_renderer->Render(hdc, self, mainBackDC, mainRect);
+
+            if (self->IsRevealLens())
+            {
+                 POINT ptSub = {0, 0};
+                 ::ClientToScreen(hWnd, &ptSub);
+                 POINT ptMain = {0, 0};
+                 if(hParent) ::ClientToScreen(hParent, &ptMain);
+                 
+                 int sx = ptSub.x - ptMain.x;
+                 int sy = ptSub.y - ptMain.y;
+                 
+                 int saved = ::SaveDC(hdc);
+                 ::SetViewportOrgEx(hdc, -sx, -sy, nullptr);
+                 self->m_renderer->RenderLegacy(hdc);
+                 ::RestoreDC(hdc, saved);
+            }
         }
 
         ::EndPaint(hWnd, &ps);
