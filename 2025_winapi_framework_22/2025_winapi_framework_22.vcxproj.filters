@@ -168,6 +168,10 @@
     <ClInclude Include="PlayerMoveState.h">
       <Filter>Engine\PlayerState</Filter>
     </ClInclude>
+    <ClInclude Include="SubWindowManager.h" />
+    <ClInclude Include="BuffEffects.h" />
+    <ClInclude Include="InvisibleEnemyOverlayRenderer.h" />
+    <ClInclude Include="ISubWindowEffect.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2025_winapi_framework_22.rc">
@@ -275,5 +279,6 @@
     <ClCompile Include="PlayerMoveState.cpp">
       <Filter>Engine\PlayerState</Filter>
     </ClCompile>
+    <ClCompile Include="SubWindowManager.cpp" />
   </ItemGroup>
 </Project>

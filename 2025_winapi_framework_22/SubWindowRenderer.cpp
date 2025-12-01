@@ -1,55 +1,84 @@
 #include "pch.h"
 #include "SubWindowRenderer.h"
+#include "SubWindow.h"
 #include "Scene.h"
 #include "Object.h"
 #include "Core.h"
 
+#pragma comment(lib, "msimg32.lib")
+
 SubWindowRenderer::SubWindowRenderer(HWND inMainWindow, Scene* inScene)
     : mainWindow(inMainWindow)
     , scene(inScene)
+    , m_legacyRenderer(new InvisibleEnemyOverlayRenderer(inScene))
 {
 }
 
-void SubWindowRenderer::Render(HDC hdc, const POINT& clientPos)
+SubWindowRenderer::~SubWindowRenderer()
 {
-    const int width = 160;
-    const int height = 160;
+    if (m_legacyRenderer) delete m_legacyRenderer;
+}
 
-    RECT parentRc = {};
-    ::GetClientRect(mainWindow, &parentRc);
-    if (parentRc.right <= 0 || parentRc.bottom <= 0)
-        return;
+void SubWindowRenderer::Render(HDC subDC, SubWindow* subWin, HDC mainBackDC, RECT mainWndRect)
+{
+    if (!subWin || !subWin->IsActive()) return;
+    
+    RECT subRect = subWin->GetRect();
+    int subW = subRect.right - subRect.left;
+    int subH = subRect.bottom - subRect.top;
 
-    int sx = clientPos.x - (width / 2);
-    int sy = clientPos.y - (height / 2);
-    if (sx < 0) sx = 0;
-    if (sy < 0) sy = 0;
-    if (sx + width > parentRc.right)  sx = (parentRc.right - width > 0) ? parentRc.right - width : 0;
-    if (sy + height > parentRc.bottom) sy = (parentRc.bottom - height > 0) ? parentRc.bottom - height : 0;
+    HBRUSH whiteBrush = (HBRUSH)::GetStockObject(WHITE_BRUSH);
+    RECT fullRect = { 0, 0, subW, subH };
+    ::FillRect(subDC, &fullRect, whiteBrush);
 
-    HDC backDC = GET_SINGLE(Core)->GetBackDC();
-    if (backDC != nullptr)
+    RECT intersect;
+    if (::IntersectRect(&intersect, &mainWndRect, &subRect))
     {
-        ::BitBlt(hdc, 0, 0, width, height, backDC, sx, sy, SRCCOPY);
+        POINT ptTL = { intersect.left, intersect.top };
+        ::ScreenToClient(mainWindow, &ptTL);
+        
+        int srcX = ptTL.x;
+        int srcY = ptTL.y;
+        int width = intersect.right - intersect.left;
+        int height = intersect.bottom - intersect.top;
+
+        // Destination (Sub Window Client Coords)
+        POINT ptDst = { intersect.left, intersect.top };
+        ::ScreenToClient(subWin->GetHWnd(), &ptDst);
+        
+        int dstX = ptDst.x;
+        int dstY = ptDst.y;
+
+        ::BitBlt(subDC, dstX, dstY, width, height, mainBackDC, srcX, srcY, SRCCOPY);
     }
 
-    int saved = ::SaveDC(hdc);
+    static HDC memDC = nullptr;
+    static HBITMAP hColorBitmap = nullptr;
+    static COLORREF lastColor = 0xFFFFFFFF;
 
-    HRGN clip = ::CreateRectRgn(0, 0, width, height);
-    ::SelectClipRgn(hdc, clip);
-    ::DeleteObject(clip);
+    if (!memDC) memDC = ::CreateCompatibleDC(subDC);
 
-    ::SetBkMode(hdc, TRANSPARENT);
-    ::SetViewportOrgEx(hdc, -sx, -sy, nullptr);
-
-    const std::vector<Object*>& ref = scene->GetLayerObjects(Layer::INVISIBLEENEMY);
-    std::vector<Object*> snapshot(ref.begin(), ref.end());
-
-    for (Object* obj : snapshot)
+    COLORREF curColor = subWin->GetTintColor();
+    if (!hColorBitmap || lastColor != curColor)
     {
-        if (obj != nullptr)
-            obj->Render(hdc);
+        if (hColorBitmap) ::DeleteObject(hColorBitmap);
+        hColorBitmap = ::CreateBitmap(1, 1, 1, 32, NULL);
+        ::SelectObject(memDC, hColorBitmap);
+        ::SetPixel(memDC, 0, 0, curColor);
+        lastColor = curColor;
     }
 
-    ::RestoreDC(hdc, saved);
+    BLENDFUNCTION bf;
+    bf.BlendOp = AC_SRC_OVER;
+    bf.BlendFlags = 0;
+    bf.SourceConstantAlpha = (BYTE)(subWin->GetAlpha() * 255);
+    bf.AlphaFormat = 0;
+
+    ::GdiAlphaBlend(subDC, 0, 0, subW, subH, memDC, 0, 0, 1, 1, bf);
+}
+
+void SubWindowRenderer::RenderLegacy(HDC hdc)
+{
+    if (m_legacyRenderer)
+        m_legacyRenderer->Render(hdc);
 }

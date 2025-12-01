@@ -14,6 +14,12 @@ enum class Layer
 	END
 };
 
+enum class OwnerType
+{
+	DEFAULT = 0,
+	END
+};
+
 enum class PenType
 {
 	RED, GREEN, END
