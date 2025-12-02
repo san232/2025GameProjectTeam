@@ -7,7 +7,7 @@ class State
 public:
     virtual ~State() = default;
 
-    virtual void Enter(StateMachine& owner) abstract;
-    virtual void Update(StateMachine& owner) abstract;
-    virtual void Exit(StateMachine& owner) abstract;
+    virtual void Enter(StateMachine& _owner) abstract;
+    virtual void Update(StateMachine& _owner) abstract;
+    virtual void Exit(StateMachine& _owner) abstract;
 };

@@ -1,24 +1,24 @@
 #include "pch.h"
 #include "PlayerAttackState.h"
 
-PlayerAttackState::PlayerAttackState(Player* owner)
-	: player(owner)
+PlayerAttackState::PlayerAttackState(Player* _owner)
+	: m_player(_owner)
 {
 
 }
 
-void PlayerAttackState::Enter(StateMachine& owner)
+void PlayerAttackState::Enter(StateMachine& _owner)
 {
 	cout << "Attack";
-	player->Attack();
+	m_player->Attack();
 }
 
-void PlayerAttackState::Update(StateMachine& owner)
+void PlayerAttackState::Update(StateMachine& _owner)
 {
 
 }
 
-void PlayerAttackState::Exit(StateMachine& owner)
+void PlayerAttackState::Exit(StateMachine& _owner)
 {
 
 }

@@ -56,6 +56,9 @@
     <Filter Include="Engine\10.State\PlayerState">
       <UniqueIdentifier>{71d36735-6f77-4752-86c0-6618fd1d6917}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\03. Object\Enemy">
+      <UniqueIdentifier>{5b7dbc64-bbc3-4376-9513-14ca3ce5dd8f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="2025_winapi_framework_22.h">
@@ -182,6 +185,12 @@
     <ClInclude Include="BuffEffects.h" />
     <ClInclude Include="InvisibleEnemyOverlayRenderer.h" />
     <ClInclude Include="ISubWindowEffect.h" />
+    <ClInclude Include="PlayerDeadState.h">
+      <Filter>Engine\10.State\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="Zombie.h">
+      <Filter>Engine\03. Object\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2025_winapi_framework_22.rc">
@@ -297,5 +306,11 @@
       <Filter>Engine\10.State</Filter>
     </ClCompile>
     <ClCompile Include="SubWindowManager.cpp" />
+    <ClCompile Include="PlayerDeadState.cpp">
+      <Filter>Engine\10.State\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="Zombie.cpp">
+      <Filter>Engine\03. Object\Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -175,6 +175,7 @@
     <ClInclude Include="GDISelector.h" />
     <ClInclude Include="InvisibleEnemyOverlayRenderer.h" />
     <ClInclude Include="ISubWindowEffect.h" />
+    <ClInclude Include="PlayerDeadState.h" />
     <ClInclude Include="PlayerIdleState.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="JewelryBox.h" />
@@ -203,6 +204,7 @@
     <ClInclude Include="TimeManager.h" />
     <ClInclude Include="Vec2.h" />
     <ClInclude Include="WindowManager.h" />
+    <ClInclude Include="Zombie.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
@@ -215,6 +217,7 @@
     <ClCompile Include="BaseEnemy.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="GDISelector.cpp" />
+    <ClCompile Include="PlayerDeadState.cpp" />
     <ClCompile Include="PlayerIdleState.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="JewelryBox.cpp" />
@@ -239,6 +242,7 @@
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="WindowManager.cpp" />
+    <ClCompile Include="Zombie.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2025_winapi_framework_22.rc" />

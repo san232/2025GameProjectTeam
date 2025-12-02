@@ -18,24 +18,24 @@
 
 Player::Player()
 	: m_pTex(nullptr)
-	, rigidCompo(nullptr)
-	, moveDirection({0.f,0.f})
-	, dashPower(500.f)
-	, curTime(0.f)
-	, isCanAttack(true)
+	, m_rigidCompo(nullptr)
+	, m_moveDirection({0.f,0.f})
+	, m_dashPower(500.f)
+	, m_curTime(0.f)
+	, m_isCanAttack(true)
 {
 	AddComponent<Collider>();
 	AddComponent<Rigidbody>();
 	AddComponent<Animator>();
 
-	rigidCompo = GetComponent<Rigidbody>();
+	m_rigidCompo = GetComponent<Rigidbody>();
 
-	idleState = new PlayerIdleState(this);
-	moveState = new PlayerMoveState(this);
-	attackState = new PlayerAttackState(this);
-	deadState = new PlayerDeadState(this);
+	m_idleState = new PlayerIdleState(this);
+	m_moveState = new PlayerMoveState(this);
+	m_attackState = new PlayerAttackState(this);
+	m_deadState = new PlayerDeadState(this);
 
-	stateMachine->ChangeState(idleState);
+	m_stateMachine->ChangeState(m_idleState);
 
 	SetHp(10);
 	SetMoveSpeed(200.0f);
@@ -45,11 +45,11 @@ Player::Player()
 
 Player::~Player()
 {
-	SAFE_DELETE(idleState);
-	SAFE_DELETE(moveState);
-	SAFE_DELETE(attackState);
-	SAFE_DELETE(deadState);
-	SAFE_DELETE(stateMachine);
+	SAFE_DELETE(m_idleState);
+	SAFE_DELETE(m_moveState);
+	SAFE_DELETE(m_attackState);
+	SAFE_DELETE(m_deadState);
+	SAFE_DELETE(m_stateMachine);
 }
 
 void Player::Render(HDC _hdc)
@@ -83,7 +83,7 @@ void Player::ExitCollision(Collider* _other)
 void Player::Update()
 {
 	Entity::Update();
-	stateMachine->Update();
+	m_stateMachine->Update();
 
 	UpdateInput();
 	CooldownRollingTime();
@@ -93,45 +93,45 @@ void Player::Update()
 
 void Player::UpdateInput()
 {
-	if (rigidCompo == nullptr)
+	if (m_rigidCompo == nullptr)
 		return;
 
-	moveDirection = { 0.f,0.f };
-	if (GET_KEY(KEY_TYPE::A)) moveDirection.x -= 1.f;
-	if (GET_KEY(KEY_TYPE::D)) moveDirection.x += 1.f;
-	if (GET_KEY(KEY_TYPE::W)) moveDirection.y -= 1.f;
-	if (GET_KEY(KEY_TYPE::S)) moveDirection.y += 1.f;
+	m_moveDirection = { 0.f,0.f };
+	if (GET_KEY(KEY_TYPE::A)) m_moveDirection.x -= 1.f;
+	if (GET_KEY(KEY_TYPE::D)) m_moveDirection.x += 1.f;
+	if (GET_KEY(KEY_TYPE::W)) m_moveDirection.y -= 1.f;
+	if (GET_KEY(KEY_TYPE::S)) m_moveDirection.y += 1.f;
 
-	bool hasInput = moveDirection != Vec2{ 0.f,0.f };
+	bool hasInput = m_moveDirection != Vec2{ 0.f,0.f };
 	if (hasInput)
 	{
-		float len = sqrtf(moveDirection.x * moveDirection.x + moveDirection.y * moveDirection.y);
-		moveDirection.x /= len;
-		moveDirection.y /= len;
-		stateMachine->ChangeState(moveState);
+		float len = sqrtf(m_moveDirection.x * m_moveDirection.x + m_moveDirection.y * m_moveDirection.y);
+		m_moveDirection.x /= len;
+		m_moveDirection.y /= len;
+		m_stateMachine->ChangeState(m_moveState);
 	}
 	else
 	{
-		stateMachine->ChangeState(idleState);
+		m_stateMachine->ChangeState(m_idleState);
 	}
 
 
-	if (GET_KEYDOWN(KEY_TYPE::SPACE) && hasInput && isCanAttack)
+	if (GET_KEYDOWN(KEY_TYPE::SPACE) && hasInput && m_isCanAttack)
 	{
-		stateMachine->ChangeState(attackState);
-		isCanAttack = false;
+		m_stateMachine->ChangeState(m_attackState);
+		m_isCanAttack = false;
 	}
 }
 
 void Player::CooldownRollingTime()
 {
-	if (isCanAttack == false)
-		curTime += fDT;
+	if (m_isCanAttack == false)
+		m_curTime += fDT;
 
-	if (curTime >= m_attackCooltime)
+	if (m_curTime >= m_attackCooltime)
 	{
-		isCanAttack = true;
-		curTime = 0;
+		m_isCanAttack = true;
+		m_curTime = 0;
 	}
 }
 
@@ -156,12 +156,12 @@ void Player::BlockPlayer()
 
 void Player::StopMoving()
 {
-	rigidCompo->SetVelocity({ 0.f,0.f });
+	m_rigidCompo->SetVelocity({ 0.f,0.f });
 }
 
 void Player::Attack()
 {
-	rigidCompo->AddImpulse(moveDirection * dashPower);
+	m_rigidCompo->AddImpulse(m_moveDirection * m_dashPower);
 }
 
 void Player::Dead()
@@ -171,5 +171,5 @@ void Player::Dead()
 
 void Player::Move()
 {
-	Translate({ fDT * moveDirection.x * m_moveSpeed, fDT * moveDirection.y * m_moveSpeed });
+	Translate({ fDT * m_moveDirection.x * m_moveSpeed, fDT * m_moveDirection.y * m_moveSpeed });
 }

@@ -1,23 +1,23 @@
 #include "pch.h"
 #include "PlayerMoveState.h"
 
-PlayerMoveState::PlayerMoveState(Player* owner)
-	: player(owner)
+PlayerMoveState::PlayerMoveState(Player* _owner)
+	: m_player(_owner)
 {
 
 }
 
-void PlayerMoveState::Enter(StateMachine& owner)
+void PlayerMoveState::Enter(StateMachine& _owner)
 {
 	cout << "Move";
 }
 
-void PlayerMoveState::Update(StateMachine& owner)
+void PlayerMoveState::Update(StateMachine& _owner)
 {
-	player->Move();
+	m_player->Move();
 }
 
-void PlayerMoveState::Exit(StateMachine& owner)
+void PlayerMoveState::Exit(StateMachine& _owner)
 {
 
 }
