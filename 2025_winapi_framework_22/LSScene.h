@@ -4,6 +4,8 @@
 class SubWindowRenderer;
 class SubWindow;
 class SubWindowController;
+class SubWindowManager;
+class ISubWindowEffect;
 
 class LSScene : public Scene
 {
@@ -14,6 +16,9 @@ public:
 
 private:
     SubWindowRenderer* subWindowRenderer = nullptr;
-    SubWindow* subWindow = nullptr;
-    SubWindowController* subWindowController = nullptr;
+    SubWindowManager* subWindowManager = nullptr;
+
+    vector<SubWindow*> m_subWindows;
+    vector<SubWindowController*> m_subWindowControllers;
+    vector<ISubWindowEffect*> m_buffEffects;
 };

@@ -37,7 +37,7 @@ ATOM BaseWindow::MyRegisterClass()
     wcex.hIcon = LoadIcon(m_hInst, MAKEINTRESOURCE(IDI_MY2025WINAPIFRAMEWORK22));
     wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
     wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW);
-    wcex.lpszMenuName = nullptr;
+    wcex.lpszMenuName = nullptr; 
     wcex.lpszClassName = L"GameP";
     wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
