@@ -2,12 +2,15 @@
 #include "SubWindowController.h"
 
 SubWindowController::SubWindowController(HWND subWindow, SIZE windowSize)
-    : subWindow(subWindow), size(windowSize)
+    : subWindow(subWindow), size(windowSize), m_isMoving(false)
 {
 }
 
 void SubWindowController::Update()
 {
+    if (!m_isMoving)
+        return;
+
     if (subWindow == nullptr)
         return;
 
