@@ -5,6 +5,7 @@
 #include "SubWindow.h"
 #include "SubWindowController.h"
 #include "Player.h"
+#include "Zombie.h"
 
 void LSScene::Init()
 {
@@ -30,7 +31,7 @@ void LSScene::Init()
 
     Spawn<Player>(Layer::INVISIBLEENEMY, { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 4 }, { 100.f,100.f });
     Spawn<Player>(Layer::DEFAULTENEMY, { WINDOW_WIDTH / 3, WINDOW_HEIGHT / 2 }, { 100.f,100.f });
-
+    Spawn<Zombie>(Layer::DEFAULTENEMY, { WINDOW_WIDTH / 3, WINDOW_HEIGHT / 2 }, { 100.f,100.f });
 }
 
 void LSScene::Update()

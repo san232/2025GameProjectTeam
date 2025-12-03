@@ -1,3 +1,4 @@
+// Zombie.h
 #pragma once
 #include "BaseEnemy.h"
 
@@ -13,4 +14,8 @@ public:
     void EnterCollision(Collider* _other) override;
     void StayCollision(Collider* _other) override;
     void ExitCollision(Collider* _other) override;
+
+protected:
+    void Attack() override;
+    void Dead() override;
 };

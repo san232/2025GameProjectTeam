@@ -9,7 +9,6 @@ PlayerMoveState::PlayerMoveState(Player* _owner)
 
 void PlayerMoveState::Enter(StateMachine& _owner)
 {
-	cout << "Move";
 }
 
 void PlayerMoveState::Update(StateMachine& _owner)

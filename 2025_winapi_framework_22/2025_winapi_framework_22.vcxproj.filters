@@ -59,6 +59,9 @@
     <Filter Include="Engine\03. Object\Enemy">
       <UniqueIdentifier>{5b7dbc64-bbc3-4376-9513-14ca3ce5dd8f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\10.State\EnemyState">
+      <UniqueIdentifier>{0af47314-fbd6-43ed-81fa-34e4ae37f2f4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="2025_winapi_framework_22.h">
@@ -142,9 +145,6 @@
     <ClInclude Include="LCMScene.h">
       <Filter>Engine\04. Scene</Filter>
     </ClInclude>
-    <ClInclude Include="JewelryBox.h">
-      <Filter>Engine\03. Object</Filter>
-    </ClInclude>
     <ClInclude Include="WindowManager.h">
       <Filter>Engine\02. Manager</Filter>
     </ClInclude>
@@ -190,6 +190,21 @@
     </ClInclude>
     <ClInclude Include="Zombie.h">
       <Filter>Engine\03. Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyIdleState.h">
+      <Filter>Engine\10.State\EnemyState</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyMoveState.h">
+      <Filter>Engine\10.State\EnemyState</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyAttackState.h">
+      <Filter>Engine\10.State\EnemyState</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyHitState.h">
+      <Filter>Engine\10.State\EnemyState</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyDeadState.h">
+      <Filter>Engine\10.State\EnemyState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -266,9 +281,6 @@
     <ClCompile Include="LCMScene.cpp">
       <Filter>Engine\04. Scene</Filter>
     </ClCompile>
-    <ClCompile Include="JewelryBox.cpp">
-      <Filter>Engine\03. Object</Filter>
-    </ClCompile>
     <ClCompile Include="WindowManager.cpp">
       <Filter>Engine\02. Manager</Filter>
     </ClCompile>
@@ -311,6 +323,21 @@
     </ClCompile>
     <ClCompile Include="Zombie.cpp">
       <Filter>Engine\03. Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyIdleState.cpp">
+      <Filter>Engine\10.State\EnemyState</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyMoveState.cpp">
+      <Filter>Engine\10.State\EnemyState</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyAttackState.cpp">
+      <Filter>Engine\10.State\EnemyState</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyHitState.cpp">
+      <Filter>Engine\10.State\EnemyState</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyDeadState.cpp">
+      <Filter>Engine\10.State\EnemyState</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

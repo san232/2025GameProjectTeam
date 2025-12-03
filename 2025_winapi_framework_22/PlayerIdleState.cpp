@@ -9,7 +9,6 @@ PlayerIdleState::PlayerIdleState(Player* _owner)
 
 void PlayerIdleState::Enter(StateMachine& _owner)
 {
-	cout << "Idle";
 	m_player->StopMoving();
 }
 
