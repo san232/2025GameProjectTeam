@@ -23,12 +23,13 @@ public:
 	void SetAttackCooltime(float _attackCooltime) { m_attackCooltime = _attackCooltime; }
 	int GetAttackPower() { return m_attackPower; }
 	void SetAttackPower(int _attackPower) { m_attackPower = _attackPower; }
-	void TakeDamage(int _damage)
+	virtual void TakeDamage(int _damage)
 	{
 		m_hp -= _damage;
 		if (m_hp <= 0)
 		{
 			Dead();
+			SetDead();
 		}
 	}
 protected:

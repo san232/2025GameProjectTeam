@@ -1,20 +1,17 @@
 ﻿#include "pch.h"
 #include "BaseEnemy.h"
-
 #include "Rigidbody.h"
 #include "Collider.h"
 #include "Defines.h"
 #include "SceneManager.h"
 #include "Scene.h"
 #include "Player.h"
-#include "Enums.h"
-
 #include "EnemyIdleState.h"
 #include "EnemyMoveState.h"
 #include "EnemyAttackState.h"
 #include "EnemyHitState.h"
 #include "EnemyDeadState.h"
-
+#include "GDISelector.h"
 
 BaseEnemy::BaseEnemy()
 	: m_stateMachine(nullptr)
@@ -44,7 +41,7 @@ BaseEnemy::BaseEnemy()
 	m_hitState = new EnemyHitState(this);
 	m_deadState = new EnemyDeadState(this);
 
-	m_stateMachine->ChangeState(m_moveState);
+	m_stateMachine->ChangeState(m_idleState);
 }
 
 BaseEnemy::~BaseEnemy()
@@ -70,6 +67,13 @@ void BaseEnemy::Update()
 
 void BaseEnemy::Render(HDC _hdc)
 {
+	Vec2 pos = GetPos();
+	float rng = m_attackRange;
+
+	GDISelector brushSelector(_hdc, BrushType::HOLLOW);
+	GDISelector penSelector(_hdc, PenType::GREEN);
+	ELLIPSE_RENDER(_hdc, pos.x, pos.y, rng * 2.f, rng * 2.f);
+
 	ComponentRender(_hdc);
 }
 
@@ -100,14 +104,14 @@ void BaseEnemy::MoveToTarget()
 		return;
 	}
 
-	float dist = std::sqrt(direction.x * direction.x + direction.y * direction.y);
+	float dist = sqrtf(direction.x * direction.x + direction.y * direction.y);
 	if (dist > 0.f)
 	{
 		direction.x /= dist;
 		direction.y /= dist;
 	}
 
-	Vec2 velocity = { direction.x * GetMoveSpeed(), direction.y * GetMoveSpeed() };
+	Vec2 velocity = { direction.x * m_moveSpeed, direction.y * m_moveSpeed };
 	if (Rigidbody* rigidbody = GetComponent<Rigidbody>())
 	{
 		rigidbody->SetVelocity(velocity);
@@ -123,14 +127,16 @@ bool BaseEnemy::IsInAttackRange() const
 	return distanceSq <= (m_attackRange * m_attackRange);
 }
 
-
 void BaseEnemy::OnHit(int damage)
 {
 	Entity::TakeDamage(damage);
 
-	if (GetHp() <= 0 || GetIsDead())
+	if (m_hp <= 0 || GetIsDead())
 	{
-		Dead();
+		if (m_stateMachine && m_deadState)
+		{
+			m_stateMachine->ChangeState(m_deadState);
+		}
 		return;
 	}
 
@@ -143,7 +149,6 @@ void BaseEnemy::OnHit(int damage)
 	}
 }
 
-
 void BaseEnemy::Dead()
 {
 	if (m_stateMachine && m_deadState)
@@ -152,9 +157,14 @@ void BaseEnemy::Dead()
 	}
 }
 
+void BaseEnemy::Move()
+{
+	MoveToTarget();
+}
+
 void BaseEnemy::UpdateFSM()
 {
-	if (GetHp() <= 0 || GetIsDead())
+	if (m_hp <= 0 || GetIsDead())
 	{
 		if (m_stateMachine && m_deadState)
 		{
@@ -185,8 +195,11 @@ void BaseEnemy::UpdateFSM()
 
 	if (!m_targetPlayer)
 	{
-		m_stateMachine->ChangeState(m_idleState);
-		m_stateMachine->Update();
+		if (m_stateMachine && m_idleState)
+		{
+			m_stateMachine->ChangeState(m_idleState);
+			m_stateMachine->Update();
+		}
 		return;
 	}
 
@@ -222,7 +235,7 @@ void BaseEnemy::UpdateAttackCooldown()
 	if (!m_canAttack)
 	{
 		m_attackTimer += fDT;
-		if (m_attackTimer >= GetAttackCooltime())
+		if (m_attackTimer >= m_attackCooltime)
 		{
 			m_attackTimer = 0.f;
 			m_canAttack = true;
@@ -245,15 +258,12 @@ Player* BaseEnemy::FindPlayer() const
 	if (!curScene)
 		return nullptr;
 
-	const std::vector<Object*>& objs = curScene->GetLayerObjects(Layer::PLAYER);
+	const vector<Object*>& objs = curScene->GetLayerObjects(Layer::PLAYER);
 
-	if (objs.empty())
-		return nullptr;
+	Player* player = nullptr;
+	if (objs.size() > 0)
+		player = dynamic_cast<Player*>(objs[0]);
 
-	Object* obj = objs[0];
-	if (!obj || obj->GetIsDead())
-		return nullptr;
 
-	return dynamic_cast<Player*>(obj);
+	return player;
 }
-

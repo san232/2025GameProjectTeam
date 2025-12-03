@@ -1,3 +1,4 @@
+﻿// Player.cpp
 #include "pch.h"
 #include "Player.h"
 #include "InputManager.h"
@@ -15,14 +16,21 @@
 #include "PlayerMoveState.h"
 #include "PlayerAttackState.h"
 #include "PlayerDeadState.h"
+#include "BaseEnemy.h"
+
+#include <cmath>
 
 Player::Player()
 	: m_pTex(nullptr)
 	, m_rigidCompo(nullptr)
-	, m_moveDirection({0.f,0.f})
+	, m_moveDirection({ 0.f,0.f })
 	, m_dashPower(500.f)
 	, m_curTime(0.f)
 	, m_isCanAttack(true)
+	, m_attackDelayTimer(0.f)
+	, m_attackPending(false)
+	, m_attackDelay(0.5f)
+	, m_attackSize(1.2f)
 {
 	AddComponent<Collider>();
 	AddComponent<Rigidbody>();
@@ -58,12 +66,23 @@ void Player::Render(HDC _hdc)
 	Vec2 size = GetSize();
 
 	BrushType brush = BrushType::HOLLOW;
-	PenType pen = PenType::RED;
+	PenType   pen = PenType::RED;
 
 	GDISelector brushSelector(_hdc, brush);
 	GDISelector penSelector(_hdc, pen);
 
 	RECT_RENDER(_hdc, pos.x, pos.y, size.x, size.y);
+
+	Vec2 attackSize = { size.x * m_attackSize,
+					 size.y * m_attackSize };
+
+	if (m_attackPending)
+	{
+		GDISelector brushSelector(_hdc, brush);
+		GDISelector penSelector(_hdc, pen);
+
+		RECT_RENDER(_hdc, pos.x, pos.y, attackSize.x, attackSize.y);
+	}
 
 	ComponentRender(_hdc);
 }
@@ -87,9 +106,9 @@ void Player::Update()
 
 	UpdateInput();
 	CooldownRollingTime();
+	UpdateAttackDelay();
 	BlockPlayer();
 }
-
 
 void Player::UpdateInput()
 {
@@ -106,15 +125,17 @@ void Player::UpdateInput()
 	if (hasInput)
 	{
 		float len = sqrtf(m_moveDirection.x * m_moveDirection.x + m_moveDirection.y * m_moveDirection.y);
-		m_moveDirection.x /= len;
-		m_moveDirection.y /= len;
+		if (len > 0.f)
+		{
+			m_moveDirection.x /= len;
+			m_moveDirection.y /= len;
+		}
 		m_stateMachine->ChangeState(m_moveState);
 	}
 	else
 	{
 		m_stateMachine->ChangeState(m_idleState);
 	}
-
 
 	if (GET_KEYDOWN(KEY_TYPE::SPACE) && hasInput && m_isCanAttack)
 	{
@@ -125,13 +146,28 @@ void Player::UpdateInput()
 
 void Player::CooldownRollingTime()
 {
-	if (m_isCanAttack == false)
+	if (!m_isCanAttack)
 		m_curTime += fDT;
 
 	if (m_curTime >= m_attackCooltime)
 	{
 		m_isCanAttack = true;
-		m_curTime = 0;
+		m_curTime = 0.f;
+	}
+}
+
+void Player::UpdateAttackDelay()
+{
+	if (!m_attackPending)
+		return;
+
+	m_attackDelayTimer += fDT;
+	if (m_attackDelayTimer >= m_attackDelay)
+	{
+		m_attackDelayTimer = 0.f;
+		m_attackPending = false;
+
+		PerformAreaAttack();
 	}
 }
 
@@ -156,20 +192,84 @@ void Player::BlockPlayer()
 
 void Player::StopMoving()
 {
-	m_rigidCompo->SetVelocity({ 0.f,0.f });
+	if (m_rigidCompo)
+		m_rigidCompo->SetVelocity({ 0.f,0.f });
 }
 
 void Player::Attack()
 {
-	m_rigidCompo->AddImpulse(m_moveDirection * m_dashPower);
+	if (m_rigidCompo)
+		m_rigidCompo->AddImpulse(m_moveDirection * m_dashPower);
+
+	m_attackDelayTimer = 0.f;
+	m_attackPending = true;
 }
 
 void Player::Dead()
 {
-
+	cout << "플레이어 죽음" << endl;
+	if (m_stateMachine && m_deadState)
+	{
+		m_stateMachine->ChangeState(m_deadState);
+	}
 }
 
 void Player::Move()
 {
-	Translate({ fDT * m_moveDirection.x * m_moveSpeed, fDT * m_moveDirection.y * m_moveSpeed });
+	Translate({ fDT * m_moveDirection.x * m_moveSpeed,
+				fDT * m_moveDirection.y * m_moveSpeed });
+}
+
+void Player::PerformAreaAttack()
+{
+	std::shared_ptr<Scene> curScene = GET_SINGLE(SceneManager)->GetCurScene();
+	if (!curScene)
+		return;
+
+	Vec2 playerPos = GetPos();
+	Vec2 playerSize = GetSize();
+
+	Vec2 aoeSize = { playerSize.x * m_attackSize,
+					 playerSize.y * m_attackSize };
+
+	Vec2 aoeCenter = playerPos;
+
+	float halfAw = aoeSize.x * 0.5f;
+	float halfAh = aoeSize.y * 0.5f;
+
+	auto ProcessEnemyLayer = [&](Layer layer)
+		{
+			const std::vector<Object*>& objs = curScene->GetLayerObjects(layer);
+
+			for (Object* obj : objs)
+			{
+				if (!obj || obj->GetIsDead())
+					continue;
+
+				BaseEnemy* enemy = dynamic_cast<BaseEnemy*>(obj);
+				if (!enemy)
+					continue;
+
+				Vec2 enemyPos = enemy->GetPos();
+				Vec2 enemySize = enemy->GetSize();
+
+				float halfEw = enemySize.x * 0.5f;
+				float halfEh = enemySize.y * 0.5f;
+
+				float dx = std::fabs(enemyPos.x - aoeCenter.x);
+				float dy = std::fabs(enemyPos.y - aoeCenter.y);
+
+				bool isHit =
+					(dx <= (halfAw + halfEw)) &&
+					(dy <= (halfAh + halfEh));
+
+				if (isHit)
+				{
+					enemy->OnHit(GetAttackPower());
+				}
+			}
+		};
+
+	ProcessEnemyLayer(Layer::DEFAULTENEMY);
+	ProcessEnemyLayer(Layer::INVISIBLEENEMY);
 }

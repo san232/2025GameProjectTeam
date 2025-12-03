@@ -1,16 +1,16 @@
 #pragma once
 #include "Entity.h"
-#include "Vec2.h"
+#include "StateMachine.h"
 
-class StateMachine;
+struct Vec2;
+class Collider;
+class Player;
+
 class EnemyIdleState;
 class EnemyMoveState;
 class EnemyAttackState;
 class EnemyHitState;
 class EnemyDeadState;
-
-class Collider;
-class Player;
 
 class BaseEnemy : public Entity
 {
@@ -29,14 +29,16 @@ public:
 public:
     void SetTargetPosition(const Vec2& _targetPos) { m_targetPosition = _targetPos; }
 
-    float GetAttackRange() const { return m_attackRange; }
+    float        GetAttackRange() const { return m_attackRange; }
     const Vec2& GetTargetPosition() const { return m_targetPosition; }
-    void SetAttackRange(float range) { m_attackRange = range; }
+    void         SetAttackRange(float range) { m_attackRange = range; }
 
     void MoveToTarget();
     bool IsInAttackRange() const;
 
     void OnHit(int damage);
+
+    Player* GetTargetPlayer() const { return m_targetPlayer; }
 
 protected:
     void UpdateFSM();
@@ -46,7 +48,7 @@ protected:
 
 public:
     void Dead() override;
-    void Move() override { MoveToTarget(); }
+    void Move() override;
 
 protected:
     StateMachine* m_stateMachine;

@@ -29,9 +29,9 @@ void LSScene::Init()
         subWindowController = new SubWindowController(subHwnd, windowSize);
     }
 
-    Spawn<Player>(Layer::INVISIBLEENEMY, { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 4 }, { 100.f,100.f });
-    Spawn<Player>(Layer::DEFAULTENEMY, { WINDOW_WIDTH / 3, WINDOW_HEIGHT / 2 }, { 100.f,100.f });
-    Spawn<Zombie>(Layer::DEFAULTENEMY, { WINDOW_WIDTH / 3, WINDOW_HEIGHT / 2 }, { 100.f,100.f });
+    Spawn<Player>(Layer::INVISIBLEENEMY, { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 4 }, { 50.f,50.f });
+    Spawn<Player>(Layer::PLAYER, { WINDOW_WIDTH / 3, WINDOW_HEIGHT / 2 }, { 50.f,50.f });
+    Spawn<Zombie>(Layer::DEFAULTENEMY, { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 4 }, { 50.f,50.f });
 }
 
 void LSScene::Update()

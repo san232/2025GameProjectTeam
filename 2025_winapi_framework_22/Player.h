@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Entity.h"
 #include "Enums.h"
 #include "StateMachine.h"
@@ -23,17 +23,20 @@ public:
 	void EnterCollision(Collider* _other) override;
 	void StayCollision(Collider* _other) override;
 	void ExitCollision(Collider* _other) override;
+
 private:
 	void UpdateInput();
 	void CooldownRollingTime();
 	void BlockPlayer();
+
+	void UpdateAttackDelay();
+	void PerformAreaAttack();
 
 private:
 	PlayerIdleState* m_idleState;
 	PlayerMoveState* m_moveState;
 	PlayerAttackState* m_attackState;
 	PlayerDeadState* m_deadState;
-
 
 private:
 	StateMachine* m_stateMachine = new StateMachine;
@@ -43,6 +46,12 @@ private:
 	float m_dashPower;
 	float m_curTime;
 	bool m_isCanAttack;
+
+	float m_attackDelayTimer;
+	bool m_attackPending;
+	float m_attackDelay;
+	float m_attackSize;
+
 
 public:
 	void Attack() override;
