@@ -5,18 +5,27 @@
 #include "SubWindow.h"
 #include "SubWindowController.h"
 #include "Player.h"
+#include "InputManager.h"
+#include "SubWindowManager.h"
+#include "BuffEffects.h"
+#include "Entity.h"
 
 void LSScene::Init()
 {
     HWND mainWindowHwnd = GET_SINGLE(WindowManager)->GetMainWindowHandle();
 
     subWindowRenderer = new SubWindowRenderer(mainWindowHwnd, this);
+    subWindowManager = new SubWindowManager();
+    buffEffect = new AttackBuffEffect();
 
     subWindow = new SubWindow();
     if (subWindow->Create(mainWindowHwnd, subWindowRenderer))
     {
         HWND subHwnd = subWindow->GetHWnd();
         GET_SINGLE(WindowManager)->RegisterSubWindow(subHwnd);
+
+        subWindow->SetEffect(buffEffect);
+        subWindowManager->RegisterSubWindow(subWindow);
 
         RECT clientRect = {};
         ::GetClientRect(subHwnd, &clientRect);
@@ -40,7 +49,44 @@ void LSScene::Update()
     if (subWindowController == nullptr || subWindow == nullptr)
         return;
 
+    if (GET_SINGLE(InputManager)->IsDown(KEY_TYPE::LBUTTON))
+    {
+        POINT mousePos;
+        ::GetCursorPos(&mousePos);
+        RECT subRect = subWindow->GetRect();
+
+        if (subWindowController->IsMoving())
+        {
+            subWindowController->ToggleMovement();
+        }
+        else
+        {
+            if (::PtInRect(&subRect, mousePos))
+            {
+                subWindowController->ToggleMovement();
+            }
+        }
+    }
+
     subWindowController->Update();
+    
+    // Update SubWindowManager
+    if (subWindowManager)
+    {
+        vector<Entity*> entities;
+        for (int i = 0; i < (int)Layer::END; ++i)
+        {
+            const vector<Object*>& objs = GetLayerObjects((Layer)i);
+            for (Object* obj : objs)
+            {
+                Entity* ent = dynamic_cast<Entity*>(obj);
+                if (ent)
+                    entities.push_back(ent);
+            }
+        }
+        subWindowManager->Update(fDT, entities);
+    }
+
     ::InvalidateRect(subWindow->GetHWnd(), nullptr, FALSE);
 }
 
@@ -49,4 +95,6 @@ LSScene::~LSScene()
     SAFE_DELETE(subWindowController);
     SAFE_DELETE(subWindow);
     SAFE_DELETE(subWindowRenderer);
+    SAFE_DELETE(subWindowManager);
+    SAFE_DELETE(buffEffect);
 }

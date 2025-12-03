@@ -4,6 +4,8 @@
 class SubWindowRenderer;
 class SubWindow;
 class SubWindowController;
+class SubWindowManager;
+class ISubWindowEffect;
 
 class LSScene : public Scene
 {
@@ -16,4 +18,6 @@ private:
     SubWindowRenderer* subWindowRenderer = nullptr;
     SubWindow* subWindow = nullptr;
     SubWindowController* subWindowController = nullptr;
+    SubWindowManager* subWindowManager = nullptr;
+    ISubWindowEffect* buffEffect = nullptr;
 };
