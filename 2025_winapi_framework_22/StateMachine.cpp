@@ -2,21 +2,21 @@
 #include "StateMachine.h"
 
 StateMachine::StateMachine()
-	: currentState(nullptr)
+	: m_currentState(nullptr)
 {
 }
 
-void StateMachine::ChangeState(State* nextState)
+void StateMachine::ChangeState(State* _nextState)
 {
-	if (currentState == nextState) return;
+	if (m_currentState == _nextState) return;
 
-	if(currentState)
-		currentState->Exit(*this);
-	currentState = nextState;
-	currentState->Enter(*this);
+	if(m_currentState)
+		m_currentState->Exit(*this);
+	m_currentState = _nextState;
+	m_currentState->Enter(*this);
 }
 
 void StateMachine::Update()
 {
-	currentState->Update(*this);
+	m_currentState->Update(*this);
 }

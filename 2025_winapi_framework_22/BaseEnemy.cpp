@@ -8,13 +8,7 @@
 BaseEnemy::BaseEnemy()
     : m_position{}
     , m_targetPosition{}
-    , m_health(100)
-    , m_moveSpeed(100.f)
-    , m_attackSpeed(1.f)
-    , m_timeSinceLastAttack(0.f)
-    , m_attackPower(10)
     , m_attackRange(50.f)
-    , m_deltaTime(0.f)
 {
     AddComponent<Rigidbody>();
     AddComponent<Collider>();
@@ -22,36 +16,17 @@ BaseEnemy::BaseEnemy()
 
 BaseEnemy::~BaseEnemy()
 {
+    SAFE_DELETE(m_stateMachine);
 }
 
 void BaseEnemy::Update()
 {
-    float deltaTime = fDT;
-    m_deltaTime = deltaTime;
-    m_timeSinceLastAttack += deltaTime;
-
+    Entity::Update();
     m_position = GetPos();
-
-    MoveToTarget(deltaTime);
-    TryAttack(deltaTime);
-
-    if (m_health <= 0) {
-        Death();
-    }
 }
 
 void BaseEnemy::Render(HDC _hdc)
 {
-    BrushType brush = BrushType::RED;
-    PenType pen = PenType::RED;
-
-    GDISelector brushSelector(_hdc, brush);
-    GDISelector penSelector(_hdc, pen);
-
-    Vec2 pos = GetPos();
-    Vec2 size = GetSize();
-    RECT_RENDER(_hdc, pos.x, pos.y, size.x, size.y);
-
     ComponentRender(_hdc);
 }
 
@@ -67,15 +42,7 @@ void BaseEnemy::ExitCollision(Collider* _other)
 {
 }
 
-void BaseEnemy::TakeDamage(int damage)
-{
-    m_health -= damage;
-    if (m_health <= 0) {
-        Death();
-    }
-}
-
-void BaseEnemy::MoveToTarget(float deltaTime)
+void BaseEnemy::MoveToTarget()
 {
     Vec2 currentPos = m_position;
     Vec2 targetPos = m_targetPosition;
@@ -102,16 +69,6 @@ void BaseEnemy::MoveToTarget(float deltaTime)
     }
 }
 
-void BaseEnemy::TryAttack(float deltaTime)
-{
-    if (IsInAttackRange()) {
-        float attackInterval = (m_attackSpeed > 0.f) ? (1.0f / m_attackSpeed) : FLT_MAX;
-        if (m_timeSinceLastAttack >= attackInterval) {
-            m_timeSinceLastAttack = 0.f;
-        }
-    }
-}
-
 bool BaseEnemy::IsInAttackRange() const
 {
     float dx = m_targetPosition.x - m_position.x;
@@ -119,8 +76,4 @@ bool BaseEnemy::IsInAttackRange() const
     float distanceSq = dx * dx + dy * dy;
 
     return distanceSq <= (m_attackRange * m_attackRange);
-}
-
-void BaseEnemy::Death()
-{
 }

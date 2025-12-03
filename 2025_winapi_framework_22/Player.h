@@ -29,20 +29,20 @@ private:
 	void BlockPlayer();
 
 private:
-	PlayerIdleState* idleState;
-	PlayerMoveState* moveState;
-	PlayerAttackState* attackState;
-	PlayerDeadState* deadState;
+	PlayerIdleState* m_idleState;
+	PlayerMoveState* m_moveState;
+	PlayerAttackState* m_attackState;
+	PlayerDeadState* m_deadState;
 
 
 private:
-	StateMachine* stateMachine = new StateMachine;
+	StateMachine* m_stateMachine = new StateMachine;
 	Texture* m_pTex;
-	Rigidbody* rigidCompo;
-	Vec2 moveDirection;
-	float dashPower;
-	float curTime;
-	bool isCanAttack;
+	Rigidbody* m_rigidCompo;
+	Vec2 m_moveDirection;
+	float m_dashPower;
+	float m_curTime;
+	bool m_isCanAttack;
 
 public:
 	void Attack() override;

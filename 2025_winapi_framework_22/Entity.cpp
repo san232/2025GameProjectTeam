@@ -13,7 +13,7 @@ Entity::~Entity()
 
 void Entity::Update()
 {
-
+	Object::Update();
 }
 
 void Entity::Render(HDC _hdc)

@@ -16,21 +16,22 @@ protected:
 	virtual void Move() abstract;
 public:
 	int GetHp() { return m_hp; }
-	void SetHp(int hp) { m_hp = hp; }
+	void SetHp(int _hp) { m_hp = _hp; }
 	float GetMoveSpeed() { return m_moveSpeed; }
-	void SetMoveSpeed(float moveSpeed) { m_moveSpeed = moveSpeed; }
+	void SetMoveSpeed(float _moveSpeed) { m_moveSpeed = _moveSpeed; }
 	float GetAttackCooltime() { return m_attackCooltime; }
-	void SetAttackCooltime(float attackCooltime) { m_attackCooltime = attackCooltime; }
+	void SetAttackCooltime(float _attackCooltime) { m_attackCooltime = _attackCooltime; }
 	int GetAttackPower() { return m_attackPower; }
-	void SetAttackPower(int attackPower) { m_attackPower = attackPower; }
-	void TakeDamage(int damage)
+	void SetAttackPower(int _attackPower) { m_attackPower = _attackPower; }
+	void TakeDamage(int _damage)
 	{
-		m_hp -= damage;
+		m_hp -= _damage;
 		if (m_hp <= 0)
 		{
-			SetDead();
+			Dead();
 		}
 	}
+	virtual void Dead() { SetDead(); };
 protected:
 	int m_hp;
 	float m_moveSpeed;

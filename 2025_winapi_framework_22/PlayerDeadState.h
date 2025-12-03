@@ -5,13 +5,13 @@
 class PlayerDeadState : public State
 {
 public:
-    explicit PlayerDeadState(Player* owner);
+    explicit PlayerDeadState(Player* _owner);
 
-    void Enter(StateMachine& owner) override;
-    void Update(StateMachine& owner) override;
-    void Exit(StateMachine& owner) override;
+    void Enter(StateMachine& _owner) override;
+    void Update(StateMachine& _owner) override;
+    void Exit(StateMachine& _owner) override;
 
 private:
-    Player* player;
+    Player* m_player;
 };
 

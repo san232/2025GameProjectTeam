@@ -5,13 +5,13 @@
 class PlayerAttackState : public State
 {
 public:
-    explicit PlayerAttackState(Player* owner);
+    explicit PlayerAttackState(Player* _owner);
 
-    void Enter(StateMachine& owner) override;
-    void Update(StateMachine& owner) override;
-    void Exit(StateMachine& owner) override;
+    void Enter(StateMachine& _owner) override;
+    void Update(StateMachine& _owner) override;
+    void Exit(StateMachine& _owner) override;
 
 private:
-    Player* player;
+    Player* m_player;
 };
 

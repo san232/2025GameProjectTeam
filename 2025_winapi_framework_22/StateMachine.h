@@ -6,9 +6,9 @@ class StateMachine
 public:
     StateMachine();
 
-    void ChangeState(State* nextState);
+    void ChangeState(State* _nextState);
     void Update();
 
 private:
-    State* currentState;
+    State* m_currentState;
 };
