@@ -29,9 +29,12 @@ public:
 public:
     void SetTargetPosition(const Vec2& _targetPos) { m_targetPosition = _targetPos; }
 
-    float        GetAttackRange() const { return m_attackRange; }
+    float GetAttackRange() const { return m_attackRange; }
     const Vec2& GetTargetPosition() const { return m_targetPosition; }
-    void         SetAttackRange(float range) { m_attackRange = range; }
+    void SetAttackRange(float range) { m_attackRange = range; }
+
+    float GetAttackDelay() const { return m_attackDelay; }
+    void  SetAttackDelay(float delay) { m_attackDelay = delay; }
 
     void MoveToTarget();
     bool IsInAttackRange() const;
@@ -65,6 +68,10 @@ protected:
 
     float m_attackTimer;
     bool  m_canAttack;
+
+    float m_attackDelay;
+    float m_attackDelayTimer;
+    bool  m_isPreparingAttack;
 
     Player* m_targetPlayer;
 

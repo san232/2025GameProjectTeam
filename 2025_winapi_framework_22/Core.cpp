@@ -6,6 +6,8 @@
 #include "SceneManager.h"
 #include "ResourceManager.h"
 #include "CollisionManager.h"
+#include "EnemySpawnManager.h"
+
 bool Core::Init(HWND _hWnd)
 {
     m_hWnd = _hWnd;
@@ -33,6 +35,7 @@ bool Core::Init(HWND _hWnd)
     if (!GET_SINGLE(ResourceManager)->Init())
         return false;
     GET_SINGLE(SceneManager)->Init();
+    GET_SINGLE(EnemySpawnManager)->Init();
 
     return true;
 }
@@ -54,6 +57,7 @@ void Core::MainUpdate()
     GET_SINGLE(InputManager)->Update();
     GET_SINGLE(ResourceManager)->FmodUpdate();
     GET_SINGLE(SceneManager)->Update();
+    GET_SINGLE(EnemySpawnManager)->Update();
 
     //Vec2 pos = m_obj.GetPos();
     //

@@ -25,6 +25,9 @@ BaseEnemy::BaseEnemy()
 	, m_attackRange(50.f)
 	, m_attackTimer(0.f)
 	, m_canAttack(true)
+	, m_attackDelay(0.5f)
+	, m_attackDelayTimer(0.f)
+	, m_isPreparingAttack(false)
 	, m_targetPlayer(nullptr)
 	, m_inHitStun(false)
 	, m_hitStunTimer(0.f)
@@ -195,6 +198,9 @@ void BaseEnemy::UpdateFSM()
 
 	if (!m_targetPlayer)
 	{
+		m_isPreparingAttack = false;
+		m_attackDelayTimer = 0.f;
+
 		if (m_stateMachine && m_idleState)
 		{
 			m_stateMachine->ChangeState(m_idleState);
@@ -203,23 +209,49 @@ void BaseEnemy::UpdateFSM()
 		return;
 	}
 
-	if (IsInAttackRange())
+	const bool inRange = IsInAttackRange();
+
+	if (inRange)
 	{
-		if (m_canAttack && m_stateMachine && m_attackState)
+		if (m_canAttack)
 		{
-			m_canAttack = false;
-			m_stateMachine->ChangeState(m_attackState);
+			if (!m_isPreparingAttack)
+			{
+				m_isPreparingAttack = true;
+				m_attackDelayTimer = 0.f;
+			}
+			else
+			{
+				m_attackDelayTimer += fDT;
+			}
+
+			if (m_attackDelayTimer >= m_attackDelay && m_stateMachine && m_attackState)
+			{
+				m_isPreparingAttack = false;
+				m_attackDelayTimer = 0.f;
+				m_canAttack = false; 
+
+				m_stateMachine->ChangeState(m_attackState);
+				m_stateMachine->Update(); 
+				return;
+			}
 		}
 		else
 		{
-			if (m_stateMachine && m_idleState)
-			{
-				m_stateMachine->ChangeState(m_idleState);
-			}
+			m_isPreparingAttack = false;
+			m_attackDelayTimer = 0.f;
+		}
+
+		if (m_stateMachine && m_idleState)
+		{
+			m_stateMachine->ChangeState(m_idleState);
 		}
 	}
 	else
 	{
+		m_isPreparingAttack = false;
+		m_attackDelayTimer = 0.f;
+
 		if (m_stateMachine && m_moveState)
 		{
 			m_stateMachine->ChangeState(m_moveState);
@@ -263,7 +295,6 @@ Player* BaseEnemy::FindPlayer() const
 	Player* player = nullptr;
 	if (objs.size() > 0)
 		player = dynamic_cast<Player*>(objs[0]);
-
 
 	return player;
 }
