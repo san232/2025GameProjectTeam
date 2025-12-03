@@ -72,7 +72,7 @@ void SubWindowManager::Update(float deltaTime, const std::vector<Entity*>& allEn
                 if (effect) effect->OnExit(entity);
             }
         }
-
+        
         m_windowEntityMap[window] = currentFrameEntities;
     }
 }
