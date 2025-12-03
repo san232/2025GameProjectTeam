@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -169,6 +169,11 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="Core.h" />
     <ClInclude Include="BaseEnemy.h" />
+    <ClInclude Include="EnemyAttackState.h" />
+    <ClInclude Include="EnemyDeadState.h" />
+    <ClInclude Include="EnemyHitState.h" />
+    <ClInclude Include="EnemyIdleState.h" />
+    <ClInclude Include="EnemyMoveState.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Enums.h" />
     <ClInclude Include="framework.h" />
@@ -178,7 +183,6 @@
     <ClInclude Include="PlayerDeadState.h" />
     <ClInclude Include="PlayerIdleState.h" />
     <ClInclude Include="InputManager.h" />
-    <ClInclude Include="JewelryBox.h" />
     <ClInclude Include="LCMScene.h" />
     <ClInclude Include="LSScene.h" />
     <ClInclude Include="Object.h" />
@@ -215,12 +219,16 @@
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="BaseEnemy.cpp" />
+    <ClCompile Include="EnemyAttackState.cpp" />
+    <ClCompile Include="EnemyDeadState.cpp" />
+    <ClCompile Include="EnemyHitState.cpp" />
+    <ClCompile Include="EnemyIdleState.cpp" />
+    <ClCompile Include="EnemyMoveState.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="GDISelector.cpp" />
     <ClCompile Include="PlayerDeadState.cpp" />
     <ClCompile Include="PlayerIdleState.cpp" />
     <ClCompile Include="InputManager.cpp" />
-    <ClCompile Include="JewelryBox.cpp" />
     <ClCompile Include="LCMScene.cpp" />
     <ClCompile Include="LSScene.cpp" />
     <ClCompile Include="main.cpp" />

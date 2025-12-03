@@ -9,7 +9,6 @@ PlayerAttackState::PlayerAttackState(Player* _owner)
 
 void PlayerAttackState::Enter(StateMachine& _owner)
 {
-	cout << "Attack";
 	m_player->Attack();
 }
 

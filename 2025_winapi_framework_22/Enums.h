@@ -47,5 +47,5 @@ enum class PlayerStateType
 
 enum class EnemyStateType
 {
-	Idle, Move, Attack, Dead
+	Idle, Move, Attack, Hit, Dead
 };
