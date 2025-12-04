@@ -1,9 +1,6 @@
 #pragma once
-#include <vector>
-#include <unordered_map>
-#include <unordered_set>
-#include "SubWindow.h"
 
+class SubWindow;
 class Entity;
 
 class SubWindowManager

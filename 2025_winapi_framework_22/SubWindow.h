@@ -1,8 +1,7 @@
 #pragma once
-#include <windows.h>
-#include "ISubWindowEffect.h"
 
 class SubWindowRenderer;
+class ISubWindowEffect;
 
 class SubWindow
 {

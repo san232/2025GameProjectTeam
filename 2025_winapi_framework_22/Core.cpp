@@ -7,6 +7,7 @@
 #include "ResourceManager.h"
 #include "CollisionManager.h"
 #include "EnemySpawnManager.h"
+#include "EffectManager.h"
 
 bool Core::Init(HWND _hWnd)
 {
@@ -17,12 +18,12 @@ bool Core::Init(HWND _hWnd)
     m_hBackBit = 0;
     m_hBackDC = 0;
 
-    // ´õºí¹öÆÛ¸µ
-    // 1. »ı¼º
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Û¸ï¿½
+    // 1. ï¿½ï¿½ï¿½ï¿½
     m_hBackBit = ::CreateCompatibleBitmap(m_hDC, WINDOW_WIDTH, WINDOW_HEIGHT);
     m_hBackDC = ::CreateCompatibleDC(m_hDC);
 
-    // 2. ¿¬°á
+    // 2. ï¿½ï¿½ï¿½ï¿½
     ::SelectObject(m_hBackDC, m_hBackBit);
 
     // 1
@@ -36,6 +37,7 @@ bool Core::Init(HWND _hWnd)
         return false;
     GET_SINGLE(SceneManager)->Init();
     GET_SINGLE(EnemySpawnManager)->Init();
+    GET_SINGLE(EffectManager)->Init();
 
     return true;
 }

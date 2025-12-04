@@ -166,6 +166,12 @@
     <ClInclude Include="Entity.h">
       <Filter>Engine\03. Object</Filter>
     </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>Engine\03. Object</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectManager.h">
+      <Filter>Engine\02. Manager</Filter>
+    </ClInclude>
     <ClInclude Include="PlayerIdleState.h">
       <Filter>Engine\10.State\PlayerState</Filter>
     </ClInclude>
@@ -304,6 +310,12 @@
     </ClCompile>
     <ClCompile Include="Entity.cpp">
       <Filter>Engine\03. Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>Engine\03. Object</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectManager.cpp">
+      <Filter>Engine\02. Manager</Filter>
     </ClCompile>
     <ClCompile Include="PlayerIdleState.cpp">
       <Filter>Engine\10.State\PlayerState</Filter>

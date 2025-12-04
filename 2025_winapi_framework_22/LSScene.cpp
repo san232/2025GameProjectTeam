@@ -79,7 +79,6 @@ void LSScene::Update()
 
         bool handled = false;
 
-        // 1. Check if any window is currently moving -> Stop it
         for (auto* ctrl : m_subWindowControllers)
         {
             if (ctrl->IsMoving())
@@ -90,10 +89,8 @@ void LSScene::Update()
             }
         }
 
-        // 2. If none were moving, check if we clicked on one to start moving
         if (!handled)
         {
-            // Check in reverse order to pick the "top-most" if they overlap (assuming creation order implies z-order roughly)
             for (int i = (int)m_subWindows.size() - 1; i >= 0; --i)
             {
                 if (!m_subWindows[i]->IsActive()) continue;

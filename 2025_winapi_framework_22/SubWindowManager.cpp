@@ -1,7 +1,9 @@
 #include "pch.h"
 #include "SubWindowManager.h"
 #include "Entity.h"
+#include "Subwindow.h"
 #include "Core.h"
+#include "ISubWindowEffect.h"
 
 SubWindowManager::SubWindowManager()
 {

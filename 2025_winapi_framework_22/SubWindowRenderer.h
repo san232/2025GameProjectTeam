@@ -1,6 +1,5 @@
 #pragma once
 #include <windows.h>
-#include "InvisibleEnemyOverlayRenderer.h"
 
 class Scene;
 class SubWindow;
@@ -17,5 +16,4 @@ public:
 private:
     HWND mainWindow;
     Scene* scene;
-    InvisibleEnemyOverlayRenderer* m_legacyRenderer;
 };

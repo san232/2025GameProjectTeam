@@ -176,10 +176,11 @@
     <ClInclude Include="EnemyMoveState.h" />
     <ClInclude Include="EnemySpawnManager.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="Effect.h" />
+    <ClInclude Include="EffectManager.h" />
     <ClInclude Include="Enums.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GDISelector.h" />
-    <ClInclude Include="InvisibleEnemyOverlayRenderer.h" />
     <ClInclude Include="ISubWindowEffect.h" />
     <ClInclude Include="PlayerDeadState.h" />
     <ClInclude Include="PlayerIdleState.h" />
@@ -227,6 +228,8 @@
     <ClCompile Include="EnemyMoveState.cpp" />
     <ClCompile Include="EnemySpawnManager.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="GDISelector.cpp" />
     <ClCompile Include="PlayerDeadState.cpp" />
     <ClCompile Include="PlayerIdleState.cpp" />

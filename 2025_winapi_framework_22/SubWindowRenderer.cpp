@@ -10,13 +10,11 @@
 SubWindowRenderer::SubWindowRenderer(HWND inMainWindow, Scene* inScene)
     : mainWindow(inMainWindow)
     , scene(inScene)
-    , m_legacyRenderer(new InvisibleEnemyOverlayRenderer(inScene))
 {
 }
 
 SubWindowRenderer::~SubWindowRenderer()
 {
-    if (m_legacyRenderer) delete m_legacyRenderer;
 }
 
 void SubWindowRenderer::Render(HDC subDC, SubWindow* subWin, HDC mainBackDC, RECT mainWndRect)
@@ -42,7 +40,6 @@ void SubWindowRenderer::Render(HDC subDC, SubWindow* subWin, HDC mainBackDC, REC
         int width = intersect.right - intersect.left;
         int height = intersect.bottom - intersect.top;
 
-        // Destination (Sub Window Client Coords)
         POINT ptDst = { intersect.left, intersect.top };
         ::ScreenToClient(subWin->GetHWnd(), &ptDst);
         
@@ -75,10 +72,4 @@ void SubWindowRenderer::Render(HDC subDC, SubWindow* subWin, HDC mainBackDC, REC
     bf.AlphaFormat = 0;
 
     ::GdiAlphaBlend(subDC, 0, 0, subW, subH, memDC, 0, 0, 1, 1, bf);
-}
-
-void SubWindowRenderer::RenderLegacy(HDC hdc)
-{
-    if (m_legacyRenderer)
-        m_legacyRenderer->Render(hdc);
 }

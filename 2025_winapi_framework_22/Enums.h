@@ -49,3 +49,8 @@ enum class EnemyStateType
 {
 	Idle, Move, Attack, Hit, Dead
 };
+
+enum class EffectType
+{
+	PLAYER_HIT, ENEMY_HIT, ENEMY_DEAD, END
+};
