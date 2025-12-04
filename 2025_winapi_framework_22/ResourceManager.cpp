@@ -176,7 +176,7 @@ void ResourceManager::RegisterFont(FontType _type, const wstring& _name, int _he
 
 void ResourceManager::RegisterTexture()
 {
-
+	LoadTexture(L"Jiwoo", L"Texture\\jiwoo.bmp");
 }
 
 void ResourceManager::LoadTexture(const wstring& _key, const wstring& _path)

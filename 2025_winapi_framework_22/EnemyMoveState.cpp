@@ -9,7 +9,6 @@ EnemyMoveState::EnemyMoveState(BaseEnemy* _owner)
 
 void EnemyMoveState::Enter(StateMachine& _owner)
 {
-    cout << "Move";
 }
 
 void EnemyMoveState::Update(StateMachine& _owner)

@@ -6,6 +6,7 @@
 class Texture;
 class Collider;
 class Rigidbody;
+class Animator;
 class PlayerIdleState;
 class PlayerMoveState;
 class PlayerAttackState;
@@ -31,6 +32,8 @@ private:
 
 	void UpdateAttackDelay();
 	void PerformAreaAttack();
+public:
+	void ChangeAnimation(wstring animationName);
 
 private:
 	PlayerIdleState* m_idleState;
@@ -43,6 +46,7 @@ private:
 	Texture* m_pTex;
 	Rigidbody* m_rigidCompo;
 	Vec2 m_moveDirection;
+	Animator* m_animator;
 	float m_dashPower;
 	float m_curTime;
 	bool m_isCanAttack;
@@ -51,6 +55,7 @@ private:
 	bool m_attackPending;
 	float m_attackDelay;
 	float m_attackSize;
+	float m_attackStateRemainTime;
 
 
 public:

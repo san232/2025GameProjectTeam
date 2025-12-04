@@ -2,6 +2,7 @@
 #include "LSScene.h"
 #include "WindowManager.h"
 #include "SubWindowManager.h"
+#include "CollisionManager.h"
 #include "SubWindowRenderer.h"
 #include "SubWindow.h"
 #include "InputManager.h"
@@ -63,9 +64,8 @@ void LSScene::Init()
         m_subWindowControllers.push_back(new SubWindowController(subHwnd, windowSize));
     }
 
-    Spawn<Player>(Layer::PLAYER, { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 4 }, { 100.f,100.f });
-    Spawn<Zombie>(Layer::DEFAULTENEMY, { WINDOW_WIDTH / 3, WINDOW_HEIGHT / 2 }, { 100.f,100.f });
-
+    Spawn<Player>(Layer::PLAYER, { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 4 }, { 50.f, 50.f });
+    GET_SINGLE(CollisionManager)->CheckLayer(Layer::DEFAULTENEMY, Layer::DEFAULTENEMY);
 }
 
 void LSScene::Update()

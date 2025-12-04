@@ -9,6 +9,7 @@ PlayerIdleState::PlayerIdleState(Player* _owner)
 
 void PlayerIdleState::Enter(StateMachine& _owner)
 {
+	m_player->ChangeAnimation(L"Idle");
 	m_player->StopMoving();
 }
 

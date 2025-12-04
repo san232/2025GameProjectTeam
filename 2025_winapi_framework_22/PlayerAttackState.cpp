@@ -9,6 +9,7 @@ PlayerAttackState::PlayerAttackState(Player* _owner)
 
 void PlayerAttackState::Enter(StateMachine& _owner)
 {
+	m_player->ChangeAnimation(L"Attack");
 	m_player->Attack();
 }
 

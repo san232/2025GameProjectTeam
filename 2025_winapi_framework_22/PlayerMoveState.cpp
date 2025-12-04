@@ -9,6 +9,7 @@ PlayerMoveState::PlayerMoveState(Player* _owner)
 
 void PlayerMoveState::Enter(StateMachine& _owner)
 {
+	m_player->ChangeAnimation(L"Move");
 }
 
 void PlayerMoveState::Update(StateMachine& _owner)

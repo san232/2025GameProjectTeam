@@ -22,19 +22,29 @@
 
 Player::Player()
 	: m_pTex(nullptr)
+	, m_animator(nullptr)
 	, m_rigidCompo(nullptr)
 	, m_moveDirection({ 0.f,0.f })
-	, m_dashPower(500.f)
+	, m_dashPower(700.f)
 	, m_curTime(0.f)
 	, m_isCanAttack(true)
 	, m_attackDelayTimer(0.f)
 	, m_attackPending(false)
 	, m_attackDelay(0.5f)
 	, m_attackSize(1.2f)
+	, m_attackStateRemainTime(0.3f)
 {
+	m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"Jiwoo");
 	AddComponent<Collider>();
 	AddComponent<Rigidbody>();
-	AddComponent<Animator>();
+	m_animator = AddComponent<Animator>();
+
+	m_animator->CreateAnimation (L"Idle", m_pTex, { 0.f,150.f }, { 50.f,50.f }, { 50.f,0.f }, 5, 0.1f);
+	m_animator->CreateAnimation (L"Move", m_pTex, { 0.f,100.f }, { 50.f,50.f }, { 50.f,0.f }, 5, 0.1f);
+	m_animator->CreateAnimation (L"Attack", m_pTex, { 0.f,200.f }, { 50.f,50.f }, { 50.f,0.f }, 5, 0.1f);
+	m_animator->CreateAnimation (L"Dead", m_pTex, { 0.f,0.f }, { 50.f,50.f }, { 50.f,0.f }, 5, 0.1f);
+
+	m_animator->Play(L"Idle");
 
 	m_rigidCompo = GetComponent<Rigidbody>();
 
@@ -47,7 +57,7 @@ Player::Player()
 
 	SetHp(10);
 	SetMoveSpeed(200.0f);
-	SetAttackCooltime(3.f);
+	SetAttackCooltime(0.5f);
 	SetAttackPower(2);
 }
 
@@ -71,16 +81,11 @@ void Player::Render(HDC _hdc)
 	GDISelector brushSelector(_hdc, brush);
 	GDISelector penSelector(_hdc, pen);
 
-	RECT_RENDER(_hdc, pos.x, pos.y, size.x, size.y);
-
 	Vec2 attackSize = { size.x * m_attackSize,
 					 size.y * m_attackSize };
 
 	if (m_attackPending)
 	{
-		GDISelector brushSelector(_hdc, brush);
-		GDISelector penSelector(_hdc, pen);
-
 		RECT_RENDER(_hdc, pos.x, pos.y, attackSize.x, attackSize.y);
 	}
 
@@ -107,8 +112,18 @@ void Player::Update()
 	UpdateInput();
 	CooldownRollingTime();
 	UpdateAttackDelay();
+
+	if (m_attackStateRemainTime > 0.f)
+	{
+		m_attackStateRemainTime -= fDT;
+		if (m_attackStateRemainTime < 0.f)
+			m_attackStateRemainTime = 0.f;
+	}
+
 	BlockPlayer();
 }
+
+
 
 void Player::UpdateInput()
 {
@@ -122,6 +137,12 @@ void Player::UpdateInput()
 	if (GET_KEY(KEY_TYPE::S)) m_moveDirection.y += 1.f;
 
 	bool hasInput = m_moveDirection != Vec2{ 0.f,0.f };
+
+	if (m_attackStateRemainTime > 0.f)
+	{
+		return;
+	}
+
 	if (hasInput)
 	{
 		float len = sqrtf(m_moveDirection.x * m_moveDirection.x + m_moveDirection.y * m_moveDirection.y);
@@ -143,6 +164,8 @@ void Player::UpdateInput()
 		m_isCanAttack = false;
 	}
 }
+
+
 
 void Player::CooldownRollingTime()
 {
@@ -203,7 +226,10 @@ void Player::Attack()
 
 	m_attackDelayTimer = 0.f;
 	m_attackPending = true;
+
+	m_attackStateRemainTime = m_attackDelay;
 }
+
 
 void Player::Dead()
 {
@@ -272,4 +298,9 @@ void Player::PerformAreaAttack()
 
 	ProcessEnemyLayer(Layer::DEFAULTENEMY);
 	ProcessEnemyLayer(Layer::INVISIBLEENEMY);
+}
+
+void Player::ChangeAnimation(wstring animationName)
+{
+	m_animator->Play(animationName);
 }
