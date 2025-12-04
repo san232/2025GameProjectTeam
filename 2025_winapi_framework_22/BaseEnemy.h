@@ -48,6 +48,7 @@ protected:
     void UpdateAttackCooldown();
     void UpdateTargetToPlayer();
     Player* FindPlayer() const;
+    void SetExp(int exp) { m_exp = exp; }
 
 public:
     void Dead() override;
@@ -78,4 +79,6 @@ protected:
     bool  m_inHitStun;
     float m_hitStunTimer;
     float m_hitStunDuration;
+
+    int m_exp;
 };

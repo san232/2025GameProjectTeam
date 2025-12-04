@@ -1,5 +1,5 @@
-ï»¿#include "pch.h"
-#include "Zombie.h"
+#include "pch.h"
+#include "Ghost.h"
 #include "Rigidbody.h"
 #include "Collider.h"
 #include "ResourceManager.h"
@@ -9,27 +9,26 @@
 
 #include <cmath>
 
-Zombie::Zombie()
+Ghost::Ghost()
 {
-	SetHp(6);
+	SetHp(1);
 	SetMoveSpeed(80.f);
 	SetAttackPower(1);
 	SetAttackCooltime(0.8f);
 	SetAttackRange(30.f);
-	SetExp(20);
 }
 
-Zombie::~Zombie()
+Ghost::~Ghost()
 {
 
 }
 
-void Zombie::Update()
+void Ghost::Update()
 {
 	BaseEnemy::Update();
 }
 
-void Zombie::Render(HDC _hdc)
+void Ghost::Render(HDC _hdc)
 {
 	BaseEnemy::Render(_hdc);
 
@@ -50,22 +49,22 @@ void Zombie::Render(HDC _hdc)
 	RECT_RENDER(_hdc, pos.x, pos.y, attackSize.x, attackSize.y);
 }
 
-void Zombie::EnterCollision(Collider* _other)
+void Ghost::EnterCollision(Collider* _other)
 {
 
 }
 
-void Zombie::StayCollision(Collider* _other)
+void Ghost::StayCollision(Collider* _other)
 {
 
 }
 
-void Zombie::ExitCollision(Collider* _other)
+void Ghost::ExitCollision(Collider* _other)
 {
 
 }
 
-void Zombie::Attack()
+void Ghost::Attack()
 {
 	Player* player = GetTargetPlayer();
 	if (!player || player->GetIsDead())
@@ -95,11 +94,11 @@ void Zombie::Attack()
 	if (isHit)
 	{
 		player->TakeDamage(GetAttackPower());
-		cout << "ê³µê²© ì„±ê³µ";
+		cout << "°ø°Ý ¼º°ø";
 	}
 }
 
-void Zombie::Dead()
+void Ghost::Dead()
 {
 	BaseEnemy::Dead();
 }
