@@ -8,7 +8,6 @@ EnemyAttackState::EnemyAttackState(BaseEnemy* _owner)
 
 void EnemyAttackState::Enter(StateMachine& _owner)
 {
-    cout << "attack";
     m_enemy->Attack();
 }
 

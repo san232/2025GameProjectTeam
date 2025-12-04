@@ -18,7 +18,7 @@ public:
 	void SetPos(Vec2 _pos) { m_pos = _pos; }
 	void SetSize(Vec2 _size) { m_size = _size; }
 	const Vec2& GetPos() const { return m_pos; }
-	const Vec2& GetSize()const { return m_size; }
+	const Vec2& GetSize() const { return m_size; }
 	bool GetIsDead() const { return m_isDie; }
 	void SetDead() { m_isDie = true; }
 protected:

@@ -176,12 +176,13 @@
     <ClInclude Include="EnemyMoveState.h" />
     <ClInclude Include="EnemySpawnManager.h" />
     <ClInclude Include="Entity.h" />
-    <ClInclude Include="Effect.h" />
-    <ClInclude Include="EffectManager.h" />
     <ClInclude Include="Enums.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GDISelector.h" />
+    <ClInclude Include="Ghost.h" />
+    <ClInclude Include="InvisibleEnemyOverlayRenderer.h" />
     <ClInclude Include="ISubWindowEffect.h" />
+    <ClInclude Include="PlayerBullet.h" />
     <ClInclude Include="PlayerDeadState.h" />
     <ClInclude Include="PlayerIdleState.h" />
     <ClInclude Include="InputManager.h" />
@@ -191,7 +192,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerMoveState.h" />
-    <ClInclude Include="PlayerAttackState.h" />
+    <ClInclude Include="PlayerRollingState.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceBase.h" />
     <ClInclude Include="ResourceManager.h" />
@@ -228,9 +229,9 @@
     <ClCompile Include="EnemyMoveState.cpp" />
     <ClCompile Include="EnemySpawnManager.cpp" />
     <ClCompile Include="Entity.cpp" />
-    <ClCompile Include="Effect.cpp" />
-    <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="GDISelector.cpp" />
+    <ClCompile Include="Ghost.cpp" />
+    <ClCompile Include="PlayerBullet.cpp" />
     <ClCompile Include="PlayerDeadState.cpp" />
     <ClCompile Include="PlayerIdleState.cpp" />
     <ClCompile Include="InputManager.cpp" />
@@ -240,7 +241,7 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerMoveState.cpp" />
-    <ClCompile Include="PlayerAttackState.cpp" />
+    <ClCompile Include="PlayerRollingState.cpp" />
     <ClCompile Include="ResourceBase.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Rigidbody.cpp" />

@@ -11,8 +11,6 @@ EnemyDeadState::EnemyDeadState(BaseEnemy* _owner)
 
 void EnemyDeadState::Enter(StateMachine& _owner)
 {
-    m_enemy->Dead();
-
     if (Rigidbody* rb = m_enemy->GetComponent<Rigidbody>())
     {
         rb->SetVelocity({ 0.f, 0.f });

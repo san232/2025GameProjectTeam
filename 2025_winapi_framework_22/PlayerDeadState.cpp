@@ -9,7 +9,7 @@ PlayerDeadState::PlayerDeadState(Player* _owner)
 
 void PlayerDeadState::Enter(StateMachine& _owner)
 {
-
+	m_player->ChangeAnimation(L"Dead");
 }
 
 void PlayerDeadState::Update(StateMachine& _owner)

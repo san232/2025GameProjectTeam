@@ -154,6 +154,7 @@ void BaseEnemy::OnHit(int damage)
 
 void BaseEnemy::Dead()
 {
+	m_targetPlayer->TakeExp(m_exp);
 	if (m_stateMachine && m_deadState)
 	{
 		m_stateMachine->ChangeState(m_deadState);

@@ -2,10 +2,10 @@
 #include "State.h"
 #include "Player.h"
 
-class PlayerAttackState : public State
+class PlayerRollingState : public State
 {
 public:
-    explicit PlayerAttackState(Player* _owner);
+    explicit PlayerRollingState(Player* _owner);
 
     void Enter(StateMachine& _owner) override;
     void Update(StateMachine& _owner) override;

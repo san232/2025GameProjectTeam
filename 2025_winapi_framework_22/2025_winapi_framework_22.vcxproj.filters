@@ -62,6 +62,9 @@
     <Filter Include="Engine\10.State\EnemyState">
       <UniqueIdentifier>{0af47314-fbd6-43ed-81fa-34e4ae37f2f4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\03. Object\Player">
+      <UniqueIdentifier>{12dfdf74-51ec-4805-a366-135cb9e61bac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="2025_winapi_framework_22.h">
@@ -178,7 +181,7 @@
     <ClInclude Include="PlayerMoveState.h">
       <Filter>Engine\10.State\PlayerState</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerAttackState.h">
+    <ClInclude Include="PlayerRollingState.h">
       <Filter>Engine\10.State\PlayerState</Filter>
     </ClInclude>
     <ClInclude Include="State.h">
@@ -214,6 +217,12 @@
     </ClInclude>
     <ClInclude Include="EnemySpawnManager.h">
       <Filter>Engine\02. Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Ghost.h">
+      <Filter>Engine\03. Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerBullet.h">
+      <Filter>Engine\03. Object\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -323,7 +332,7 @@
     <ClCompile Include="PlayerMoveState.cpp">
       <Filter>Engine\10.State\PlayerState</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerAttackState.cpp">
+    <ClCompile Include="PlayerRollingState.cpp">
       <Filter>Engine\10.State\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="State.cpp">
@@ -356,6 +365,12 @@
     </ClCompile>
     <ClCompile Include="EnemySpawnManager.cpp">
       <Filter>Engine\02. Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Ghost.cpp">
+      <Filter>Engine\03. Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerBullet.cpp">
+      <Filter>Engine\03. Object\Player</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
