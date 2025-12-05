@@ -29,6 +29,8 @@ public:
     void SetRevealLens(bool reveal) { m_isRevealLens = reveal; }
     bool IsRevealLens() const { return m_isRevealLens; }
 
+    void Update();
+
 private:
     static ATOM RegisterClassOnce(HINSTANCE hInst);
     static SubWindow* GetThis(HWND hWnd);
@@ -42,4 +44,6 @@ private:
     ISubWindowEffect* m_effect;
     bool m_isActive;
     bool m_isRevealLens;
+
+    bool m_isFollowingMouse = false;
 };

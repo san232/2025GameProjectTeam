@@ -5,13 +5,6 @@
 #include "Effect.h"
 #include "Object.h"
 
-EffectManager::EffectManager()
-{
-}
-
-EffectManager::~EffectManager()
-{
-}
 
 void EffectManager::Init()
 {

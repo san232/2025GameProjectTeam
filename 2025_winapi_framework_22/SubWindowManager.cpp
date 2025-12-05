@@ -34,6 +34,8 @@ void SubWindowManager::Update(float deltaTime, const std::vector<Entity*>& allEn
     {
         if (!window->IsActive()) continue;
 
+        window->Update();
+
         RECT winRect = window->GetRect();
         ISubWindowEffect* effect = window->GetEffect();
 
@@ -81,7 +83,7 @@ void SubWindowManager::Update(float deltaTime, const std::vector<Entity*>& allEn
 
 void SubWindowManager::RenderAll()
 {
-    
+    /*
     HWND hPrev = HWND_BOTTOM;
     for (SubWindow* win : m_subWindows)
     {
@@ -93,7 +95,7 @@ void SubWindowManager::RenderAll()
             hPrev = win->GetHWnd();
         }
     }
-    
+    */
     for (SubWindow* win : m_subWindows)
     {
         if (win->IsActive() && win->GetHWnd())
