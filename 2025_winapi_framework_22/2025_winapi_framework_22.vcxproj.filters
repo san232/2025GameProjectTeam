@@ -218,6 +218,9 @@
     <ClInclude Include="PlayerBullet.h">
       <Filter>Engine\03. Object\Player</Filter>
     </ClInclude>
+    <ClInclude Include="Boom.h">
+      <Filter>Engine\03. Object\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2025_winapi_framework_22.rc">
@@ -359,6 +362,9 @@
     </ClCompile>
     <ClCompile Include="PlayerBullet.cpp">
       <Filter>Engine\03. Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Boom.cpp">
+      <Filter>Engine\03. Object\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

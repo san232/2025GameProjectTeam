@@ -13,5 +13,7 @@ public:
 
 private:
     Player* m_player;
+    float m_curTime;
+    float m_deadTime;
 };
 

@@ -13,4 +13,6 @@ public:
 
 private:
     BaseEnemy* m_enemy;
+    float m_curTime;
+    float m_deadTime;
 };

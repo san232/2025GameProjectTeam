@@ -118,24 +118,25 @@ void Animation::Render(HDC _hdc)
 
     Object* obj = m_owner->GetOwner();
     Vec2 pos = obj->GetPos();
+    Vec2 size = obj->GetSize();
 
     const tAnimFrame& fr = m_frames[(size_t)m_curFrame];
     pos = pos + fr.vOffset;
 
-    // 목적지(화면) 사각형: 스프라이트 중심 정렬
-    int dx = (int)(pos.x - fr.vSlice.x / 2);
-    int dy = (int)(pos.y - fr.vSlice.y / 2);
-    int dw = (int)fr.vSlice.x;
-    int dh = (int)fr.vSlice.y;
+    int dx = (int)(pos.x - size.x / 2);
+    int dy = (int)(pos.y - size.y / 2);
+    int dw = (int)size.x;
+    int dh = (int)size.y;
 
-    // 소스(시트) 사각형
     int sx = (int)fr.vLT.x;
     int sy = (int)fr.vLT.y;
     int sw = (int)fr.vSlice.x;
     int sh = (int)fr.vSlice.y;
-    BOOL debug = TransparentBlt(_hdc,
-        dx, dy, dw, dh,
+
+    TransparentBlt(_hdc,
+        dx, dy, dw, dh, 
         m_tex->GetTextureDC(),
         sx, sy, sw, sh,
         RGB(255, 0, 255));
 }
+

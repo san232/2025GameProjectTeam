@@ -1,5 +1,5 @@
-ï»¿#include "pch.h"
-#include "Zombie.h"
+#include "pch.h"
+#include "Boom.h"
 #include "Rigidbody.h"
 #include "Collider.h"
 #include "ResourceManager.h"
@@ -10,13 +10,13 @@
 
 #include <cmath>
 
-Zombie::Zombie()
+Boom::Boom()
 {
 	SetHp(6);
-	SetMoveSpeed(80.f);
+	SetMoveSpeed(160.f);
 	SetAttackPower(1);
 	SetAttackCooltime(0.8f);
-	SetAttackRange(40.f);
+	SetAttackRange(30.f);
 	SetExp(20);
 
 	m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"BoomEnemy");
@@ -28,17 +28,17 @@ Zombie::Zombie()
 	m_animator->CreateAnimation(L"Dead", m_pTex, { 0.f,   18.f }, { 64.f, 64.f }, { 64.f, 0.f }, 7, 0.08f);
 }
 
-Zombie::~Zombie()
+Boom::~Boom()
 {
 
 }
 
-void Zombie::Update()
+void Boom::Update()
 {
 	BaseEnemy::Update();
 }
 
-void Zombie::Render(HDC _hdc)
+void Boom::Render(HDC _hdc)
 {
 	BaseEnemy::Render(_hdc);
 
@@ -57,22 +57,22 @@ void Zombie::Render(HDC _hdc)
 	RECT_RENDER(_hdc, pos.x, pos.y, attackSize.x, attackSize.y);
 }
 
-void Zombie::EnterCollision(Collider* _other)
+void Boom::EnterCollision(Collider* _other)
 {
 
 }
 
-void Zombie::StayCollision(Collider* _other)
+void Boom::StayCollision(Collider* _other)
 {
 
 }
 
-void Zombie::ExitCollision(Collider* _other)
+void Boom::ExitCollision(Collider* _other)
 {
 
 }
 
-void Zombie::Attack()
+void Boom::Attack()
 {
 	Player* player = GetTargetPlayer();
 	if (!player || player->GetIsDead())
@@ -102,11 +102,11 @@ void Zombie::Attack()
 	if (isHit)
 	{
 		player->TakeDamage(GetAttackPower());
-		cout << "ê³µê²© ì„±ê³µ";
+		cout << "°ø°Ý ¼º°ø";
 	}
 }
 
-void Zombie::Dead()
+void Boom::Dead()
 {
 	BaseEnemy::Dead();
 }

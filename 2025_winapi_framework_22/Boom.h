@@ -1,11 +1,11 @@
 #pragma once
 #include "BaseEnemy.h"
 
-class Zombie : public BaseEnemy
+class Boom : public BaseEnemy
 {
 public:
-    Zombie();
-    ~Zombie() override;
+    Boom();
+    ~Boom() override;
 
 public:
     void Update() override;

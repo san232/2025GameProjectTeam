@@ -37,5 +37,5 @@ private:
     int  m_bossWaveInterval = 5;
     bool m_waveActive = false;
 
-    Vec2 m_enemySpawnSize = Vec2(50.f, 50.f);
+    Vec2 m_enemySpawnSize = Vec2(70.f, 70.f);
 };

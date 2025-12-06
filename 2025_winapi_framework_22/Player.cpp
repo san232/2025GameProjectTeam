@@ -34,17 +34,17 @@ Player::Player()
     , m_attackElapsedTime(0.f)
     , m_level(1)
     , m_curExp(0)
-    , m_needExp(50)
+    , m_needExp(100)
 {
-    m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"Jiwoo");
-    AddComponent<Collider>();
+    m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"Player");
+    AddComponent<Collider>()->SetSize({ 50.f,50.f });
     AddComponent<Rigidbody>();
     m_animator = AddComponent<Animator>();
 
-    m_animator->CreateAnimation(L"Idle", m_pTex, { 0.f, 150.f }, { 50.f, 50.f }, { 50.f, 0.f }, 5, 0.1f);
-    m_animator->CreateAnimation(L"Move", m_pTex, { 0.f, 100.f }, { 50.f, 50.f }, { 50.f, 0.f }, 5, 0.1f);
-    m_animator->CreateAnimation(L"Rolling", m_pTex, { 0.f, 200.f }, { 50.f, 50.f }, { 50.f, 0.f }, 5, 0.1f);
-    m_animator->CreateAnimation(L"Dead", m_pTex, { 0.f, 0.f }, { 50.f, 50.f }, { 50.f, 0.f }, 5, 0.1f);
+    m_animator->CreateAnimation(L"Idle", m_pTex, { 0.f, 10.f }, { 64.f, 64.f }, { 64.f, 0.f }, 6, 0.1f);
+    m_animator->CreateAnimation(L"Move", m_pTex, { 0.f, 89.f }, { 64.f, 64.f }, { 64.f, 0.f }, 3, 0.1f);
+    m_animator->CreateAnimation(L"Dead", m_pTex, { 0.f, 168.f }, { 64.f, 64.f }, { 64.f, 0.f }, 7, 0.1f);
+    m_animator->CreateAnimation(L"Rolling", m_pTex, { 0.f, 247.f }, { 64.f, 64.f }, { 64.f, 0.f }, 9, 0.06f);
 
     m_animator->Play(L"Idle");
 
@@ -58,6 +58,7 @@ Player::Player()
     m_stateMachine->ChangeState(m_idleState);
 
     SetHp(10);
+    m_maxHp = GetHp();
     SetMoveSpeed(200.0f);
     SetAttackCooltime(0.2f);
 }
@@ -74,6 +75,115 @@ Player::~Player()
 void Player::Render(HDC _hdc)
 {
     ComponentRender(_hdc);
+    RenderHpUI(_hdc);
+    RenderExpUI(_hdc);
+}
+
+void Player::RenderExpUI(HDC _hdc)
+{
+    float ratio = 0.f;
+    if (m_needExp > 0)
+    {
+        ratio = static_cast<float>(m_curExp) / static_cast<float>(m_needExp);
+        if (ratio < 0.f) ratio = 0.f;
+        if (ratio > 1.f) ratio = 1.f;
+    }
+
+    int barHeight = 15;
+    int barMarginX = 10;
+    int barMarginBottom = 5;
+
+    int left = barMarginX;
+    int right = WINDOW_WIDTH - barMarginX;
+    int bottom = WINDOW_HEIGHT - barMarginBottom;
+    int top = bottom - barHeight;
+
+    HPEN oldPen = (HPEN)::SelectObject(_hdc, ::GetStockObject(BLACK_PEN));
+    HBRUSH oldBrush = (HBRUSH)::SelectObject(_hdc, ::GetStockObject(BLACK_BRUSH));
+    ::Rectangle(_hdc, left, top, right, bottom);
+
+    int innerLeft = left + 1;
+    int innerTop = top + 1;
+    int innerRight = right - 1;
+    int innerBottom = bottom - 1;
+    int innerWidth = innerRight - innerLeft;
+
+    int filledWidth = static_cast<int>(innerWidth * ratio);
+    int filledRight = innerLeft + filledWidth;
+
+    if (filledWidth > 0)
+    {
+        GDISelector greenBrush(_hdc, BrushType::GREEN);
+        ::Rectangle(_hdc, innerLeft, innerTop, filledRight, innerBottom);
+    }
+
+    if (filledRight < innerRight)
+    {
+        HBRUSH whiteBrush = (HBRUSH)::GetStockObject(WHITE_BRUSH);
+        HBRUSH prevBrush = (HBRUSH)::SelectObject(_hdc, whiteBrush);
+        ::Rectangle(_hdc, filledRight, innerTop, innerRight, innerBottom);
+        ::SelectObject(_hdc, prevBrush);
+    }
+
+    ::SelectObject(_hdc, oldBrush);
+    ::SelectObject(_hdc, oldPen);
+}
+
+void Player::RenderHpUI(HDC _hdc)
+{
+    float ratio = 0.f;
+    if (m_maxHp > 0)
+    {
+        ratio = static_cast<float>(m_hp) / static_cast<float>(m_maxHp);
+        if (ratio < 0.f) ratio = 0.f;
+        if (ratio > 1.f) ratio = 1.f;
+    }
+
+    int barHeight = 15;
+    int barMarginX = 10;
+    int gapFromExp = 10;
+
+    int expBarHeight = 15;
+    int expBarMarginBottom = 5;
+
+    int expBottom = WINDOW_HEIGHT - expBarMarginBottom;
+    int expTop = expBottom - expBarHeight;
+
+    int bottom = expTop - gapFromExp;
+    int top = bottom - barHeight;
+
+    int left = barMarginX;
+    int right = left + 300;
+
+    HPEN oldPen = (HPEN)::SelectObject(_hdc, ::GetStockObject(BLACK_PEN));
+    HBRUSH oldBrush = (HBRUSH)::SelectObject(_hdc, ::GetStockObject(BLACK_BRUSH));
+    ::Rectangle(_hdc, left, top, right, bottom);
+
+    int innerLeft = left + 1;
+    int innerTop = top + 1;
+    int innerRight = right - 1;
+    int innerBottom = bottom - 1;
+    int innerWidth = innerRight - innerLeft;
+
+    int filledWidth = static_cast<int>(innerWidth * ratio);
+    int filledRight = innerLeft + filledWidth;
+
+    if (filledWidth > 0)
+    {
+        GDISelector redBrush(_hdc, BrushType::RED);
+        ::Rectangle(_hdc, innerLeft, innerTop, filledRight, innerBottom);
+    }
+
+    if (filledRight < innerRight)
+    {
+        HBRUSH whiteBrush = (HBRUSH)::GetStockObject(WHITE_BRUSH);
+        HBRUSH prevBrush = (HBRUSH)::SelectObject(_hdc, whiteBrush);
+        ::Rectangle(_hdc, filledRight, innerTop, innerRight, innerBottom);
+        ::SelectObject(_hdc, prevBrush);
+    }
+
+    ::SelectObject(_hdc, oldBrush);
+    ::SelectObject(_hdc, oldPen);
 }
 
 void Player::EnterCollision(Collider* _other)
@@ -109,8 +219,8 @@ void Player::Update()
 
 void Player::UpdateInput()
 {
-    if (m_rigidCompo == nullptr)
-        return;
+    if (m_rigidCompo == nullptr) return;
+    if (m_isDeadState == true) return;
 
     m_moveDirection = { 0.f, 0.f };
     if (GET_KEY(KEY_TYPE::A)) m_moveDirection.x -= 1.f;
@@ -120,41 +230,9 @@ void Player::UpdateInput()
 
     bool hasInput = m_moveDirection != Vec2{ 0.f, 0.f };
 
-    if (GET_KEYDOWN(KEY_TYPE::SPACE) && m_canAttack)
+    if (GET_KEYDOWN(KEY_TYPE::LBUTTON) && m_canAttack)
     {
-        std::shared_ptr<Scene> curScene = GET_SINGLE(SceneManager)->GetCurScene();
-        if (curScene)
-        {
-            POINT mousePt = GET_MOUSEPOS;
-            Vec2 mousePos((float)mousePt.x, (float)mousePt.y);
-
-            Vec2 playerPos = GetPos();
-
-            Vec2 dir{ mousePos.x - playerPos.x, mousePos.y - playerPos.y };
-            float len = sqrtf(dir.x * dir.x + dir.y * dir.y);
-            if (len > 0.f)
-            {
-                dir.x /= len;
-                dir.y /= len;
-            }
-            else
-            {
-                dir = Vec2{ 1.f, 0.f };
-            }
-
-            Vec2 bulletSize{ 12.f, 12.f };
-            Vec2 bulletPos = playerPos + dir * (GetSize().x * 0.5f + bulletSize.x * 0.5f);
-
-            PlayerBullet* bullet = new PlayerBullet;
-            bullet->SetPos(bulletPos);
-            bullet->SetSize(bulletSize);
-            bullet->SetDirection(dir);
-
-            curScene->AddObject(bullet, Layer::PLAYERBULLET);
-
-            m_canAttack = false;
-            m_attackElapsedTime = 0.f;
-        }
+        Attack();
     }
 
     if (m_rollingStateRemainTime > 0.f)
@@ -175,7 +253,7 @@ void Player::UpdateInput()
         m_stateMachine->ChangeState(m_idleState);
     }
 
-    if (GET_KEYDOWN(KEY_TYPE::LSHIFT) && hasInput && m_canRolling)
+    if (GET_KEYDOWN(KEY_TYPE::SPACE) && hasInput && m_canRolling)
     {
         m_stateMachine->ChangeState(m_rollingState);
         m_canRolling = false;
@@ -232,17 +310,61 @@ void Player::StopMoving()
         m_rigidCompo->SetVelocity({ 0.f, 0.f });
 }
 
-void Player::Attack()
+void Player::TakeDamage(int _damage)
+{
+    if (m_isInvincibility == true) return;
+    Entity::TakeDamage(_damage);
+}
+
+void Player::Rolling()
 {
     if (m_rigidCompo)
         m_rigidCompo->AddImpulse(m_moveDirection * m_dashPower);
 
-    m_rollingStateRemainTime = 0.3f;
+    m_rollingStateRemainTime = 0.6f;
+}
+
+void Player::Attack()
+{
+    std::shared_ptr<Scene> curScene = GET_SINGLE(SceneManager)->GetCurScene();
+    if (curScene)
+    {
+        POINT mousePt = GET_MOUSEPOS;
+        Vec2 mousePos((float)mousePt.x, (float)mousePt.y);
+
+        Vec2 playerPos = GetPos();
+
+        Vec2 dir{ mousePos.x - playerPos.x, mousePos.y - playerPos.y };
+        float len = sqrtf(dir.x * dir.x + dir.y * dir.y);
+        if (len > 0.f)
+        {
+            dir.x /= len;
+            dir.y /= len;
+        }
+        else
+        {
+            dir = Vec2{ 1.f, 0.f };
+        }
+
+        Vec2 bulletSize{ 30.f, 30.f };
+        Vec2 bulletPos = playerPos + dir * (GetSize().x * 0.5f + bulletSize.x * 0.5f);
+
+        PlayerBullet* bullet = new PlayerBullet;
+        bullet->SetPos(bulletPos);
+        bullet->SetSize(bulletSize);
+        bullet->SetDirection(dir);
+
+        curScene->AddObject(bullet, Layer::PLAYERBULLET);
+
+        m_canAttack = false;
+        m_attackElapsedTime = 0.f;
+    }
 }
 
 void Player::Dead()
 {
     cout << "플레이어 죽음" << endl;
+    m_isDeadState = true;
     if (m_stateMachine && m_deadState)
     {
         m_stateMachine->ChangeState(m_deadState);
@@ -255,14 +377,13 @@ void Player::Move()
                 fDT * m_moveDirection.y * m_moveSpeed });
 }
 
-void Player::ChangeAnimation(wstring animationName)
+void Player::ChangeAnimation(wstring animationName, bool isLoop)
 {
-    m_animator->Play(animationName);
+    m_animator->Play(animationName, isLoop ? PlayMode::Loop : PlayMode::Once);
 }
 
 int Player::LevelUp(int level)
 {
-    cout << "LevelUp";
     return (int)(m_needExp * 1.5f);
 }
 
@@ -271,7 +392,7 @@ void Player::TakeExp(int exp)
     m_curExp += exp;
     if (m_needExp <= m_curExp)
     {
-        m_curExp -= m_needExp;
+        m_curExp = 0;
         m_level++;
         m_needExp = LevelUp(m_level);
     }

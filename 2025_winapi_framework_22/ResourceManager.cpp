@@ -127,13 +127,43 @@ SoundInfo* ResourceManager::FindSound(const wstring& _key)
 void ResourceManager::RegisterGDI()
 {
 	// BRUSH
+	// BRUSH
 	m_Brushs[(UINT)BrushType::HOLLOW] = (HBRUSH)::GetStockObject(HOLLOW_BRUSH);
-	m_Brushs[(UINT)BrushType::RED] = (HBRUSH)::CreateSolidBrush(RGB(255, 167, 167));
-	m_Brushs[(UINT)BrushType::GREEN] = (HBRUSH)::CreateSolidBrush(RGB(134, 229, 134));
+	m_Brushs[(UINT)BrushType::RED] = (HBRUSH)::CreateSolidBrush(RGB(255, 0, 0));
+	m_Brushs[(UINT)BrushType::GREEN] = (HBRUSH)::CreateSolidBrush(RGB(0, 255, 0));
+	m_Brushs[(UINT)BrushType::BLUE] = (HBRUSH)::CreateSolidBrush(RGB(0, 0, 255));
+	m_Brushs[(UINT)BrushType::WHITE] = (HBRUSH)::CreateSolidBrush(RGB(255, 255, 255));
+	m_Brushs[(UINT)BrushType::BLACK] = (HBRUSH)::CreateSolidBrush(RGB(0, 0, 0));
+	m_Brushs[(UINT)BrushType::YELLOW] = (HBRUSH)::CreateSolidBrush(RGB(255, 255, 0));
+	m_Brushs[(UINT)BrushType::CYAN] = (HBRUSH)::CreateSolidBrush(RGB(0, 255, 255));
+	m_Brushs[(UINT)BrushType::MAGENTA] = (HBRUSH)::CreateSolidBrush(RGB(255, 0, 255));
+	m_Brushs[(UINT)BrushType::GRAY] = (HBRUSH)::CreateSolidBrush(RGB(128, 128, 128));
+	m_Brushs[(UINT)BrushType::LIGHTGRAY] = (HBRUSH)::CreateSolidBrush(RGB(211, 211, 211));
+	m_Brushs[(UINT)BrushType::ORANGE] = (HBRUSH)::CreateSolidBrush(RGB(255, 165, 0));
+	m_Brushs[(UINT)BrushType::BROWN] = (HBRUSH)::CreateSolidBrush(RGB(165, 42, 42));
+	m_Brushs[(UINT)BrushType::PURPLE] = (HBRUSH)::CreateSolidBrush(RGB(128, 0, 128));
+	m_Brushs[(UINT)BrushType::VIOLET] = (HBRUSH)::CreateSolidBrush(RGB(238, 130, 238));
+	m_Brushs[(UINT)BrushType::PINK] = (HBRUSH)::CreateSolidBrush(RGB(255, 192, 203));
+	m_Brushs[(UINT)BrushType::LIGHTGREEN] = (HBRUSH)::CreateSolidBrush(RGB(61, 235, 61));
 
 	// PEN 
 	m_Pens[(UINT)PenType::RED] = ::CreatePen(PS_SOLID, 1, RGB(255, 0, 0));
 	m_Pens[(UINT)PenType::GREEN] = ::CreatePen(PS_SOLID, 1, RGB(0, 255, 0));
+	m_Pens[(UINT)PenType::BLUE] = ::CreatePen(PS_SOLID, 1, RGB(0, 0, 255));
+	m_Pens[(UINT)PenType::WHITE] = ::CreatePen(PS_SOLID, 1, RGB(255, 255, 255));
+	m_Pens[(UINT)PenType::BLACK] = ::CreatePen(PS_SOLID, 1, RGB(0, 0, 0));
+	m_Pens[(UINT)PenType::YELLOW] = ::CreatePen(PS_SOLID, 1, RGB(255, 255, 0));
+	m_Pens[(UINT)PenType::CYAN] = ::CreatePen(PS_SOLID, 1, RGB(0, 255, 255));
+	m_Pens[(UINT)PenType::MAGENTA] = ::CreatePen(PS_SOLID, 1, RGB(255, 0, 255));
+	m_Pens[(UINT)PenType::GRAY] = ::CreatePen(PS_SOLID, 1, RGB(128, 128, 128));
+	m_Pens[(UINT)PenType::LIGHTGRAY] = ::CreatePen(PS_SOLID, 1, RGB(211, 211, 211));
+	m_Pens[(UINT)PenType::ORANGE] = ::CreatePen(PS_SOLID, 1, RGB(255, 165, 0));
+	m_Pens[(UINT)PenType::BROWN] = ::CreatePen(PS_SOLID, 1, RGB(165, 42, 42));
+	m_Pens[(UINT)PenType::PURPLE] = ::CreatePen(PS_SOLID, 1, RGB(128, 0, 128));
+	m_Pens[(UINT)PenType::VIOLET] = ::CreatePen(PS_SOLID, 1, RGB(238, 130, 238));
+	m_Pens[(UINT)PenType::PINK] = ::CreatePen(PS_SOLID, 1, RGB(255, 192, 203));
+	m_Pens[(UINT)PenType::LIGHTGREEN] = ::CreatePen(PS_SOLID, 1, RGB(173, 255, 47));
+
 
 	// 폰트 등록
 }
@@ -176,7 +206,10 @@ void ResourceManager::RegisterFont(FontType _type, const wstring& _name, int _he
 
 void ResourceManager::RegisterTexture()
 {
-	LoadTexture(L"Jiwoo", L"Texture\\jiwoo.bmp");
+	LoadTexture(L"Player", L"Texture\\Player.bmp");
+	LoadTexture(L"PlayerBullet", L"Texture\\PlayerBullet.bmp");
+	LoadTexture(L"BoomEnemy", L"Texture\\BoomEnemy.bmp");
+	LoadTexture(L"Ghost", L"Texture\\Ghost.bmp");
 }
 
 void ResourceManager::LoadTexture(const wstring& _key, const wstring& _path)
