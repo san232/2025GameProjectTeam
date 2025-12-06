@@ -1,7 +1,9 @@
 #include "pch.h"
 #include "SubWindowManager.h"
 #include "Entity.h"
+#include "Subwindow.h"
 #include "Core.h"
+#include "ISubWindowEffect.h"
 
 SubWindowManager::SubWindowManager()
 {
@@ -26,11 +28,30 @@ void SubWindowManager::UnregisterSubWindow(SubWindow* window)
     }
 }
 
+void SubWindowManager::ResetWindow(SubWindow* window)
+{
+    auto it = m_windowEntityMap.find(window);
+    if (it != m_windowEntityMap.end())
+    {
+        ISubWindowEffect* effect = window->GetEffect();
+        if (effect)
+        {
+            for (Entity* entity : it->second)
+            {
+                effect->OnExit(entity);
+            }
+        }
+        it->second.clear();
+    }
+}
+
 void SubWindowManager::Update(float deltaTime, const std::vector<Entity*>& allEntities)
 {
     for (SubWindow* window : m_subWindows)
     {
         if (!window->IsActive()) continue;
+
+        window->Update();
 
         RECT winRect = window->GetRect();
         ISubWindowEffect* effect = window->GetEffect();
@@ -79,7 +100,7 @@ void SubWindowManager::Update(float deltaTime, const std::vector<Entity*>& allEn
 
 void SubWindowManager::RenderAll()
 {
-    
+    /*
     HWND hPrev = HWND_BOTTOM;
     for (SubWindow* win : m_subWindows)
     {
@@ -91,7 +112,7 @@ void SubWindowManager::RenderAll()
             hPrev = win->GetHWnd();
         }
     }
-    
+    */
     for (SubWindow* win : m_subWindows)
     {
         if (win->IsActive() && win->GetHWnd())

@@ -2,6 +2,8 @@
 #include "SubWindow.h"
 #include "SubWindowRenderer.h"
 #include "Core.h"
+#include "InputManager.h"
+#include "ISubWindowEffect.h"
 
 static std::unordered_map<HWND, SubWindow*> g_subWindows;
 static const wchar_t* kSubWindowClass = L"SubWindowClass";
@@ -24,6 +26,17 @@ SubWindow::~SubWindow()
         g_subWindows.erase(m_hWnd);
         ::DestroyWindow(m_hWnd);
         m_hWnd = nullptr;
+    }
+}
+
+void SubWindow::SetEffect(ISubWindowEffect* effect)
+{
+    m_effect = effect;
+    if (m_hWnd && m_effect)
+    {
+        ::SetWindowText(m_hWnd, m_effect->GetName().c_str());
+        SetTintColor(m_effect->GetColor(), m_alpha);
+        ::InvalidateRect(m_hWnd, nullptr, FALSE);
     }
 }
 
@@ -62,9 +75,9 @@ bool SubWindow::Create(HWND parent, SubWindowRenderer* renderer, int width, int 
     m_hWnd = ::CreateWindowExW(
         WS_EX_WINDOWEDGE,
         kSubWindowClass,
-        L"",
-        WS_CHILD | WS_CLIPSIBLINGS | WS_VISIBLE,
-        0, 0, width, height,
+        L"SubWindow",
+        WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_VISIBLE,
+        CW_USEDEFAULT, CW_USEDEFAULT, width, height,
         parent, nullptr, hInst, nullptr);
 
     if (m_hWnd == nullptr)
@@ -97,6 +110,34 @@ RECT SubWindow::GetRect() const
     return rc;
 }
 
+void SubWindow::Update()
+{
+    if (!m_hWnd || !m_isActive) return;
+
+    POINT mousePos = GET_MOUSE_SCREEN_POS;
+
+    if (GET_KEYDOWN(KEY_TYPE::LBUTTON))
+    {
+        RECT rc = GetRect();
+        if (::PtInRect(&rc, mousePos))
+        {
+            m_isFollowingMouse = !m_isFollowingMouse;
+        }
+    }
+
+    if (m_isFollowingMouse)
+    {
+        RECT rc = GetRect();
+        int width = rc.right - rc.left;
+        int height = rc.bottom - rc.top;
+
+        int x = mousePos.x - width / 2;
+        int y = mousePos.y - height / 2;
+
+        ::SetWindowPos(m_hWnd, nullptr, x, y, 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE);
+    }
+}
+
 LRESULT CALLBACK SubWindow::WndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
 {
     SubWindow* self = SubWindow::GetThis(hWnd);
@@ -104,7 +145,29 @@ LRESULT CALLBACK SubWindow::WndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
     switch (msg)
     {
     case WM_NCHITTEST:
-        return HTTRANSPARENT;
+    {
+        LRESULT hit = ::DefWindowProc(hWnd, msg, wp, lp);
+        if (hit == HTCLIENT)
+            return HTTRANSPARENT;
+        return hit;
+    }
+
+    case WM_NCLBUTTONDOWN:
+    {
+        if (wp == HTCAPTION)
+            return 0;
+        break;
+    }
+
+    case WM_SYSCOMMAND:
+    {
+        if ((wp & 0xFFF0) == SC_MOVE || (wp & 0xFFF0) == SC_CLOSE)
+            return 0;
+        break;
+    }
+
+    case WM_CLOSE:
+        return 0;
 
     case WM_ERASEBKGND:
         return 1;
@@ -118,24 +181,15 @@ LRESULT CALLBACK SubWindow::WndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
         {
             HDC mainBackDC = GET_SINGLE(Core)->GetBackDC();
             
-            HWND hParent = ::GetParent(hWnd);
-            RECT mainRect = {};
-            if (hParent)
-            {
-                POINT ptTL = { 0, 0 };
-                ::ClientToScreen(hParent, &ptTL);
-                ::GetClientRect(hParent, &mainRect);
-                ::OffsetRect(&mainRect, ptTL.x, ptTL.y);
-            }
-
-            self->m_renderer->Render(hdc, self, mainBackDC, mainRect);
+            self->m_renderer->Render(hdc, self, mainBackDC);
 
             if (self->IsRevealLens())
             {
                  POINT ptSub = {0, 0};
                  ::ClientToScreen(hWnd, &ptSub);
+                 HWND hMain = GET_SINGLE(Core)->GetHwnd();
                  POINT ptMain = {0, 0};
-                 if(hParent) ::ClientToScreen(hParent, &ptMain);
+                 ::ClientToScreen(hMain, &ptMain);
                  
                  int sx = ptSub.x - ptMain.x;
                  int sy = ptSub.y - ptMain.y;

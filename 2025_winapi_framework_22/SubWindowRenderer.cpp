@@ -10,62 +10,82 @@
 SubWindowRenderer::SubWindowRenderer(HWND inMainWindow, Scene* inScene)
     : mainWindow(inMainWindow)
     , scene(inScene)
-    , m_legacyRenderer(new InvisibleEnemyOverlayRenderer(inScene))
+    , m_memDC(nullptr)
+    , m_hColorBitmap(nullptr)
+    , m_lastColor(0xFFFFFFFF)
 {
 }
 
 SubWindowRenderer::~SubWindowRenderer()
 {
-    if (m_legacyRenderer) delete m_legacyRenderer;
+    if (m_hColorBitmap)
+        ::DeleteObject(m_hColorBitmap);
+    if (m_memDC)
+        ::DeleteDC(m_memDC);
 }
 
-void SubWindowRenderer::Render(HDC subDC, SubWindow* subWin, HDC mainBackDC, RECT mainWndRect)
+void SubWindowRenderer::Render(HDC subDC, SubWindow* subWin, HDC mainBackDC)
 {
     if (!subWin || !subWin->IsActive()) return;
     
-    RECT subRect = subWin->GetRect();
-    int subW = subRect.right - subRect.left;
-    int subH = subRect.bottom - subRect.top;
+    POINT mainPtTL = { 0, 0 };
+    ::ClientToScreen(mainWindow, &mainPtTL);
+    
+    RECT mainClientRect;
+    ::GetClientRect(mainWindow, &mainClientRect);
+    int mainW = mainClientRect.right - mainClientRect.left;
+    int mainH = mainClientRect.bottom - mainClientRect.top;
+
+    RECT mainScreenRect = {
+        mainPtTL.x,
+        mainPtTL.y,
+        mainPtTL.x + mainW,
+        mainPtTL.y + mainH
+    };
+
+    RECT subClientRect;
+    ::GetClientRect(subWin->GetHWnd(), &subClientRect);
+    POINT subPtTL = { subClientRect.left, subClientRect.top };
+    POINT subPtBR = { subClientRect.right, subClientRect.bottom };
+    ::ClientToScreen(subWin->GetHWnd(), &subPtTL);
+    ::ClientToScreen(subWin->GetHWnd(), &subPtBR);
+    RECT subScreenRect = { subPtTL.x, subPtTL.y, subPtBR.x, subPtBR.y };
+
+    int subW = subClientRect.right - subClientRect.left;
+    int subH = subClientRect.bottom - subClientRect.top;
 
     HBRUSH whiteBrush = (HBRUSH)::GetStockObject(WHITE_BRUSH);
     RECT fullRect = { 0, 0, subW, subH };
     ::FillRect(subDC, &fullRect, whiteBrush);
 
     RECT intersect;
-    if (::IntersectRect(&intersect, &mainWndRect, &subRect))
+    if (::IntersectRect(&intersect, &mainScreenRect, &subScreenRect))
     {
-        POINT ptTL = { intersect.left, intersect.top };
-        ::ScreenToClient(mainWindow, &ptTL);
+        int srcX = intersect.left - mainScreenRect.left;
+        int srcY = intersect.top - mainScreenRect.top;
         
-        int srcX = ptTL.x;
-        int srcY = ptTL.y;
         int width = intersect.right - intersect.left;
         int height = intersect.bottom - intersect.top;
 
-        // Destination (Sub Window Client Coords)
-        POINT ptDst = { intersect.left, intersect.top };
-        ::ScreenToClient(subWin->GetHWnd(), &ptDst);
-        
-        int dstX = ptDst.x;
-        int dstY = ptDst.y;
+        int dstX = intersect.left - subScreenRect.left;
+        int dstY = intersect.top - subScreenRect.top;
 
         ::BitBlt(subDC, dstX, dstY, width, height, mainBackDC, srcX, srcY, SRCCOPY);
     }
 
-    static HDC memDC = nullptr;
-    static HBITMAP hColorBitmap = nullptr;
-    static COLORREF lastColor = 0xFFFFFFFF;
-
-    if (!memDC) memDC = ::CreateCompatibleDC(subDC);
+    if (!m_memDC) m_memDC = ::CreateCompatibleDC(subDC);
 
     COLORREF curColor = subWin->GetTintColor();
-    if (!hColorBitmap || lastColor != curColor)
+    if (!m_hColorBitmap || m_lastColor != curColor)
     {
-        if (hColorBitmap) ::DeleteObject(hColorBitmap);
-        hColorBitmap = ::CreateBitmap(1, 1, 1, 32, NULL);
-        ::SelectObject(memDC, hColorBitmap);
-        ::SetPixel(memDC, 0, 0, curColor);
-        lastColor = curColor;
+        HBITMAP hNewBmp = ::CreateBitmap(1, 1, 1, 32, NULL);
+        ::SelectObject(m_memDC, hNewBmp);
+        
+        if (m_hColorBitmap) ::DeleteObject(m_hColorBitmap);
+        
+        m_hColorBitmap = hNewBmp;
+        ::SetPixel(m_memDC, 0, 0, curColor);
+        m_lastColor = curColor;
     }
 
     BLENDFUNCTION bf;
@@ -74,11 +94,13 @@ void SubWindowRenderer::Render(HDC subDC, SubWindow* subWin, HDC mainBackDC, REC
     bf.SourceConstantAlpha = (BYTE)(subWin->GetAlpha() * 255);
     bf.AlphaFormat = 0;
 
-    ::GdiAlphaBlend(subDC, 0, 0, subW, subH, memDC, 0, 0, 1, 1, bf);
+    ::GdiAlphaBlend(subDC, 0, 0, subW, subH, m_memDC, 0, 0, 1, 1, bf);
 }
 
 void SubWindowRenderer::RenderLegacy(HDC hdc)
 {
-    if (m_legacyRenderer)
-        m_legacyRenderer->Render(hdc);
+    if (scene)
+    {
+        scene->Render(hdc);
+    }
 }

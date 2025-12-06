@@ -1,9 +1,6 @@
 #pragma once
-#include <vector>
-#include <unordered_map>
-#include <unordered_set>
-#include "SubWindow.h"
 
+class SubWindow;
 class Entity;
 
 class SubWindowManager
@@ -14,6 +11,8 @@ public:
 
     void RegisterSubWindow(SubWindow* window);
     void UnregisterSubWindow(SubWindow* window);
+
+    void ResetWindow(SubWindow* window);
 
     void Update(float deltaTime, const std::vector<Entity*>& allEntities);
 

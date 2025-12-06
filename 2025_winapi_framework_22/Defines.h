@@ -19,9 +19,10 @@ public:								\
 #define GET_KEY(key) GET_SINGLE(InputManager)->IsPress(key)
 #define GET_KEYWIDTH(mainkey, modkey) GET_SINGLE(InputManager)->IsPressWith(mainkey, modkey)
 #define GET_MOUSEPOS GET_SINGLE(InputManager)->GetMousePos()
+#define GET_MOUSE_SCREEN_POS GET_SINGLE(InputManager)->GetMouseScreenPos()
 
 
-// GDI ÇïÆÛ
+// GDI ï¿½ï¿½ï¿½ï¿½
 #define RECT_RENDER(hdc, posx, posy, sizex, sizey) Rectangle(hdc, (int)(posx-sizex/2),(int)(posy-sizey/2),(int)(posx+sizex/2),(int)(posy+sizey/2))
 #define ELLIPSE_RENDER(hdc, posx, posy, sizex, sizey) Ellipse(hdc, (int)(posx-sizex/2),(int)(posy-sizey/2),(int)(posx+sizex/2),(int)(posy+sizey/2))
 #define RECT_MAKE(posx, posy, sizex, sizey) {posx-sizex/2,posy-sizey/2,posx+sizex/2,posy+sizey/2}

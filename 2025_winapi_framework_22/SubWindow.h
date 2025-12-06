@@ -1,8 +1,7 @@
 #pragma once
-#include <windows.h>
-#include "ISubWindowEffect.h"
 
 class SubWindowRenderer;
+class ISubWindowEffect;
 
 class SubWindow
 {
@@ -19,7 +18,7 @@ public:
     COLORREF GetTintColor() const { return m_tintColor; }
     float GetAlpha() const { return m_alpha; }
 
-    void SetEffect(ISubWindowEffect* effect) { m_effect = effect; }
+    void SetEffect(ISubWindowEffect* effect);
     ISubWindowEffect* GetEffect() const { return m_effect; }
 
     bool IsActive() const { return m_isActive; }
@@ -29,6 +28,8 @@ public:
 
     void SetRevealLens(bool reveal) { m_isRevealLens = reveal; }
     bool IsRevealLens() const { return m_isRevealLens; }
+
+    void Update();
 
 private:
     static ATOM RegisterClassOnce(HINSTANCE hInst);
@@ -43,4 +44,6 @@ private:
     ISubWindowEffect* m_effect;
     bool m_isActive;
     bool m_isRevealLens;
+
+    bool m_isFollowingMouse = false;
 };

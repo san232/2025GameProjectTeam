@@ -170,6 +170,8 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="Core.h" />
     <ClInclude Include="BaseEnemy.h" />
+    <ClInclude Include="Effect.h" />
+    <ClInclude Include="EffectManager.h" />
     <ClInclude Include="EnemyAttackState.h" />
     <ClInclude Include="EnemyDeadState.h" />
     <ClInclude Include="EnemyHitState.h" />
@@ -224,6 +226,8 @@
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="BaseEnemy.cpp" />
+    <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="EnemyAttackState.cpp" />
     <ClCompile Include="EnemyDeadState.cpp" />
     <ClCompile Include="EnemyHitState.cpp" />

@@ -18,50 +18,31 @@ void LSScene::Init()
     subWindowRenderer = new SubWindowRenderer(mainWindowHwnd, this);
     subWindowManager = new SubWindowManager();
     
-    // Create Effects
     ISubWindowEffect* attackBuff = new AttackBuffEffect();
     ISubWindowEffect* speedBuff = new MoveSpeedBuffEffect();
     m_buffEffects.push_back(attackBuff);
     m_buffEffects.push_back(speedBuff);
+    m_currentBuffIndex = 0;
 
-    // --- Window 1: Attack Buff ---
-    SubWindow* win1 = new SubWindow();
-    if (win1->Create(mainWindowHwnd, subWindowRenderer, 200, 200))
+    m_subWindow = new SubWindow();
+    if (m_subWindow->Create(mainWindowHwnd, subWindowRenderer, 200, 200))
     {
-        win1->SetEffect(attackBuff);
-        win1->SetTintColor(RGB(255, 100, 100), 0.3f); // Red Tint
-        ::SetWindowPos(win1->GetHWnd(), nullptr, 100, 100, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
+        if (!m_buffEffects.empty())
+        {
+            m_subWindow->SetEffect(m_buffEffects[m_currentBuffIndex]);
+        }
+        
+        ::SetWindowPos(m_subWindow->GetHWnd(), nullptr, 100, 100, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
 
-        HWND subHwnd = win1->GetHWnd();
+        HWND subHwnd = m_subWindow->GetHWnd();
         GET_SINGLE(WindowManager)->RegisterSubWindow(subHwnd);
-        subWindowManager->RegisterSubWindow(win1);
+        subWindowManager->RegisterSubWindow(m_subWindow);
 
         RECT clientRect = {};
         ::GetClientRect(subHwnd, &clientRect);
         SIZE windowSize = { clientRect.right - clientRect.left, clientRect.bottom - clientRect.top };
 
-        m_subWindows.push_back(win1);
-        m_subWindowControllers.push_back(new SubWindowController(subHwnd, windowSize));
-    }
-
-    // --- Window 2: Speed Buff ---
-    SubWindow* win2 = new SubWindow();
-    if (win2->Create(mainWindowHwnd, subWindowRenderer, 200, 200))
-    {
-        win2->SetEffect(speedBuff);
-        win2->SetTintColor(RGB(100, 100, 255), 0.3f); // Blue Tint
-        ::SetWindowPos(win2->GetHWnd(), nullptr, 400, 100, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
-
-        HWND subHwnd = win2->GetHWnd();
-        GET_SINGLE(WindowManager)->RegisterSubWindow(subHwnd);
-        subWindowManager->RegisterSubWindow(win2);
-
-        RECT clientRect = {};
-        ::GetClientRect(subHwnd, &clientRect);
-        SIZE windowSize = { clientRect.right - clientRect.left, clientRect.bottom - clientRect.top };
-
-        m_subWindows.push_back(win2);
-        m_subWindowControllers.push_back(new SubWindowController(subHwnd, windowSize));
+        m_subWindowController = new SubWindowController(subHwnd, windowSize);
     }
 
     Spawn<Player>(Layer::PLAYER, { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 4 }, { 80.f, 80.f });
@@ -73,46 +54,39 @@ void LSScene::Update()
 {
     Scene::Update();
 
+    if (GET_KEYDOWN(KEY_TYPE::TAB))
+    {
+        if (!m_buffEffects.empty() && m_subWindow)
+        {
+            if (subWindowManager)
+                subWindowManager->ResetWindow(m_subWindow);
+
+            m_currentBuffIndex = (m_currentBuffIndex + 1) % m_buffEffects.size();
+            m_subWindow->SetEffect(m_buffEffects[m_currentBuffIndex]);
+        }
+    }
+
     if (GET_SINGLE(InputManager)->IsDown(KEY_TYPE::LBUTTON))
     {
-        POINT mousePos;
-        ::GetCursorPos(&mousePos);
+        POINT mousePos = GET_MOUSE_SCREEN_POS;
 
-        bool handled = false;
-
-        // 1. Check if any window is currently moving -> Stop it
-        for (auto* ctrl : m_subWindowControllers)
+        if (m_subWindowController && m_subWindowController->IsMoving())
         {
-            if (ctrl->IsMoving())
-            {
-                ctrl->ToggleMovement();
-                handled = true;
-                break; 
-            }
+            m_subWindowController->ToggleMovement();
         }
-
-        // 2. If none were moving, check if we clicked on one to start moving
-        if (!handled)
+        else if (m_subWindow && m_subWindow->IsActive())
         {
-            // Check in reverse order to pick the "top-most" if they overlap (assuming creation order implies z-order roughly)
-            for (int i = (int)m_subWindows.size() - 1; i >= 0; --i)
+            RECT subRect = m_subWindow->GetRect();
+            if (::PtInRect(&subRect, mousePos))
             {
-                if (!m_subWindows[i]->IsActive()) continue;
-
-                RECT subRect = m_subWindows[i]->GetRect();
-                if (::PtInRect(&subRect, mousePos))
-                {
-                    m_subWindowControllers[i]->ToggleMovement();
-                    break;
-                }
+                if (m_subWindowController)
+                    m_subWindowController->ToggleMovement();
             }
         }
     }
 
-    for (auto* ctrl : m_subWindowControllers)
-    {
-        ctrl->Update();
-    }
+    if (m_subWindowController)
+        m_subWindowController->Update();
     
     if (subWindowManager)
     {
@@ -130,22 +104,14 @@ void LSScene::Update()
         subWindowManager->Update(fDT, entities);
     }
 
-    for (auto* win : m_subWindows)
-    {
-        if (win->GetHWnd())
-            ::InvalidateRect(win->GetHWnd(), nullptr, FALSE);
-    }
+    if (m_subWindow && m_subWindow->GetHWnd())
+        ::InvalidateRect(m_subWindow->GetHWnd(), nullptr, FALSE);
 }
 
 LSScene::~LSScene()
 {
-    for (auto* ctrl : m_subWindowControllers)
-        SAFE_DELETE(ctrl);
-    m_subWindowControllers.clear();
-
-    for (auto* win : m_subWindows)
-        SAFE_DELETE(win);
-    m_subWindows.clear();
+    SAFE_DELETE(m_subWindowController);
+    SAFE_DELETE(m_subWindow);
 
     for (auto* effect : m_buffEffects)
         SAFE_DELETE(effect);

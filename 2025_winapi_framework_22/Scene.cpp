@@ -30,17 +30,17 @@ void Scene::RequestDestroy(Object* obj)
 	if (obj == nullptr)
 		return;
 
-	// ¡◊¡ˆ æ ¿∏∏È ≥÷æÓ∂Û
+	// Ï£ΩÏßÄ ÏïäÏúºÎ©¥ ÎÑ£Ïñ¥Îùº
 	if (!obj->GetIsDead())
 	{
 		obj->SetDead();
-		// Ω«¡¶ delete¥¬ FlushObjectø°º≠
+		// Ïã§Ï†ú deleteÎäî FlushObjectÏóêÏÑú
 		m_killObject.push_back(obj);
 	}
 }
 void Scene::FlushEvent()
 {
-	// ªË¡¶
+	// ÏÇ≠Ï†ú
 	for (Object* d : m_killObject)
 	{
 		RemoveObject(d);
@@ -48,14 +48,23 @@ void Scene::FlushEvent()
 	}
 	m_killObject.clear();
 
-	// ª˝º∫
+	for (SpawnObject spawnObj : m_spawnObject)
+	{
+		AddObject(spawnObj.obj, spawnObj.type);
+	}
+	m_spawnObject.clear();
 
-	// æ¿ ∫Ø∞Ê
 }
 
 void Scene::RequestSpawn(Object* obj, Layer _type)
 {
+	if (obj == nullptr)
+		return;
 
+	SpawnObject spawnObj;
+	spawnObj.obj = obj;
+	spawnObj.type = _type;
+	m_spawnObject.push_back(spawnObj);
 }
 
 

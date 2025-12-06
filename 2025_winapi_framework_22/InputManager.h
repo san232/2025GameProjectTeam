@@ -8,7 +8,7 @@ enum class KEY_TYPE
 	CTRL, LALT, LSHIFT, SPACE,
 	ENTER, TAB, ESC, LBUTTON, RBUTTON,
 	NUM_1, NUM_2, NUM_3, NUM_4, LAST
-	// LASTÀÇ¹Ì: ³¡ÀÌ¶ó´Â ¶æÀÌ¾ß
+	// LASTï¿½Ç¹ï¿½: ï¿½ï¿½ï¿½Ì¶ï¿½ï¿½ ï¿½ï¿½ï¿½Ì¾ï¿½
 };
 
 enum class KEY_STATE
@@ -44,6 +44,7 @@ public:
 		return IsPress(_mainKey) && IsPress(_modKey);
 	}
 	const POINT& GetMousePos() const { return m_mousePos; }
+	const POINT& GetMouseScreenPos() const { return m_mouseScreenPos; }
 	const POINT& GetMouseDelta() const { return m_mouseDelta; }
 
 private:
@@ -59,6 +60,7 @@ private:
 	VK_LBUTTON, VK_RBUTTON,'1','2','3','4'};
 
 	POINT m_mousePos;
+	POINT m_mouseScreenPos;
 	POINT m_prevMousePos;
 	POINT m_mouseDelta;
 
