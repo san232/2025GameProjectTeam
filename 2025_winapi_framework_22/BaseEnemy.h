@@ -55,10 +55,13 @@ protected:
     void UpdateTargetToPlayer();
     Player* FindPlayer() const;
     void SetExp(int exp) { m_exp = exp; }
+    void UpdateFlipToTarget();
 
 public:
     void Dead() override;
     void Move() override;
+
+    void SetDefaultLookRight(bool right) { m_defaultLookRight = right; }
 
 protected:
     StateMachine* m_stateMachine;
@@ -95,4 +98,6 @@ protected:
     int m_exp;
 
     bool m_isDeadState;
+
+    bool m_defaultLookRight;
 };

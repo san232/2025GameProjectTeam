@@ -18,6 +18,7 @@ Zombie::Zombie()
 	SetAttackCooltime(0.8f);
 	SetAttackRange(40.f);
 	SetExp(20);
+	SetDefaultLookRight(false);
 
 	m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"BoomEnemy");
 

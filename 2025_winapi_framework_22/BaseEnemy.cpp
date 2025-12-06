@@ -40,6 +40,7 @@ BaseEnemy::BaseEnemy()
     , m_hitStunTimer(0.f)
     , m_hitStunDuration(0.2f)
     , m_isDeadState(false)
+    , m_defaultLookRight(true)
 {
     AddComponent<Rigidbody>();
     AddComponent<Collider>();
@@ -314,6 +315,7 @@ void BaseEnemy::UpdateTargetToPlayer()
     if (m_targetPlayer)
     {
         SetTargetPosition(m_targetPlayer->GetPos());
+        UpdateFlipToTarget();
     }
 }
 
@@ -336,3 +338,21 @@ void BaseEnemy::ChangeAnimation(wstring animationName, bool isLoop)
 {
     m_animator->Play(animationName, isLoop ? PlayMode::Loop : PlayMode::Once);
 }
+
+void BaseEnemy::UpdateFlipToTarget()
+{
+    if (!m_targetPlayer)
+        return;
+
+    bool playerRight = (m_targetPosition.x > m_position.x);
+
+    bool flipX = false;
+
+    if (m_defaultLookRight)
+        flipX = !playerRight;
+    else
+        flipX = playerRight;
+
+    m_animator->SetFlipX(flipX);
+}
+

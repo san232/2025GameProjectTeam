@@ -111,32 +111,61 @@ void Animation::AdvanceFrame()
     }
 }
 
-void Animation::Render(HDC _hdc)
+void Animation::Render(HDC hdc)
 {
     if (!m_owner || !m_tex || m_frames.empty())
         return;
 
     Object* obj = m_owner->GetOwner();
     Vec2 pos = obj->GetPos();
-    Vec2 size = obj->GetSize();
 
     const tAnimFrame& fr = m_frames[(size_t)m_curFrame];
     pos = pos + fr.vOffset;
 
-    int dx = (int)(pos.x - size.x / 2);
-    int dy = (int)(pos.y - size.y / 2);
-    int dw = (int)size.x;
-    int dh = (int)size.y;
-
-    int sx = (int)fr.vLT.x;
-    int sy = (int)fr.vLT.y;
     int sw = (int)fr.vSlice.x;
     int sh = (int)fr.vSlice.y;
 
-    TransparentBlt(_hdc,
-        dx, dy, dw, dh, 
-        m_tex->GetTextureDC(),
-        sx, sy, sw, sh,
-        RGB(255, 0, 255));
-}
+    int dw = sw;
+    int dh = sh;
 
+    int dx = (int)(pos.x - dw / 2);
+    int dy = (int)(pos.y - dh / 2);
+
+    int sx = (int)fr.vLT.x;
+    int sy = (int)fr.vLT.y;
+
+    bool flipX = m_owner->GetFlipX();
+
+    HDC srcDC = m_tex->GetTextureDC();
+
+    if (!flipX)
+    {
+        TransparentBlt(hdc,
+            dx, dy, dw, dh,
+            srcDC,
+            sx, sy, sw, sh,
+            RGB(255, 0, 255));
+    }
+    else
+    {
+        HDC memDC = CreateCompatibleDC(hdc);
+        HBITMAP memBmp = CreateCompatibleBitmap(hdc, sw, sh);
+        HBITMAP oldBmp = (HBITMAP)SelectObject(memDC, memBmp);
+
+        StretchBlt(memDC,
+            sw - 1, 0, -sw, sh,
+            srcDC,
+            sx, sy, sw, sh,
+            SRCCOPY);
+
+        TransparentBlt(hdc,
+            dx, dy, dw, dh,
+            memDC,
+            0, 0, sw, sh,
+            RGB(255, 0, 255));
+
+        SelectObject(memDC, oldBmp);
+        DeleteObject(memBmp);
+        DeleteDC(memDC);
+    }
+}

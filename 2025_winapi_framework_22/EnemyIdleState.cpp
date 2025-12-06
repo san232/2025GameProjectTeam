@@ -10,7 +10,6 @@ EnemyIdleState::EnemyIdleState(BaseEnemy* _owner)
 
 void EnemyIdleState::Enter(StateMachine& _owner)
 {
-    cout << "Idle";
     m_enemy->ChangeAnimation(L"Idle");
     if (Rigidbody* rb = m_enemy->GetComponent<Rigidbody>())
     {

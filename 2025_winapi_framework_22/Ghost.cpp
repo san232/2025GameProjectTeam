@@ -18,6 +18,7 @@ Ghost::Ghost()
 	SetAttackCooltime(0.8f);
 	SetAttackRange(30.f);
 	SetExp(20);
+	SetDefaultLookRight(true);
 
 	m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"Ghost");
 
