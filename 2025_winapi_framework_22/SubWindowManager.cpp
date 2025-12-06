@@ -28,6 +28,23 @@ void SubWindowManager::UnregisterSubWindow(SubWindow* window)
     }
 }
 
+void SubWindowManager::ResetWindow(SubWindow* window)
+{
+    auto it = m_windowEntityMap.find(window);
+    if (it != m_windowEntityMap.end())
+    {
+        ISubWindowEffect* effect = window->GetEffect();
+        if (effect)
+        {
+            for (Entity* entity : it->second)
+            {
+                effect->OnExit(entity);
+            }
+        }
+        it->second.clear();
+    }
+}
+
 void SubWindowManager::Update(float deltaTime, const std::vector<Entity*>& allEntities)
 {
     for (SubWindow* window : m_subWindows)

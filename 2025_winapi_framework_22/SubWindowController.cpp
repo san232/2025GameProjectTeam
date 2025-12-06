@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "SubWindowController.h"
+#include "InputManager.h"
 
 SubWindowController::SubWindowController(HWND subWindow, SIZE windowSize)
     : subWindow(subWindow), size(windowSize), m_isMoving(false)
@@ -18,11 +19,7 @@ void SubWindowController::Update()
     if (parent == nullptr)
         return;
 
-    POINT cursor = {};
-    if (!::GetCursorPos(&cursor))
-        return;
-
-    ::ScreenToClient(parent, &cursor);
+    POINT cursor = GET_MOUSEPOS;
 
     RECT parentRect = {};
     ::GetClientRect(parent, &parentRect);

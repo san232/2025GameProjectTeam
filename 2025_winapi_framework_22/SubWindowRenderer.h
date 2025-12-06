@@ -16,4 +16,8 @@ public:
 private:
     HWND mainWindow;
     Scene* scene;
+
+    HDC m_memDC;
+    HBITMAP m_hColorBitmap;
+    COLORREF m_lastColor;
 };

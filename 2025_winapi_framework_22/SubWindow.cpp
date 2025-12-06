@@ -3,6 +3,7 @@
 #include "SubWindowRenderer.h"
 #include "Core.h"
 #include "InputManager.h"
+#include "ISubWindowEffect.h"
 
 static std::unordered_map<HWND, SubWindow*> g_subWindows;
 static const wchar_t* kSubWindowClass = L"SubWindowClass";
@@ -25,6 +26,17 @@ SubWindow::~SubWindow()
         g_subWindows.erase(m_hWnd);
         ::DestroyWindow(m_hWnd);
         m_hWnd = nullptr;
+    }
+}
+
+void SubWindow::SetEffect(ISubWindowEffect* effect)
+{
+    m_effect = effect;
+    if (m_hWnd && m_effect)
+    {
+        ::SetWindowText(m_hWnd, m_effect->GetName().c_str());
+        SetTintColor(m_effect->GetColor(), m_alpha);
+        ::InvalidateRect(m_hWnd, nullptr, FALSE);
     }
 }
 
@@ -102,8 +114,7 @@ void SubWindow::Update()
 {
     if (!m_hWnd || !m_isActive) return;
 
-    POINT mousePos;
-    ::GetCursorPos(&mousePos);
+    POINT mousePos = GET_MOUSE_SCREEN_POS;
 
     if (GET_KEYDOWN(KEY_TYPE::LBUTTON))
     {

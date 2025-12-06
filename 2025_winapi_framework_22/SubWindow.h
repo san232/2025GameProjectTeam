@@ -18,7 +18,7 @@ public:
     COLORREF GetTintColor() const { return m_tintColor; }
     float GetAlpha() const { return m_alpha; }
 
-    void SetEffect(ISubWindowEffect* effect) { m_effect = effect; }
+    void SetEffect(ISubWindowEffect* effect);
     ISubWindowEffect* GetEffect() const { return m_effect; }
 
     bool IsActive() const { return m_isActive; }

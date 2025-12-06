@@ -12,6 +12,8 @@ public:
     void RegisterSubWindow(SubWindow* window);
     void UnregisterSubWindow(SubWindow* window);
 
+    void ResetWindow(SubWindow* window);
+
     void Update(float deltaTime, const std::vector<Entity*>& allEntities);
 
     void RenderAll(); 

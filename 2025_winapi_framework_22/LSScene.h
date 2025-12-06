@@ -18,7 +18,9 @@ private:
     SubWindowRenderer* subWindowRenderer = nullptr;
     SubWindowManager* subWindowManager = nullptr;
 
-    vector<SubWindow*> m_subWindows;
-    vector<SubWindowController*> m_subWindowControllers;
+    SubWindow* m_subWindow = nullptr;
+    SubWindowController* m_subWindowController = nullptr;
+    
     vector<ISubWindowEffect*> m_buffEffects;
+    int m_currentBuffIndex = 0;
 };

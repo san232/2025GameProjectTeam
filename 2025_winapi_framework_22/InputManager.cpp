@@ -5,12 +5,13 @@ void InputManager::Init()
 {
 	m_vecKey.resize((int)KEY_TYPE::LAST, KeyInfo{KEY_STATE::NONE, false});
 	m_mousePos = {};
+	m_mouseScreenPos = {};
 	m_mouseDelta = {};
 	m_prevMousePos = m_mousePos;
 
 	for (int i = 0; i < (int)KEY_TYPE::LAST; ++i)
 	{
-		assert(m_vkKey[i] != 0 && "KEY_TYPE, vkKey 매핑 에러");
+		assert(m_vkKey[i] != 0 && "KEY_TYPE, vkKey  ");
 	}
 }
 
@@ -18,8 +19,7 @@ void InputManager::Init()
 void InputManager::Update()
 {
 	HWND hWnd = ::GetFocus();
-	//::GetActiveWindow();
-	//::SetActiveWindow();
+
 	if (hWnd == nullptr)
 	{
 		ResetAll();
@@ -38,8 +38,8 @@ void InputManager::ResetAll()
 		e.state = KEY_STATE::NONE;
 	}
 
-	// mouse
-	::GetCursorPos(&m_mousePos);
+	::GetCursorPos(&m_mouseScreenPos);
+	m_mousePos = m_mouseScreenPos;
 	::ScreenToClient(GET_SINGLE(Core)->GetHwnd(), &m_mousePos);
 	m_prevMousePos = m_mousePos;
 	m_mouseDelta = { 0,0 };
@@ -48,7 +48,8 @@ void InputManager::ResetAll()
 
 void InputManager::UpdateMouse()
 {
-	::GetCursorPos(&m_mousePos);
+	::GetCursorPos(&m_mouseScreenPos);
+	m_mousePos = m_mouseScreenPos;
 
 	::ScreenToClient(GET_SINGLE(Core)->GetHwnd(), &m_mousePos);
 
@@ -78,4 +79,3 @@ void InputManager::UpdateKeys()
 		}
 	}
 }
-

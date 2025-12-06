@@ -10,11 +10,18 @@
 SubWindowRenderer::SubWindowRenderer(HWND inMainWindow, Scene* inScene)
     : mainWindow(inMainWindow)
     , scene(inScene)
+    , m_memDC(nullptr)
+    , m_hColorBitmap(nullptr)
+    , m_lastColor(0xFFFFFFFF)
 {
 }
 
 SubWindowRenderer::~SubWindowRenderer()
 {
+    if (m_hColorBitmap)
+        ::DeleteObject(m_hColorBitmap);
+    if (m_memDC)
+        ::DeleteDC(m_memDC);
 }
 
 void SubWindowRenderer::Render(HDC subDC, SubWindow* subWin, HDC mainBackDC)
@@ -66,20 +73,19 @@ void SubWindowRenderer::Render(HDC subDC, SubWindow* subWin, HDC mainBackDC)
         ::BitBlt(subDC, dstX, dstY, width, height, mainBackDC, srcX, srcY, SRCCOPY);
     }
 
-    static HDC memDC = nullptr;
-    static HBITMAP hColorBitmap = nullptr;
-    static COLORREF lastColor = 0xFFFFFFFF;
-
-    if (!memDC) memDC = ::CreateCompatibleDC(subDC);
+    if (!m_memDC) m_memDC = ::CreateCompatibleDC(subDC);
 
     COLORREF curColor = subWin->GetTintColor();
-    if (!hColorBitmap || lastColor != curColor)
+    if (!m_hColorBitmap || m_lastColor != curColor)
     {
-        if (hColorBitmap) ::DeleteObject(hColorBitmap);
-        hColorBitmap = ::CreateBitmap(1, 1, 1, 32, NULL);
-        ::SelectObject(memDC, hColorBitmap);
-        ::SetPixel(memDC, 0, 0, curColor);
-        lastColor = curColor;
+        HBITMAP hNewBmp = ::CreateBitmap(1, 1, 1, 32, NULL);
+        ::SelectObject(m_memDC, hNewBmp);
+        
+        if (m_hColorBitmap) ::DeleteObject(m_hColorBitmap);
+        
+        m_hColorBitmap = hNewBmp;
+        ::SetPixel(m_memDC, 0, 0, curColor);
+        m_lastColor = curColor;
     }
 
     BLENDFUNCTION bf;
@@ -88,7 +94,7 @@ void SubWindowRenderer::Render(HDC subDC, SubWindow* subWin, HDC mainBackDC)
     bf.SourceConstantAlpha = (BYTE)(subWin->GetAlpha() * 255);
     bf.AlphaFormat = 0;
 
-    ::GdiAlphaBlend(subDC, 0, 0, subW, subH, memDC, 0, 0, 1, 1, bf);
+    ::GdiAlphaBlend(subDC, 0, 0, subW, subH, m_memDC, 0, 0, 1, 1, bf);
 }
 
 void SubWindowRenderer::RenderLegacy(HDC hdc)
