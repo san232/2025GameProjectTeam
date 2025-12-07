@@ -18,15 +18,15 @@ Zombie::Zombie()
 	SetAttackCooltime(0.8f);
 	SetAttackRange(40.f);
 	SetExp(20);
-	SetDefaultLookRight(false);
+	SetDefaultLookRight(true);
 
-	m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"BoomEnemy");
+	m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"Zombie");
 
-	m_animator->CreateAnimation(L"Idle", m_pTex, { 0.f, 274.f }, { 64.f, 64.f }, { 64.f,0.f }, 5, 0.12f);
-	m_animator->CreateAnimation(L"Move", m_pTex, { 0.f,  82.f }, { 64.f, 64.f }, { 64.f,0.f }, 4, 0.08f);
-	m_animator->CreateAnimation(L"Attack", m_pTex, { 0.f, 210.f }, { 64.f, 64.f }, { 64.f,0.f }, 8, 0.06f);
-	m_animator->CreateAnimation(L"Hit", m_pTex, { 0.f, 146.f }, { 64.f, 64.f }, { 64.f,  0.f }, 3, 0.06f);
-	m_animator->CreateAnimation(L"Dead", m_pTex, { 0.f,   18.f }, { 64.f, 64.f }, { 64.f, 0.f }, 7, 0.08f);
+	m_animator->CreateAnimation(L"Move", m_pTex, { 0.f, 0.f }, { 64.f, 64.f }, { 64.f,0.f }, 7, 0.1f);
+	m_animator->CreateAnimation(L"Dead", m_pTex, { 0.f, 64.f }, { 64.f, 64.f }, { 64.f, 0.f }, 7, 0.1f);
+	m_animator->CreateAnimation(L"Attack", m_pTex, { 0.f, 128.f }, { 64.f, 64.f }, { 64.f,0.f }, 6, 0.1f);
+	m_animator->CreateAnimation(L"Idle", m_pTex, { 0.f, 192.f }, { 64.f, 64.f }, { 64.f,0.f }, 4, 0.1f);
+	m_animator->CreateAnimation(L"Hit", m_pTex, { 0.f, 256.f }, { 64.f, 64.f }, { 64.f,  0.f }, 3, 0.1f);
 }
 
 Zombie::~Zombie()

@@ -2,8 +2,6 @@
 #include "PlayerDeadState.h"
 #include "Rigidbody.h"
 #include "Collider.h"
-#include "SceneManager.h"
-#include "Scene.h"
 
 PlayerDeadState::PlayerDeadState(Player* _owner)
 	: m_player(_owner)
@@ -32,11 +30,7 @@ void PlayerDeadState::Update(StateMachine& _owner)
 
     if (m_deadTime <= m_curTime)
     {
-        std::shared_ptr<Scene> curScene = GET_SINGLE(SceneManager)->GetCurScene();
-        if (curScene)
-        {
-            curScene->RequestDestroy(m_player);
-        }
+        m_player->Destroy();
     }
 }
 

@@ -26,7 +26,7 @@ Ghost::Ghost()
 	m_animator->CreateAnimation(L"Move", m_pTex, { 0.f,  50.f }, { 64.f, 64.f }, { 64.f,0.f }, 4, 0.08f);
 	m_animator->CreateAnimation(L"Hit", m_pTex, { 0.f, 100.f }, { 64.f, 64.f }, { 64.f,  0.f }, 3, 0.06f);
 	m_animator->CreateAnimation(L"Attack", m_pTex, { 0.f, 155.f }, { 64.f, 64.f }, { 64.f,0.f }, 8, 0.06f);
-	m_animator->CreateAnimation(L"Dead", m_pTex, { 0.f, 210.f }, { 64.f, 64.f }, { 64.f, 0.f }, 7, 0.08f);
+	m_animator->CreateAnimation(L"Dead", m_pTex, { 0.f, 210.f }, { 64.f, 64.f }, { 64.f, 0.f }, 9, 0.08f);
 }
 
 Ghost::~Ghost()

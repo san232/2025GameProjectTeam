@@ -187,6 +187,7 @@
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="InvisibleEnemyOverlayRenderer.h" />
     <ClInclude Include="ISubWindowEffect.h" />
+    <ClInclude Include="PlayerAttackEffect.h" />
     <ClInclude Include="PlayerBullet.h" />
     <ClInclude Include="PlayerDeadState.h" />
     <ClInclude Include="PlayerIdleState.h" />
@@ -241,6 +242,7 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="GDISelector.cpp" />
     <ClCompile Include="Ghost.cpp" />
+    <ClCompile Include="PlayerAttackEffect.cpp" />
     <ClCompile Include="PlayerBullet.cpp" />
     <ClCompile Include="PlayerDeadState.cpp" />
     <ClCompile Include="PlayerIdleState.cpp" />

@@ -41,6 +41,7 @@ public:
     void ChangeAnimation(wstring animationName, bool isLoop = true);
     int LevelUp(int level);
     void TakeExp(int exp);
+    void Destroy();
 
 private:
     PlayerIdleState* m_idleState;

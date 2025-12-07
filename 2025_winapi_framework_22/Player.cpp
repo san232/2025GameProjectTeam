@@ -29,7 +29,7 @@ Player::Player()
 	, m_curTime(0.f)
 	, m_canRolling(true)
 	, m_rollingStateRemainTime(0.f)
-	, m_rollingCooltime(0.5f)
+	, m_rollingCooltime(2.f)
 	, m_canAttack(true)
 	, m_attackElapsedTime(0.f)
 	, m_level(1)
@@ -60,7 +60,7 @@ Player::Player()
 	SetHp(10);
 	m_maxHp = GetHp();
 	SetMoveSpeed(200.0f);
-	SetAttackCooltime(0.2f);
+	SetAttackCooltime(0.7f);
 }
 
 Player::~Player()
@@ -379,6 +379,15 @@ void Player::Dead()
 	}
 }
 
+void Player::Destroy()
+{
+	std::shared_ptr<Scene> curScene = GET_SINGLE(SceneManager)->GetCurScene();
+	if (curScene)
+	{
+		curScene->RequestDestroy(this);
+	}
+}
+
 void Player::Move()
 {
 	Translate({ fDT * m_moveDirection.x * m_moveSpeed,
@@ -392,6 +401,11 @@ void Player::ChangeAnimation(wstring animationName, bool isLoop)
 
 int Player::LevelUp(int level)
 {
+	m_rollingCooltime -= 0.1f;
+	SetAttackCooltime(GetAttackCooltime() - 0.05f);
+	SetAttackPower(GetAttackPower() + 1);
+	m_maxHp += 1;
+	SetHp(m_maxHp);
 	return (int)(m_needExp * 1.5f);
 }
 

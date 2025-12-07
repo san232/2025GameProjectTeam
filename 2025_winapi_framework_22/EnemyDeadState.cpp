@@ -2,8 +2,6 @@
 #include "EnemyDeadState.h"
 #include "Rigidbody.h"
 #include "Collider.h"
-#include "SceneManager.h"
-#include "Scene.h"
 
 EnemyDeadState::EnemyDeadState(BaseEnemy* _owner)
     : m_enemy(_owner)
@@ -31,11 +29,7 @@ void EnemyDeadState::Update(StateMachine& _owner)
 
     if (m_deadTime <= m_curTime)
     {
-        std::shared_ptr<Scene> curScene = GET_SINGLE(SceneManager)->GetCurScene();
-        if (curScene)
-        {
-            curScene->RequestDestroy(m_enemy);
-        }
+        m_enemy->Destroy();
     }
 }
 

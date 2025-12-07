@@ -60,6 +60,7 @@ protected:
 public:
     void Dead() override;
     void Move() override;
+    void Destroy();
 
     void SetDefaultLookRight(bool right) { m_defaultLookRight = right; }
 

@@ -14,7 +14,7 @@
 
 Cat::Cat()
 {
-    SetHp(15);
+    SetHp(5);
     SetMoveSpeed(70.f);
     SetAttackCooltime(1.2f);
     SetAttackRange(200.f);

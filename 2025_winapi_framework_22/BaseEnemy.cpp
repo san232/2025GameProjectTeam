@@ -175,6 +175,15 @@ void BaseEnemy::Dead()
     }
 }
 
+void BaseEnemy::Destroy()
+{
+    std::shared_ptr<Scene> curScene = GET_SINGLE(SceneManager)->GetCurScene();
+    if (curScene)
+    {
+        curScene->RequestDestroy(this);
+    }
+}
+
 void BaseEnemy::Move()
 {
     MoveToTarget();
@@ -341,7 +350,7 @@ void BaseEnemy::ChangeAnimation(wstring animationName, bool isLoop)
 
 void BaseEnemy::UpdateFlipToTarget()
 {
-    if (!m_targetPlayer)
+    if (!m_targetPlayer || GetDeadState())
         return;
 
     bool playerRight = (m_targetPosition.x > m_position.x);
