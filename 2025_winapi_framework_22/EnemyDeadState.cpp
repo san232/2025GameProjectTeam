@@ -31,7 +31,11 @@ void EnemyDeadState::Update(StateMachine& _owner)
 
     if (m_deadTime <= m_curTime)
     {
-        m_enemy->SetDead();
+        std::shared_ptr<Scene> curScene = GET_SINGLE(SceneManager)->GetCurScene();
+        if (curScene)
+        {
+            curScene->RequestDestroy(m_enemy);
+        }
     }
 }
 

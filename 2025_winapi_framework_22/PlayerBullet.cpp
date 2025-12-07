@@ -37,13 +37,6 @@ void PlayerBullet::Update()
     {
         Dead();
     }
-
-    Vec2 pos = GetPos();
-    if (pos.x < -100.f || pos.x > WINDOW_WIDTH + 100.f ||
-        pos.y < -100.f || pos.y > WINDOW_HEIGHT + 100.f)
-    {
-        Dead();
-    }
 }
 
 void PlayerBullet::Render(HDC _hdc)

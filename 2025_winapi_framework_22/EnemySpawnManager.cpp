@@ -8,6 +8,7 @@
 #include "Zombie.h"
 #include "Ghost.h"
 #include "Boom.h"
+#include "Cat.h"
 
 void EnemySpawnManager::Init()
 {
@@ -109,7 +110,7 @@ void EnemySpawnManager::SpawnWaveEnemies(Scene* scene, bool bossWave)
     {
         Vec2 spawnPos = GetRandomOffScreenSpawnPos();
 
-        int typeCount = 3;
+        int typeCount = 4;
         int rand = std::rand() % typeCount;
 
         switch (rand)
@@ -122,6 +123,9 @@ void EnemySpawnManager::SpawnWaveEnemies(Scene* scene, bool bossWave)
             break;
         case 2:
             scene->Spawn<Boom>(Layer::DEFAULTENEMY, spawnPos, m_enemySpawnSize);
+            break;
+        case 3:
+            scene->Spawn<Cat>(Layer::DEFAULTENEMY, spawnPos, m_enemySpawnSize);
             break;
         }
     }

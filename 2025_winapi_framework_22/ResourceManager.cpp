@@ -210,6 +210,8 @@ void ResourceManager::RegisterTexture()
 	LoadTexture(L"PlayerBullet", L"Texture\\PlayerBullet.bmp");
 	LoadTexture(L"BoomEnemy", L"Texture\\BoomEnemy.bmp");
 	LoadTexture(L"Ghost", L"Texture\\Ghost.bmp");
+	LoadTexture(L"Cat", L"Texture\\Cat.bmp");
+	LoadTexture(L"CatBullet", L"Texture\\CatBullet.bmp");
 }
 
 void ResourceManager::LoadTexture(const wstring& _key, const wstring& _path)
