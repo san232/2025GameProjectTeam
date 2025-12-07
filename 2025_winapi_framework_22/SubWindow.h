@@ -44,6 +44,4 @@ private:
     ISubWindowEffect* m_effect;
     bool m_isActive;
     bool m_isRevealLens;
-
-    bool m_isFollowingMouse = false;
 };

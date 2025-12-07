@@ -7,7 +7,7 @@
 class AttackBuffEffect : public ISubWindowEffect
 {
 private:
-    int m_buffAmount = 10;
+    int m_buffAmount = 2;
     std::wstring m_name = L"Attack Buff";
     COLORREF m_color = RGB(255, 100, 100);
 
@@ -16,7 +16,7 @@ public:
         if (entity)
         {
             int currentPower = entity->GetAttackPower();
-            entity->SetAttackPower(currentPower + m_buffAmount);
+            entity->SetAttackPower(currentPower * m_buffAmount);
         }
     }
     void OnStay(Entity* entity, float dt) override {
@@ -25,7 +25,7 @@ public:
         if (entity)
         {
             int currentPower = entity->GetAttackPower();
-            entity->SetAttackPower(currentPower - m_buffAmount);
+            entity->SetAttackPower(currentPower / m_buffAmount);
         }
     }
 
@@ -36,7 +36,7 @@ public:
 class MoveSpeedBuffEffect : public ISubWindowEffect
 {
 private:
-    float m_speedBuffAmount = 100.f;
+    float m_speedBuffAmount = 2.f;
     std::wstring m_name = L"Speed Buff";
     COLORREF m_color = RGB(100, 100, 255);
 
@@ -45,7 +45,7 @@ public:
         if (entity)
         {
             float currentSpeed = entity->GetMoveSpeed();
-            entity->SetMoveSpeed(currentSpeed + m_speedBuffAmount);
+            entity->SetMoveSpeed(currentSpeed * m_speedBuffAmount);
         }
     }
     void OnStay(Entity* entity, float dt) override {
@@ -54,7 +54,7 @@ public:
         if (entity)
         {
             float currentSpeed = entity->GetMoveSpeed();
-            entity->SetMoveSpeed(currentSpeed - m_speedBuffAmount);
+            entity->SetMoveSpeed(currentSpeed / m_speedBuffAmount);
         }
     }
 

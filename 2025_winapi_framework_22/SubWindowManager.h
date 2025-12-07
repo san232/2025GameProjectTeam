@@ -2,6 +2,10 @@
 
 class SubWindow;
 class Entity;
+class SubWindowRenderer;
+class SubWindowController;
+class ISubWindowEffect;
+class Scene;
 
 class SubWindowManager
 {
@@ -9,19 +13,21 @@ public:
     SubWindowManager();
     ~SubWindowManager();
 
-    void RegisterSubWindow(SubWindow* window);
-    void UnregisterSubWindow(SubWindow* window);
-
-    void ResetWindow(SubWindow* window);
-
+    void Init(HWND hMainWnd, Scene* ownerScene);
     void Update(float deltaTime, const std::vector<Entity*>& allEntities);
-
-    void RenderAll(); 
+    void Render();
 
 private:
+    void ResetWindow();
     POINT WorldToScreen(const Vec2& worldPos);
 
 private:
-    std::vector<SubWindow*> m_subWindows;
-    std::unordered_map<SubWindow*, std::unordered_set<Entity*>> m_windowEntityMap;
+    SubWindow* m_subWindow;
+    SubWindowRenderer* m_renderer;
+    SubWindowController* m_controller;
+    
+    std::vector<ISubWindowEffect*> m_buffEffects;
+    int m_currentBuffIndex;
+
+    std::unordered_set<Entity*> m_prevFrameEntities;
 };
