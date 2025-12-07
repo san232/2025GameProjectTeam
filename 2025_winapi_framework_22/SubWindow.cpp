@@ -113,29 +113,6 @@ RECT SubWindow::GetRect() const
 void SubWindow::Update()
 {
     if (!m_hWnd || !m_isActive) return;
-
-    POINT mousePos = GET_MOUSE_SCREEN_POS;
-
-    if (GET_KEYDOWN(KEY_TYPE::LBUTTON))
-    {
-        RECT rc = GetRect();
-        if (::PtInRect(&rc, mousePos))
-        {
-            m_isFollowingMouse = !m_isFollowingMouse;
-        }
-    }
-
-    if (m_isFollowingMouse)
-    {
-        RECT rc = GetRect();
-        int width = rc.right - rc.left;
-        int height = rc.bottom - rc.top;
-
-        int x = mousePos.x - width / 2;
-        int y = mousePos.y - height / 2;
-
-        ::SetWindowPos(m_hWnd, nullptr, x, y, 0, 0, SWP_NOSIZE | SWP_NOZORDER | SWP_NOACTIVATE);
-    }
 }
 
 LRESULT CALLBACK SubWindow::WndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
@@ -144,13 +121,13 @@ LRESULT CALLBACK SubWindow::WndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
 
     switch (msg)
     {
-    case WM_NCHITTEST:
-    {
-        LRESULT hit = ::DefWindowProc(hWnd, msg, wp, lp);
-        if (hit == HTCLIENT)
-            return HTTRANSPARENT;
-        return hit;
-    }
+    //case WM_NCHITTEST:
+    //{
+    //    LRESULT hit = ::DefWindowProc(hWnd, msg, wp, lp);
+    //    if (hit == HTCLIENT)
+    //        return HTTRANSPARENT;
+    //    return hit;
+    //}
 
     case WM_NCLBUTTONDOWN:
     {
