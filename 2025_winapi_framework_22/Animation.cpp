@@ -111,7 +111,7 @@ void Animation::AdvanceFrame()
     }
 }
 
-void Animation::Render(HDC _hdc)
+void Animation::Render(HDC hdc)
 {
     if (!m_owner || !m_tex || m_frames.empty())
         return;
@@ -122,20 +122,50 @@ void Animation::Render(HDC _hdc)
     const tAnimFrame& fr = m_frames[(size_t)m_curFrame];
     pos = pos + fr.vOffset;
 
-    // 목적지(화면) 사각형: 스프라이트 중심 정렬
-    int dx = (int)(pos.x - fr.vSlice.x / 2);
-    int dy = (int)(pos.y - fr.vSlice.y / 2);
-    int dw = (int)fr.vSlice.x;
-    int dh = (int)fr.vSlice.y;
-
-    // 소스(시트) 사각형
-    int sx = (int)fr.vLT.x;
-    int sy = (int)fr.vLT.y;
     int sw = (int)fr.vSlice.x;
     int sh = (int)fr.vSlice.y;
-    BOOL debug = TransparentBlt(_hdc,
-        dx, dy, dw, dh,
-        m_tex->GetTextureDC(),
-        sx, sy, sw, sh,
-        RGB(255, 0, 255));
+
+    int dw = sw;
+    int dh = sh;
+
+    int dx = (int)(pos.x - dw / 2);
+    int dy = (int)(pos.y - dh / 2);
+
+    int sx = (int)fr.vLT.x;
+    int sy = (int)fr.vLT.y;
+
+    bool flipX = m_owner->GetFlipX();
+
+    HDC srcDC = m_tex->GetTextureDC();
+
+    if (!flipX)
+    {
+        TransparentBlt(hdc,
+            dx, dy, dw, dh,
+            srcDC,
+            sx, sy, sw, sh,
+            RGB(255, 0, 255));
+    }
+    else
+    {
+        HDC memDC = CreateCompatibleDC(hdc);
+        HBITMAP memBmp = CreateCompatibleBitmap(hdc, sw, sh);
+        HBITMAP oldBmp = (HBITMAP)SelectObject(memDC, memBmp);
+
+        StretchBlt(memDC,
+            sw - 1, 0, -sw, sh,
+            srcDC,
+            sx, sy, sw, sh,
+            SRCCOPY);
+
+        TransparentBlt(hdc,
+            dx, dy, dw, dh,
+            memDC,
+            0, 0, sw, sh,
+            RGB(255, 0, 255));
+
+        SelectObject(memDC, oldBmp);
+        DeleteObject(memBmp);
+        DeleteDC(memDC);
+    }
 }

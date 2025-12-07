@@ -24,12 +24,45 @@ enum class OwnerType
 
 enum class PenType
 {
-	RED, GREEN, END
+	RED,
+	GREEN,
+	BLUE,
+	WHITE,
+	BLACK,
+	YELLOW,
+	CYAN,
+	MAGENTA,
+	GRAY,
+	LIGHTGRAY,
+	ORANGE,
+	BROWN,
+	PURPLE,
+	VIOLET,
+	PINK,
+	LIGHTGREEN,
+	END
 };
 
 enum class BrushType
 {
-	HOLLOW, RED, GREEN, END
+	HOLLOW, 
+	RED, 
+	GREEN,
+	BLUE,
+	WHITE,
+	BLACK,
+	YELLOW,
+	CYAN,
+	MAGENTA,
+	GRAY,
+	LIGHTGRAY,
+	ORANGE,
+	BROWN,
+	PURPLE,
+	VIOLET,
+	PINK,
+	LIGHTGREEN,
+	END
 };
 
 enum class FontType

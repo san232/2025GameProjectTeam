@@ -10,6 +10,7 @@ EnemyHitState::EnemyHitState(BaseEnemy* _owner)
 
 void EnemyHitState::Enter(StateMachine& _owner)
 {
+    m_enemy->ChangeAnimation(L"Hit");
     if (Rigidbody* rb = m_enemy->GetComponent<Rigidbody>())
     {
         rb->SetVelocity({ 0.f, 0.f });

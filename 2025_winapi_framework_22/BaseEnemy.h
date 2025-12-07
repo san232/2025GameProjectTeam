@@ -5,6 +5,8 @@
 struct Vec2;
 class Collider;
 class Player;
+class Animator;
+class Texture;
 
 class EnemyIdleState;
 class EnemyMoveState;
@@ -34,7 +36,7 @@ public:
     void SetAttackRange(float range) { m_attackRange = range; }
 
     float GetAttackDelay() const { return m_attackDelay; }
-    void  SetAttackDelay(float delay) { m_attackDelay = delay; }
+    void SetAttackDelay(float delay) { m_attackDelay = delay; }
 
     void MoveToTarget();
     bool IsInAttackRange() const;
@@ -42,6 +44,10 @@ public:
     void OnHit(int damage);
 
     Player* GetTargetPlayer() const { return m_targetPlayer; }
+    void ChangeAnimation(wstring animationName, bool isLoop = true);
+
+    bool GetDeadState() { return m_isDeadState; }
+    void SetDeadState(bool isDeadState) { m_isDeadState = isDeadState; }
 
 protected:
     void UpdateFSM();
@@ -49,13 +55,18 @@ protected:
     void UpdateTargetToPlayer();
     Player* FindPlayer() const;
     void SetExp(int exp) { m_exp = exp; }
+    void UpdateFlipToTarget();
 
 public:
     void Dead() override;
     void Move() override;
 
+    void SetDefaultLookRight(bool right) { m_defaultLookRight = right; }
+
 protected:
     StateMachine* m_stateMachine;
+    Animator* m_animator;
+    Texture* m_pTex;
 
     EnemyIdleState* m_idleState;
     EnemyMoveState* m_moveState;
@@ -63,22 +74,30 @@ protected:
     EnemyHitState* m_hitState;
     EnemyDeadState* m_deadState;
 
-    Vec2  m_position;
-    Vec2  m_targetPosition;
+    Vec2 m_position;
+    Vec2 m_targetPosition;
     float m_attackRange;
 
     float m_attackTimer;
-    bool  m_canAttack;
+    bool m_canAttack;
 
     float m_attackDelay;
     float m_attackDelayTimer;
-    bool  m_isPreparingAttack;
+    bool m_isPreparingAttack;
+
+    bool m_inAttackState;
+    float m_attackStateTimer;
+    float m_attackStateDuration;
 
     Player* m_targetPlayer;
 
-    bool  m_inHitStun;
+    bool m_inHitStun;
     float m_hitStunTimer;
     float m_hitStunDuration;
 
     int m_exp;
+
+    bool m_isDeadState;
+
+    bool m_defaultLookRight;
 };

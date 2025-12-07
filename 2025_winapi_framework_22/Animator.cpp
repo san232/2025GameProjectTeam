@@ -8,6 +8,7 @@
 Animator::Animator()
     : m_curAnimation(nullptr)
     , m_paused(false)
+    , m_flipX(false)
 {
 
 }
@@ -85,4 +86,3 @@ void Animator::Resume()
 {
     m_paused = false;
 }
-

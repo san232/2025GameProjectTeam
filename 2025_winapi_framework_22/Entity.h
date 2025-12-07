@@ -29,7 +29,6 @@ public:
 		if (m_hp <= 0)
 		{
 			Dead();
-			SetDead();
 		}
 	}
 protected:

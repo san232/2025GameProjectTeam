@@ -221,17 +221,11 @@
     <ClInclude Include="Ghost.h">
       <Filter>Engine\03. Object\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="BossMonster.h">
-      <Filter>Engine\03. Object\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="PlayerBullet.h">
       <Filter>Engine\03. Object\Player</Filter>
     </ClInclude>
-    <ClInclude Include="BossChargeState.h">
-      <Filter>Engine\10.State\EnemyState</Filter>
-    </ClInclude>
-    <ClInclude Include="BossGroggyState.h">
-      <Filter>Engine\10.State\EnemyState</Filter>
+    <ClInclude Include="Boom.h">
+      <Filter>Engine\03. Object\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -378,17 +372,11 @@
     <ClCompile Include="Ghost.cpp">
       <Filter>Engine\03. Object\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="BossMonster.cpp">
-      <Filter>Engine\03. Object\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerBullet.cpp">
       <Filter>Engine\03. Object\Player</Filter>
     </ClCompile>
-    <ClCompile Include="BossChargeState.cpp">
-      <Filter>Engine\10.State\EnemyState</Filter>
-    </ClCompile>
-    <ClCompile Include="BossGroggyState.cpp">
-      <Filter>Engine\10.State\EnemyState</Filter>
+    <ClCompile Include="Boom.cpp">
+      <Filter>Engine\03. Object\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

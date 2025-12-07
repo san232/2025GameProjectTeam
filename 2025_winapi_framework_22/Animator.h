@@ -31,6 +31,9 @@ public:
     void Pause();
     void Resume();
 
+    void SetFlipX(bool flip) { m_flipX = flip; }
+    bool GetFlipX() const { return m_flipX; }
+
 public:
     Animation* GetCurrent() const { return m_curAnimation; }
     bool IsPaused() const { return m_paused; }
@@ -38,7 +41,6 @@ public:
 private:
     std::unordered_map<std::wstring, Animation*> m_mapAnim; // 소유권
     Animation* m_curAnimation; // 선택만
-    bool       m_paused;
-
-
+    bool m_paused;
+    bool m_flipX;
 };

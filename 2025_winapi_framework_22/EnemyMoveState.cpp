@@ -9,6 +9,7 @@ EnemyMoveState::EnemyMoveState(BaseEnemy* _owner)
 
 void EnemyMoveState::Enter(StateMachine& _owner)
 {
+    m_enemy->ChangeAnimation(L"Move");
 }
 
 void EnemyMoveState::Update(StateMachine& _owner)

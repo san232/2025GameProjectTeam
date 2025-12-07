@@ -4,7 +4,9 @@
 #include "Collider.h"
 #include "BaseEnemy.h"
 #include "SceneManager.h"
+#include "ResourceManager.h"
 #include "Scene.h"
+#include "Texture.h"
 #include "GDISelector.h"
 #include "Defines.h"
 
@@ -13,6 +15,7 @@ PlayerBullet::PlayerBullet()
     , m_lifeTime(0.f)
     , m_maxLifeTime(2.f)
 {
+    m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"PlayerBullet");
     AddComponent<Collider>();
     SetHp(1);
     SetAttackPower(5);
@@ -34,27 +37,23 @@ void PlayerBullet::Update()
     {
         Dead();
     }
-
-    Vec2 pos = GetPos();
-    if (pos.x < -100.f || pos.x > WINDOW_WIDTH + 100.f ||
-        pos.y < -100.f || pos.y > WINDOW_HEIGHT + 100.f)
-    {
-        Dead();
-    }
 }
 
 void PlayerBullet::Render(HDC _hdc)
 {
     Vec2 pos = GetPos();
     Vec2 size = GetSize();
+    LONG width = m_pTex->GetWidth();
+    LONG height = m_pTex->GetHeight();
 
-    BrushType brush = BrushType::HOLLOW;
-    PenType   pen = PenType::GREEN;
-
-    GDISelector brushSelector(_hdc, brush);
-    GDISelector penSelector(_hdc, pen);
-
-    RECT_RENDER(_hdc, pos.x, pos.y, size.x, size.y);
+    ::TransparentBlt(_hdc
+        , (int)(pos.x - size.x / 2)
+        , (int)(pos.y - size.y / 2)
+        , size.x
+        , size.y
+        , m_pTex->GetTextureDC()
+        , 0, 0, width, height,
+        RGB(255, 0, 255));
 
     ComponentRender(_hdc);
 }
@@ -62,15 +61,12 @@ void PlayerBullet::Render(HDC _hdc)
 void PlayerBullet::EnterCollision(Collider* _other)
 {
     Object* otherObj = _other->GetOwner();
-    if (!otherObj || otherObj->GetIsDead())
-        return;
-
     BaseEnemy* enemy = dynamic_cast<BaseEnemy*>(otherObj);
-    if (!enemy)
-        return;
+
+    if (enemy == nullptr) return;
+    if (enemy->GetDeadState()) return;
 
     enemy->OnHit(GetAttackPower());
-
     Dead();
 }
 

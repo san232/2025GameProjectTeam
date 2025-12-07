@@ -6,6 +6,9 @@
 #include "Object.h"
 #include "BaseEnemy.h"
 #include "Zombie.h"
+#include "Ghost.h"
+#include "Boom.h"
+#include "Cat.h"
 
 void EnemySpawnManager::Init()
 {
@@ -48,26 +51,18 @@ void EnemySpawnManager::StartNextWave()
 
 bool EnemySpawnManager::AreAllEnemiesDead() const
 {
+    int enemyCnt = 0;
     std::shared_ptr<Scene> curScene = GET_SINGLE(SceneManager)->GetCurScene();
-    if (!curScene)
-        return true;
-
     const vector<Object*>& enemyLayer = curScene->GetLayerObjects(Layer::DEFAULTENEMY);
 
     for (Object* obj : enemyLayer)
     {
-        if (!obj)
-            continue;
-
         BaseEnemy* enemy = dynamic_cast<BaseEnemy*>(obj);
-        if (!enemy)
-            continue;
-
-        if (!enemy->GetIsDead())
-            return false;
+        if (!enemy->GetDeadState())
+            enemyCnt++;
     }
 
-    return true;
+    return enemyCnt == 0;
 }
 
 Vec2 EnemySpawnManager::GetRandomOffScreenSpawnPos() const
@@ -114,7 +109,25 @@ void EnemySpawnManager::SpawnWaveEnemies(Scene* scene, bool bossWave)
     for (int i = 0; i < enemyCount; ++i)
     {
         Vec2 spawnPos = GetRandomOffScreenSpawnPos();
-        scene->Spawn<Zombie>(Layer::DEFAULTENEMY, spawnPos, m_enemySpawnSize);
+
+        int typeCount = 4;
+        int rand = std::rand() % typeCount;
+
+        switch (rand)
+        {
+        case 0:
+            scene->Spawn<Zombie>(Layer::DEFAULTENEMY, spawnPos, m_enemySpawnSize);
+            break;
+        case 1:
+            scene->Spawn<Ghost>(Layer::DEFAULTENEMY, spawnPos, m_enemySpawnSize);
+            break;
+        case 2:
+            scene->Spawn<Boom>(Layer::DEFAULTENEMY, spawnPos, m_enemySpawnSize);
+            break;
+        case 3:
+            scene->Spawn<Cat>(Layer::DEFAULTENEMY, spawnPos, m_enemySpawnSize);
+            break;
+        }
     }
 
     if (bossWave)
@@ -122,3 +135,4 @@ void EnemySpawnManager::SpawnWaveEnemies(Scene* scene, bool bossWave)
         // 보스 소환
     }
 }
+

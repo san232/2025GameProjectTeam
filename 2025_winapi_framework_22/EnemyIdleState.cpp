@@ -10,6 +10,7 @@ EnemyIdleState::EnemyIdleState(BaseEnemy* _owner)
 
 void EnemyIdleState::Enter(StateMachine& _owner)
 {
+    m_enemy->ChangeAnimation(L"Idle");
     if (Rigidbody* rb = m_enemy->GetComponent<Rigidbody>())
     {
         rb->SetVelocity({ 0.f, 0.f });

@@ -1,11 +1,11 @@
 #pragma once
 #include "BaseEnemy.h"
 
-class Zombie : public BaseEnemy
+class Cat : public BaseEnemy
 {
 public:
-    Zombie();
-    ~Zombie() override;
+    Cat();
+    ~Cat() override;
 
 public:
     void Update() override;
@@ -20,5 +20,10 @@ protected:
     void Dead() override;
 
 private:
-    float m_attackHitboxScale = 1.1f;
+    void SpawnBullet();
+
+private:
+    float m_attackShotDelay = 0.3f;
+    float m_attackShotTimer = 0.f;
+    bool m_isShotCharging = false;
 };

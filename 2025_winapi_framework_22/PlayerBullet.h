@@ -2,6 +2,7 @@
 #include "Entity.h"
 
 class Collider;
+class Texture;
 
 class PlayerBullet : public Entity
 {
@@ -25,6 +26,7 @@ protected:
 	void Move() override;
 
 private:
+	Texture* m_pTex;
 	Vec2 m_direction;
 	float m_lifeTime;
 	float m_maxLifeTime;
