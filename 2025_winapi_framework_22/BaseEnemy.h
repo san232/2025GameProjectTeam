@@ -56,6 +56,12 @@ protected:
     Player* FindPlayer() const;
     void SetExp(int exp) { m_exp = exp; }
     void UpdateFlipToTarget();
+    void SetStatMulti()
+    {
+        SetHp(GetHp() * hPstatMulti);
+        SetMoveSpeed(GetMoveSpeed() * moveSpeedstatMulti);
+        SetAttackPower(GetAttackPower() * atkPowerstatMulti);
+    }
 
 public:
     void Dead() override;
@@ -101,4 +107,8 @@ protected:
     bool m_isDeadState;
 
     bool m_defaultLookRight;
+
+    int hPstatMulti;
+    float moveSpeedstatMulti;
+    int atkPowerstatMulti;
 };

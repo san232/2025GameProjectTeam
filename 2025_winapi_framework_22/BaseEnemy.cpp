@@ -6,6 +6,7 @@
 #include "Texture.h"
 #include "Defines.h"
 #include "SceneManager.h"
+#include "EnemySpawnManager.h"
 #include "Scene.h"
 #include "Player.h"
 #include "EnemyIdleState.h"
@@ -53,6 +54,11 @@ BaseEnemy::BaseEnemy()
     m_attackState = new EnemyAttackState(this);
     m_hitState = new EnemyHitState(this);
     m_deadState = new EnemyDeadState(this);
+
+    int wave = GET_SINGLE(EnemySpawnManager)->GetCurrentWave() - 1;
+    hPstatMulti = (wave / 5) + 1;
+    moveSpeedstatMulti = ((float)wave / 30) + 1.f;
+    atkPowerstatMulti = (wave / 10) + 1;
 }
 
 BaseEnemy::~BaseEnemy()
@@ -364,4 +370,3 @@ void BaseEnemy::UpdateFlipToTarget()
 
     m_animator->SetFlipX(flipX);
 }
-

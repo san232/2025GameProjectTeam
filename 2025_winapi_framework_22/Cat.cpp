@@ -22,6 +22,8 @@ Cat::Cat()
     SetAttackDelay(0.f);
     SetDefaultLookRight(false);
 
+    SetStatMulti();
+
     m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"Cat");
 
     m_attackShotDelay = 0.3f;

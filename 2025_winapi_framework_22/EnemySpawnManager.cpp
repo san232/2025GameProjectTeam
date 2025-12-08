@@ -104,7 +104,7 @@ void EnemySpawnManager::SpawnWaveEnemies(Scene* scene, bool bossWave)
         return;
 
     int baseCount = 3;
-    int enemyCount = baseCount + m_currentWave;
+    int enemyCount = baseCount + (int)(m_currentWave / 2);
 
     for (int i = 0; i < enemyCount; ++i)
     {
@@ -112,6 +112,8 @@ void EnemySpawnManager::SpawnWaveEnemies(Scene* scene, bool bossWave)
 
         int typeCount = 4;
         int rand = std::rand() % typeCount;
+
+        BaseEnemy* enemy = nullptr;
 
         switch (rand)
         {
@@ -135,4 +137,3 @@ void EnemySpawnManager::SpawnWaveEnemies(Scene* scene, bool bossWave)
         // 보스 소환
     }
 }
-

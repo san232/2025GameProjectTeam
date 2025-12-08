@@ -20,6 +20,8 @@ Ghost::Ghost()
 	SetExp(20);
 	SetDefaultLookRight(true);
 
+	SetStatMulti();
+
 	m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"Ghost");
 
 	m_animator->CreateAnimation(L"Idle", m_pTex, { 0.f, 0.f }, { 64.f, 64.f }, { 64.f,0.f }, 5, 0.12f);

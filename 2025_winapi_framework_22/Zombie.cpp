@@ -20,6 +20,8 @@ Zombie::Zombie()
 	SetExp(20);
 	SetDefaultLookRight(true);
 
+	SetStatMulti();
+
 	m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"Zombie");
 
 	m_animator->CreateAnimation(L"Move", m_pTex, { 0.f, 0.f }, { 64.f, 64.f }, { 63.f, 0.f }, 7, 0.1f);

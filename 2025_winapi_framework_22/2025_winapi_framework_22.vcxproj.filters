@@ -71,6 +71,12 @@
     <Filter Include="Engine\03. Object\Enemy\Boss">
       <UniqueIdentifier>{2a9eedb3-e8ea-4843-8d25-ef9a2c8469cf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\03. Object\Enemy\Bullet">
+      <UniqueIdentifier>{423ec833-768a-4f29-b342-0ad02f6a2273}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\03. Object\Player\Effect">
+      <UniqueIdentifier>{5840983b-77d8-4d21-a015-846f8aac0186}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="2025_winapi_framework_22.h">
@@ -141,15 +147,9 @@
     <ClInclude Include="Ghost.h">
       <Filter>Engine\03. Object\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerBullet.h">
-      <Filter>Engine\03. Object\Player</Filter>
-    </ClInclude>
     <ClInclude Include="Boom.h">
       <Filter>Engine\03. Object\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Cat.h" />
-    <ClInclude Include="CatBullet.h" />
-    <ClInclude Include="PlayerAttackEffect.h" />
     <ClInclude Include="BossChargeState.h">
       <Filter>Engine\10.State\EnemyState\BossState</Filter>
     </ClInclude>
@@ -158,6 +158,98 @@
     </ClInclude>
     <ClInclude Include="BossKnight.h">
       <Filter>Engine\03. Object\Enemy\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="SubWindow.h" />
+    <ClInclude Include="SubWindowController.h" />
+    <ClInclude Include="SubWindowRenderer.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="Cat.h">
+      <Filter>Engine\03. Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Engine\99. Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>Engine\10.State</Filter>
+    </ClInclude>
+    <ClInclude Include="StateMachine.h">
+      <Filter>Engine\10.State</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerDeadState.h">
+      <Filter>Engine\10.State\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerIdleState.h">
+      <Filter>Engine\10.State\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerMoveState.h">
+      <Filter>Engine\10.State\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerRollingState.h">
+      <Filter>Engine\10.State\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="Vec2.h">
+      <Filter>Engine\99. Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Defines.h">
+      <Filter>Engine\99. Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowManager.h">
+      <Filter>Engine\02. Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="EventManager.h">
+      <Filter>Engine\02. Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>Engine\02. Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Engine\02. Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeManager.h">
+      <Filter>Engine\02. Manager\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Engine\02. Manager\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="LCMScene.h">
+      <Filter>Engine\04. Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="LSScene.h">
+      <Filter>Engine\04. Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Engine\04. Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Engine\03. Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Engine\03. Object</Filter>
+    </ClInclude>
+    <ClInclude Include="CatBullet.h">
+      <Filter>Engine\03. Object\Enemy\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Zombie.h">
+      <Filter>Engine\03. Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Rigidbody.h">
+      <Filter>Engine\06. Component\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="SubWindowManager.h">
+      <Filter>Engine\02. Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerAttackEffect.h">
+      <Filter>Engine\03. Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerBullet.h">
+      <Filter>Engine\03. Object\Player\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Engine\05. Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceBase.h">
+      <Filter>Engine\05. Resource</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -276,7 +368,6 @@
     <ClCompile Include="StateMachine.cpp">
       <Filter>Engine\10.State</Filter>
     </ClCompile>
-    <ClCompile Include="SubWindowManager.cpp" />
     <ClCompile Include="PlayerDeadState.cpp">
       <Filter>Engine\10.State\PlayerState</Filter>
     </ClCompile>
@@ -304,15 +395,9 @@
     <ClCompile Include="Ghost.cpp">
       <Filter>Engine\03. Object\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerBullet.cpp">
-      <Filter>Engine\03. Object\Player</Filter>
-    </ClCompile>
     <ClCompile Include="Boom.cpp">
       <Filter>Engine\03. Object\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Cat.cpp" />
-    <ClCompile Include="CatBullet.cpp" />
-    <ClCompile Include="PlayerAttackEffect.cpp" />
     <ClCompile Include="BossChargeState.cpp">
       <Filter>Engine\10.State\EnemyState\BossState</Filter>
     </ClCompile>
@@ -321,6 +406,21 @@
     </ClCompile>
     <ClCompile Include="BossKnight.cpp">
       <Filter>Engine\03. Object\Enemy\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Cat.cpp">
+      <Filter>Engine\03. Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="CatBullet.cpp">
+      <Filter>Engine\03. Object\Enemy\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="SubWindowManager.cpp">
+      <Filter>Engine\02. Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerAttackEffect.cpp">
+      <Filter>Engine\03. Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerBullet.cpp">
+      <Filter>Engine\03. Object\Player\Effect</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
