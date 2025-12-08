@@ -5,6 +5,7 @@
 #include "SceneManager.h"
 #include "ResourceManager.h"
 #include "GDISelector.h"
+#include "Texture.h"
 
 TitleScene::TitleScene()
 {
@@ -16,6 +17,7 @@ TitleScene::~TitleScene()
 
 void TitleScene::Init()
 {
+
     RECT rect;
     GetClientRect(GET_SINGLE(Core)->GetHwnd(), &rect);
 
@@ -64,11 +66,21 @@ void TitleScene::Render(HDC _hdc)
     RECT rect;
     GetClientRect(GET_SINGLE(Core)->GetHwnd(), &rect);
 
+    Texture* pTex = GET_SINGLE(ResourceManager)->GetTexture(L"TitleBG");
+    if (nullptr != pTex)
+    {
+        int texWidth = pTex->GetWidth();
+        int texHeight = pTex->GetHeight();
+        
+        StretchBlt(_hdc, 0, 0, rect.right, rect.bottom, 
+                   pTex->GetTextureDC(), 0, 0, texWidth, texHeight, SRCCOPY);
+    }
+
     {
         GDISelector fontSel(_hdc, FontType::TITLE);
         
         wstring titleText = L"Lantern Hero";
-        SetTextColor(_hdc, RGB(255, 255, 255));
+        SetTextColor(_hdc, RGB(255, 255, 255)); 
         DrawText(_hdc, titleText.c_str(), -1, &rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
     }
 

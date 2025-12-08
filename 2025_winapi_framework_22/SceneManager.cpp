@@ -3,6 +3,7 @@
 #include "LCMScene.h"
 #include "LSScene.h"
 #include "TitleScene.h"
+#include "DeadScene.h"
 #include "Collider.h"
 #include "Object.h"
 void SceneManager::Init()
@@ -15,6 +16,7 @@ void SceneManager::Init()
 
 	// �� ���
 	RegisterScene(L"TitleScene", std::make_shared<TitleScene>());
+	RegisterScene(L"DeadScene", std::make_shared<DeadScene>());
 	RegisterScene(L"LCMScene", std::make_shared<LCMScene>());
 	RegisterScene(L"LSScene", std::make_shared<LSScene>());
 
