@@ -186,7 +186,6 @@
     <ClInclude Include="EnemySpawnManager.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Enums.h" />
-    <ClInclude Include="EventManager.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GDISelector.h" />
     <ClInclude Include="Ghost.h" />
