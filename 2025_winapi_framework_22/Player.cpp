@@ -219,7 +219,7 @@ void Player::Update()
 
 void Player::UpdateInput()
 {
-	if (m_rigidCompo == nullptr)
+	if (m_rigidCompo == nullptr || m_isDeadState)
 		return;
 
 	POINT mousePt = GET_MOUSEPOS;
@@ -335,7 +335,7 @@ void Player::Rolling()
 void Player::Attack()
 {
 	std::shared_ptr<Scene> curScene = GET_SINGLE(SceneManager)->GetCurScene();
-	if (curScene)
+	if (curScene != nullptr)
 	{
 		POINT mousePt = GET_MOUSEPOS;
 		Vec2 mousePos((float)mousePt.x, (float)mousePt.y);
