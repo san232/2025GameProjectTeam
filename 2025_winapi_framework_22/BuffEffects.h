@@ -62,3 +62,31 @@ public:
     COLORREF GetColor() const override { return m_color; }
 };
 
+class TimeSlowEffect : public ISubWindowEffect
+{
+private:
+    float m_slowFactor = 0.3f;
+    std::wstring m_name = L"Time Slow";
+    COLORREF m_color = RGB(100, 255, 100);
+
+public:
+    void OnEnter(Entity* entity) override {
+        if (entity)
+        {
+            float currentSpeed = entity->GetMoveSpeed();
+            entity->SetMoveSpeed(currentSpeed * m_slowFactor);
+        }
+    }
+    void OnStay(Entity* entity, float dt) override {
+    }
+    void OnExit(Entity* entity) override {
+        if (entity)
+        {
+            float currentSpeed = entity->GetMoveSpeed();
+            entity->SetMoveSpeed(currentSpeed / m_slowFactor);
+        }
+    }
+
+    const std::wstring& GetName() const override { return m_name; }
+    COLORREF GetColor() const override { return m_color; }
+};

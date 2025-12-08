@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Effect.h"
 #include "TimeManager.h"
+#include "SceneManager.h"
 
 Effect::Effect()
 	: m_duration(-1.f)
@@ -14,12 +15,18 @@ Effect::~Effect()
 
 void Effect::Update()
 {
+}
+
+void Effect::LateUpdate()
+{
+	Object::LateUpdate();
+
 	if (m_duration > 0.f)
 	{
 		m_accTime += fDT;
 		if (m_accTime >= m_duration)
 		{
-			SetDead();
+			SceneManager::GetInst()->RequestDestroy(this);
 		}
 	}
 }

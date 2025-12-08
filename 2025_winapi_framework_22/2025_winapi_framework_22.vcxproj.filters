@@ -65,6 +65,12 @@
     <Filter Include="Engine\03. Object\Player">
       <UniqueIdentifier>{12dfdf74-51ec-4805-a366-135cb9e61bac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\10.State\EnemyState\BossState">
+      <UniqueIdentifier>{3fb08006-abbe-4c0c-b94a-35c9e7b7025f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\03. Object\Enemy\Boss">
+      <UniqueIdentifier>{2a9eedb3-e8ea-4843-8d25-ef9a2c8469cf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="2025_winapi_framework_22.h">
@@ -73,50 +79,14 @@
     <ClInclude Include="framework.h">
       <Filter>Default</Filter>
     </ClInclude>
-    <ClInclude Include="Resource.h">
-      <Filter>Default</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>Default</Filter>
-    </ClInclude>
     <ClInclude Include="Core.h">
       <Filter>Engine\01. Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Defines.h">
-      <Filter>Engine\99. Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="pch.h">
-      <Filter>Engine\99. Headers</Filter>
     </ClInclude>
     <ClInclude Include="BaseWindow.h">
       <Filter>Engine\01. Core</Filter>
     </ClInclude>
-    <ClInclude Include="Object.h">
-      <Filter>Engine\03. Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Vec2.h">
-      <Filter>Engine\99. Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>Engine\04. Scene</Filter>
-    </ClInclude>
     <ClInclude Include="Enums.h">
       <Filter>Engine\99. Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>Engine\02. Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Engine\03. Object</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceBase.h">
-      <Filter>Engine\05. Resource</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>Engine\05. Resource</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceManager.h">
-      <Filter>Engine\02. Manager</Filter>
     </ClInclude>
     <ClInclude Include="Component.h">
       <Filter>Engine\06. Component</Filter>
@@ -127,12 +97,6 @@
     <ClInclude Include="GDISelector.h">
       <Filter>Engine\08. Module</Filter>
     </ClInclude>
-    <ClInclude Include="TimeManager.h">
-      <Filter>Engine\02. Manager\Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="InputManager.h">
-      <Filter>Engine\02. Manager\Framework</Filter>
-    </ClInclude>
     <ClInclude Include="CollisionManager.h">
       <Filter>Engine\02. Manager\Framework</Filter>
     </ClInclude>
@@ -142,29 +106,8 @@
     <ClInclude Include="Animator.h">
       <Filter>Engine\06. Component\Animation</Filter>
     </ClInclude>
-    <ClInclude Include="Rigidbody.h">
-      <Filter>Engine\06. Component\Physics</Filter>
-    </ClInclude>
-    <ClInclude Include="LCMScene.h">
-      <Filter>Engine\04. Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="WindowManager.h">
-      <Filter>Engine\02. Manager</Filter>
-    </ClInclude>
     <ClInclude Include="BaseEnemy.h">
       <Filter>Engine\03. Object</Filter>
-    </ClInclude>
-    <ClInclude Include="LSScene.h">
-      <Filter>Engine\04. Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="SubWindow.h">
-      <Filter>Engine\09.Window</Filter>
-    </ClInclude>
-    <ClInclude Include="SubWindowController.h">
-      <Filter>Engine\09.Window</Filter>
-    </ClInclude>
-    <ClInclude Include="SubWindowRenderer.h">
-      <Filter>Engine\09.Window</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">
       <Filter>Engine\03. Object</Filter>
@@ -175,31 +118,8 @@
     <ClInclude Include="EffectManager.h">
       <Filter>Engine\02. Manager</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerIdleState.h">
-      <Filter>Engine\10.State\PlayerState</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerMoveState.h">
-      <Filter>Engine\10.State\PlayerState</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerRollingState.h">
-      <Filter>Engine\10.State\PlayerState</Filter>
-    </ClInclude>
-    <ClInclude Include="State.h">
-      <Filter>Engine\10.State</Filter>
-    </ClInclude>
-    <ClInclude Include="StateMachine.h">
-      <Filter>Engine\10.State</Filter>
-    </ClInclude>
-    <ClInclude Include="SubWindowManager.h" />
     <ClInclude Include="BuffEffects.h" />
-    <ClInclude Include="InvisibleEnemyOverlayRenderer.h" />
     <ClInclude Include="ISubWindowEffect.h" />
-    <ClInclude Include="PlayerDeadState.h">
-      <Filter>Engine\10.State\PlayerState</Filter>
-    </ClInclude>
-    <ClInclude Include="Zombie.h">
-      <Filter>Engine\03. Object\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="EnemyIdleState.h">
       <Filter>Engine\10.State\EnemyState</Filter>
     </ClInclude>
@@ -226,6 +146,18 @@
     </ClInclude>
     <ClInclude Include="Boom.h">
       <Filter>Engine\03. Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Cat.h" />
+    <ClInclude Include="CatBullet.h" />
+    <ClInclude Include="PlayerAttackEffect.h" />
+    <ClInclude Include="BossChargeState.h">
+      <Filter>Engine\10.State\EnemyState\BossState</Filter>
+    </ClInclude>
+    <ClInclude Include="BossDashState.h">
+      <Filter>Engine\10.State\EnemyState\BossState</Filter>
+    </ClInclude>
+    <ClInclude Include="BossKnight.h">
+      <Filter>Engine\03. Object\Enemy\Boss</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -377,6 +309,18 @@
     </ClCompile>
     <ClCompile Include="Boom.cpp">
       <Filter>Engine\03. Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Cat.cpp" />
+    <ClCompile Include="CatBullet.cpp" />
+    <ClCompile Include="PlayerAttackEffect.cpp" />
+    <ClCompile Include="BossChargeState.cpp">
+      <Filter>Engine\10.State\EnemyState\BossState</Filter>
+    </ClCompile>
+    <ClCompile Include="BossDashState.cpp">
+      <Filter>Engine\10.State\EnemyState\BossState</Filter>
+    </ClCompile>
+    <ClCompile Include="BossKnight.cpp">
+      <Filter>Engine\03. Object\Enemy\Boss</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
