@@ -124,8 +124,6 @@
     <ClInclude Include="EffectManager.h">
       <Filter>Engine\02. Manager</Filter>
     </ClInclude>
-    <ClInclude Include="BuffEffects.h" />
-    <ClInclude Include="ISubWindowEffect.h" />
     <ClInclude Include="EnemyIdleState.h">
       <Filter>Engine\10.State\EnemyState</Filter>
     </ClInclude>
@@ -160,9 +158,6 @@
       <Filter>Engine\03. Object\Enemy\Boss</Filter>
     </ClInclude>
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="SubWindow.h" />
-    <ClInclude Include="SubWindowController.h" />
-    <ClInclude Include="SubWindowRenderer.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Cat.h">
       <Filter>Engine\03. Object\Enemy</Filter>
@@ -195,9 +190,6 @@
       <Filter>Engine\99. Headers</Filter>
     </ClInclude>
     <ClInclude Include="WindowManager.h">
-      <Filter>Engine\02. Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="EventManager.h">
       <Filter>Engine\02. Manager</Filter>
     </ClInclude>
     <ClInclude Include="ResourceManager.h">
@@ -250,6 +242,24 @@
     </ClInclude>
     <ClInclude Include="ResourceBase.h">
       <Filter>Engine\05. Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="SubWindow.h">
+      <Filter>Engine\09.Window</Filter>
+    </ClInclude>
+    <ClInclude Include="SubWindowController.h">
+      <Filter>Engine\09.Window</Filter>
+    </ClInclude>
+    <ClInclude Include="SubWindowRenderer.h">
+      <Filter>Engine\09.Window</Filter>
+    </ClInclude>
+    <ClInclude Include="ISubWindowEffect.h">
+      <Filter>Engine\99. Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="BuffEffects.h">
+      <Filter>Engine\99. Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleScene.h">
+      <Filter>Engine\04. Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -421,6 +431,9 @@
     </ClCompile>
     <ClCompile Include="PlayerBullet.cpp">
       <Filter>Engine\03. Object\Player\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>Engine\04. Scene</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -217,6 +217,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TimeManager.h" />
+    <ClInclude Include="TitleScene.h" />
     <ClInclude Include="Vec2.h" />
     <ClInclude Include="WindowManager.h" />
     <ClInclude Include="Zombie.h" />
@@ -272,6 +273,7 @@
     <ClCompile Include="SubWindowRenderer.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TimeManager.cpp" />
+    <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="WindowManager.cpp" />
     <ClCompile Include="Zombie.cpp" />
   </ItemGroup>
