@@ -20,7 +20,7 @@ CatBullet::CatBullet()
 {
     AddComponent<Collider>();
     SetHp(1);
-    SetMoveSpeed(150.f);
+    SetMoveSpeed(200.f);
     SetAttackPower(1);
     m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"CatBullet");
 }

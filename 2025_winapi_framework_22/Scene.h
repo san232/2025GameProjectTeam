@@ -41,6 +41,7 @@ public:
 	void RequestDestroy(Object* obj);
 	void RequestSpawn(Object* obj, Layer _type);
 	void FlushEvent();
+	void SetStopObject(bool _stopObject) { m_stopObject = _stopObject; }
 private:
 	void RemoveObject(Object* _obj);
 private:
@@ -49,5 +50,6 @@ private:
 	vector<SpawnObject> m_spawnObject;
 	// ?? 
 	vector<Object*> m_vecObj[(UINT)Layer::END];
+	bool m_stopObject = false;
 };
 

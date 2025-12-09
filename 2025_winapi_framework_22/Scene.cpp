@@ -80,6 +80,7 @@ void Scene::RemoveObject(Object* _obj)
 
 void Scene::Update()
 {
+	if (m_stopObject) return;
 	//Scene* pScene = new DevScene;
 	for (UINT i = 0; i < (UINT)Layer::DEFAULTEND; ++i)
 	{

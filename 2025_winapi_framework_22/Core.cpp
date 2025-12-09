@@ -8,6 +8,7 @@
 #include "CollisionManager.h"
 #include "EnemySpawnManager.h"
 #include "EffectManager.h"
+#include "LevelUpManager.h"
 
 bool Core::Init(HWND _hWnd)
 {
@@ -38,6 +39,7 @@ bool Core::Init(HWND _hWnd)
     GET_SINGLE(SceneManager)->Init();
     GET_SINGLE(EnemySpawnManager)->Init();
     GET_SINGLE(EffectManager)->Init();
+    GET_SINGLE(LevelUpManager)->Init();
 
     return true;
 }
@@ -60,6 +62,7 @@ void Core::MainUpdate()
     GET_SINGLE(ResourceManager)->FmodUpdate();
     GET_SINGLE(SceneManager)->Update();
     GET_SINGLE(EnemySpawnManager)->Update();
+    GET_SINGLE(LevelUpManager)->Update();
 
     //Vec2 pos = m_obj.GetPos();
     //
@@ -91,6 +94,7 @@ void Core::MainRender()
     
     // 2. draw
     GET_SINGLE(SceneManager)->Render(m_hBackDC);
+    GET_SINGLE(LevelUpManager)->Render(m_hBackDC);
 
     // 3. display
     ::BitBlt(m_hDC, 0, 0, WINDOW_WIDTH, WINDOW_HEIGHT, m_hBackDC, 0,0,SRCCOPY);

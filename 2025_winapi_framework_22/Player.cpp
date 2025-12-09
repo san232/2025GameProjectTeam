@@ -4,6 +4,7 @@
 #include "SceneManager.h"
 #include "ResourceManager.h"
 #include "EffectManager.h"
+#include "LevelUpManager.h"
 #include "Scene.h"
 #include "Texture.h"
 #include "Collider.h"
@@ -30,7 +31,7 @@ Player::Player()
 	, m_animator(nullptr)
 	, m_rigidCompo(nullptr)
 	, m_moveDirection({ 0.f, 0.f })
-	, m_dashPower(700.f)
+	, m_dashPower(900.f)
 	, m_curTime(0.f)
 	, m_canRolling(true)
 	, m_rollingStateRemainTime(0.f)
@@ -39,7 +40,7 @@ Player::Player()
 	, m_attackElapsedTime(0.f)
 	, m_level(1)
 	, m_curExp(0)
-	, m_needExp(100)
+	, m_needExp(1)
 {
 	m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"Player");
 	AddComponent<Collider>()->SetSize({ 50.f,50.f });
@@ -64,7 +65,7 @@ Player::Player()
 
 	SetHp(10);
 	m_maxHp = GetHp();
-	SetMoveSpeed(200.0f);
+	SetMoveSpeed(250.0f);
 	SetAttackCooltime(0.7f);
 	SetAttackPower(5);
 }
@@ -410,11 +411,7 @@ void Player::ChangeAnimation(wstring animationName, bool isLoop)
 int Player::LevelUp(int level)
 {
 	GET_SINGLE(EffectManager)->CreateEffect<PlayerLevelUpEffect>(GetPos(), { 70.f,70.f }, 2.f);
-	m_rollingCooltime -= 0.1f;
-	SetAttackCooltime(GetAttackCooltime() - 0.05f);
-	SetAttackPower(GetAttackPower() + 1);
-	m_maxHp += 1;
-	SetHp(m_maxHp);
+	GET_SINGLE(LevelUpManager)->LevelUpPlayer(this);
 	return (int)(m_needExp * 1.5f);
 }
 

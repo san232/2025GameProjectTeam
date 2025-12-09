@@ -26,6 +26,7 @@ SnailBullet::SnailBullet()
 
 SnailBullet::~SnailBullet()
 {
+
 }
 
 void SnailBullet::Update()

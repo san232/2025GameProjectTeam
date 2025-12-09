@@ -17,7 +17,7 @@ Cat::Cat()
     SetHp(5);
     SetMoveSpeed(70.f);
     SetAttackCooltime(1.2f);
-    SetAttackRange(200.f);
+    SetAttackRange(300.f);
     SetExp(15);
     SetAttackDelay(0.f);
     SetDefaultLookRight(false);

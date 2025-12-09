@@ -42,6 +42,9 @@ public:
     int LevelUp(int level);
     void TakeExp(int exp);
     void Destroy();
+    int GetMaxHp() { return m_maxHp; }
+    float GetRollingCooltime() { return m_rollingCooltime; }
+    void SetRollingCooltime(float _rollingCooltime) { m_rollingCooltime = _rollingCooltime; }
 
 private:
     PlayerIdleState* m_idleState;

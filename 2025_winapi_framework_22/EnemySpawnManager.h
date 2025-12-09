@@ -13,13 +13,6 @@ public:
     void Init();
     void Update();
 
-    void SetBossWaveInterval(int interval)
-    {
-        if (interval <= 0)
-            interval = 1;
-        m_bossWaveInterval = interval;
-    }
-
     int  GetBossWaveInterval() const { return m_bossWaveInterval; }
     int  GetCurrentWave() const { return m_currentWave; }
 

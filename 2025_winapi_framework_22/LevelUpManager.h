@@ -1,0 +1,28 @@
+#pragma once
+#include "Defines.h"
+#include "Enums.h"
+
+class Player;
+
+class LevelUpManager
+{
+    DECLARE_SINGLE(LevelUpManager);
+
+public:
+    void Init();
+    void Update();
+    void Render(HDC _hdc);
+
+public:
+    void LevelUpPlayer(Player* _player);
+    bool IsActive() const { return m_isActive; }
+
+private:
+    void LevelUp(LevelUpType _type);
+
+private:
+    Player* m_player = nullptr;
+    bool  m_isActive = false;
+    float m_elapsed = 0.f;
+    float m_appearDuration = 0.3f;
+};
