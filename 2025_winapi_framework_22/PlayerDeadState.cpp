@@ -31,7 +31,7 @@ void PlayerDeadState::Update(StateMachine& _owner)
 
     if (m_deadTime <= m_curTime)
     {
-        GET_SINGLE(SceneManager)->LoadScene(L"DeadScene");
+        GET_SINGLE(SceneManager)->LoadSceneWithTransition(L"DeadScene");
     }
 }
 

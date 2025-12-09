@@ -41,7 +41,7 @@ void DeadScene::Update()
 
         if (PtInRect(&m_btnRetry, mousePos))
         {
-            GET_SINGLE(SceneManager)->LoadScene(L"LSScene");
+            GET_SINGLE(SceneManager)->LoadSceneWithTransition(L"LSScene");
         }
     }
 }

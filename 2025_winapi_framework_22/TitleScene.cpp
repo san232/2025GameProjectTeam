@@ -49,7 +49,7 @@ void TitleScene::Update()
 
         if (PtInRect(&m_btnStart, mousePos))
         {
-            GET_SINGLE(SceneManager)->LoadScene(L"LSScene");
+            GET_SINGLE(SceneManager)->LoadSceneWithTransition(L"LSScene");
         }
 
         if (PtInRect(&m_btnExit, mousePos))
