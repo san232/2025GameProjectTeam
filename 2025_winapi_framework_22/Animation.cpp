@@ -125,8 +125,9 @@ void Animation::Render(HDC hdc)
     int sw = (int)fr.vSlice.x;
     int sh = (int)fr.vSlice.y;
 
-    int dw = sw;
-    int dh = sh;
+    Vec2 objSize = obj->GetSize();
+    int dw = (int)objSize.x;
+    int dh = (int)objSize.y;
 
     int dx = (int)(pos.x - dw / 2);
     int dy = (int)(pos.y - dh / 2);
@@ -148,11 +149,11 @@ void Animation::Render(HDC hdc)
     }
     else
     {
-        HDC memDC = CreateCompatibleDC(hdc);
-        HBITMAP memBmp = CreateCompatibleBitmap(hdc, sw, sh);
-        HBITMAP oldBmp = (HBITMAP)SelectObject(memDC, memBmp);
+        HDC backDC = CreateCompatibleDC(hdc);
+        HBITMAP backBmp = CreateCompatibleBitmap(hdc, sw, sh);
+        HBITMAP oldBmp = (HBITMAP)SelectObject(backDC, backBmp);
 
-        StretchBlt(memDC,
+        StretchBlt(backDC,
             sw - 1, 0, -sw, sh,
             srcDC,
             sx, sy, sw, sh,
@@ -160,12 +161,12 @@ void Animation::Render(HDC hdc)
 
         TransparentBlt(hdc,
             dx, dy, dw, dh,
-            memDC,
+            backDC,
             0, 0, sw, sh,
             RGB(255, 0, 255));
 
-        SelectObject(memDC, oldBmp);
-        DeleteObject(memBmp);
-        DeleteDC(memDC);
+        SelectObject(backDC, oldBmp);
+        DeleteObject(backBmp);
+        DeleteDC(backDC);
     }
 }

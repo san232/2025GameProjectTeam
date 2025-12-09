@@ -211,8 +211,14 @@ void ResourceManager::RegisterTexture()
 	LoadTexture(L"BoomEnemy", L"Texture\\BoomEnemy.bmp");
 	LoadTexture(L"Ghost", L"Texture\\Ghost.bmp");
 	LoadTexture(L"Cat", L"Texture\\Cat.bmp");
+	LoadTexture(L"Snail", L"Texture\\Snail.bmp");
 	LoadTexture(L"CatBullet", L"Texture\\CatBullet.bmp");
+	LoadTexture(L"SnailBullet", L"Texture\\SnailBullet.bmp");
 	LoadTexture(L"Zombie", L"Texture\\Zombie.bmp");
+	LoadTexture(L"PlayerAttackEffect", L"Texture\\PlayerAttackEffect.bmp");
+	LoadTexture(L"PlayerHitEffect", L"Texture\\PlayerHitEffect.bmp");
+	LoadTexture(L"EnemyHitEffect", L"Texture\\EnemyHitEffect.bmp");
+	LoadTexture(L"PlayerLevelUp", L"Texture\\PlayerLevelUp.bmp");
 }
 
 void ResourceManager::LoadTexture(const wstring& _key, const wstring& _path)

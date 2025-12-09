@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "Cat.h"
+#include "Snail.h"
 #include "Rigidbody.h"
 #include "Collider.h"
 #include "ResourceManager.h"
@@ -12,7 +12,7 @@
 
 #include <cmath>
 
-Cat::Cat()
+Snail::Snail()
 {
     SetHp(5);
     SetMoveSpeed(70.f);
@@ -24,24 +24,24 @@ Cat::Cat()
 
     SetStatMulti();
 
-    m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"Cat");
+    m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"Snail");
 
     m_attackShotDelay = 0.3f;
     m_attackShotTimer = 0.f;
     m_isShotCharging = false;
 
-    m_animator->CreateAnimation(L"Idle", m_pTex, { 0.f, 0.f }, { 64.f, 64.f }, { 64.f,0.f }, 5, 0.12f);
-    m_animator->CreateAnimation(L"Move", m_pTex, { 0.f,  60.f }, { 64.f, 64.f }, { 64.f,0.f }, 3, 0.08f);
-    m_animator->CreateAnimation(L"Hit", m_pTex, { 0.f, 115.f }, { 64.f, 64.f }, { 64.f,  0.f }, 2, 0.06f);
-    m_animator->CreateAnimation(L"Attack", m_pTex, { 0.f, 170.f }, { 64.f, 64.f }, { 64.f,0.f }, 7, 0.06f);
-    m_animator->CreateAnimation(L"Dead", m_pTex, { 0.f, 225.f }, { 64.f, 64.f }, { 64.f, 0.f }, 8, 0.08f);
+    m_animator->CreateAnimation(L"Idle", m_pTex, { 0.f, 0.f }, { 64.f, 30.f }, { 64.f,0.f }, 2, 0.12f);
+    m_animator->CreateAnimation(L"Move", m_pTex, { 0.f,  35.f }, { 64.f, 30.f }, { 64.f,0.f }, 4, 0.08f);
+    m_animator->CreateAnimation(L"Attack", m_pTex, { 0.f, 60.f }, { 64.f, 30.f }, { 64.f,0.f }, 7, 0.06f);
+    m_animator->CreateAnimation(L"Hit", m_pTex, { 0.f, 90.f }, { 64.f, 30.f }, { 64.f,  0.f }, 2, 0.06f);
+    m_animator->CreateAnimation(L"Dead", m_pTex, { 0.f, 120.f }, { 64.f, 30.f }, { 64.f, 0.f }, 10, 0.08f);
 }
 
-Cat::~Cat()
+Snail::~Snail()
 {
 }
 
-void Cat::Update()
+void Snail::Update()
 {
     BaseEnemy::Update();
 
@@ -57,24 +57,24 @@ void Cat::Update()
     }
 }
 
-void Cat::Render(HDC _hdc)
+void Snail::Render(HDC _hdc)
 {
     BaseEnemy::Render(_hdc);
 }
 
-void Cat::EnterCollision(Collider* _other)
+void Snail::EnterCollision(Collider* _other)
 {
 }
 
-void Cat::StayCollision(Collider* _other)
+void Snail::StayCollision(Collider* _other)
 {
 }
 
-void Cat::ExitCollision(Collider* _other)
+void Snail::ExitCollision(Collider* _other)
 {
 }
 
-void Cat::Attack()
+void Snail::Attack()
 {
     Player* player = GetTargetPlayer();
     if (!player || player->GetIsDead())
@@ -84,12 +84,12 @@ void Cat::Attack()
     m_attackShotTimer = 0.f;
 }
 
-void Cat::Dead()
+void Snail::Dead()
 {
     BaseEnemy::Dead();
 }
 
-void Cat::SpawnBullet()
+void Snail::SpawnBullet()
 {
     std::shared_ptr<Scene> curScene = GET_SINGLE(SceneManager)->GetCurScene();
     if (!curScene)

@@ -8,7 +8,6 @@ EnemyAttackState::EnemyAttackState(BaseEnemy* _owner)
 
 void EnemyAttackState::Enter(StateMachine& _owner)
 {
-    cout << "Attack";
     m_enemy->ChangeAnimation(L"Attack");
     m_enemy->Attack();
 }

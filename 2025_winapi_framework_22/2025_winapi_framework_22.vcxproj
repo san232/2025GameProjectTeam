@@ -180,6 +180,7 @@
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="EnemyAttackState.h" />
     <ClInclude Include="EnemyDeadState.h" />
+    <ClInclude Include="EnemyHitEffect.h" />
     <ClInclude Include="EnemyHitState.h" />
     <ClInclude Include="EnemyIdleState.h" />
     <ClInclude Include="EnemyMoveState.h" />
@@ -200,7 +201,9 @@
     <ClInclude Include="PlayerAttackEffect.h" />
     <ClInclude Include="PlayerBullet.h" />
     <ClInclude Include="PlayerDeadState.h" />
+    <ClInclude Include="PlayerHitEffect.h" />
     <ClInclude Include="PlayerIdleState.h" />
+    <ClInclude Include="PlayerLevelUpEffect.h" />
     <ClInclude Include="PlayerMoveState.h" />
     <ClInclude Include="PlayerRollingState.h" />
     <ClInclude Include="Resource.h" />
@@ -209,6 +212,7 @@
     <ClInclude Include="Rigidbody.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="Snail.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="SubWindow.h" />
@@ -241,6 +245,7 @@
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="EnemyAttackState.cpp" />
     <ClCompile Include="EnemyDeadState.cpp" />
+    <ClCompile Include="EnemyHitEffect.cpp" />
     <ClCompile Include="EnemyHitState.cpp" />
     <ClCompile Include="EnemyIdleState.cpp" />
     <ClCompile Include="EnemyMoveState.cpp" />
@@ -251,6 +256,7 @@
     <ClCompile Include="PlayerAttackEffect.cpp" />
     <ClCompile Include="PlayerBullet.cpp" />
     <ClCompile Include="PlayerDeadState.cpp" />
+    <ClCompile Include="PlayerHitEffect.cpp" />
     <ClCompile Include="PlayerIdleState.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="LCMScene.cpp" />
@@ -258,6 +264,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerLevelUpEffect.cpp" />
     <ClCompile Include="PlayerMoveState.cpp" />
     <ClCompile Include="PlayerRollingState.cpp" />
     <ClCompile Include="ResourceBase.cpp" />
@@ -265,6 +272,7 @@
     <ClCompile Include="Rigidbody.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="Snail.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="StateMachine.cpp" />
     <ClCompile Include="SubWindow.cpp" />

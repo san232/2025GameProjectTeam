@@ -23,9 +23,6 @@ public:
     int  GetBossWaveInterval() const { return m_bossWaveInterval; }
     int  GetCurrentWave() const { return m_currentWave; }
 
-    void SetEnemySpawnSize(const Vec2& size) { m_enemySpawnSize = size; }
-    const Vec2& GetEnemySpawnSize() const { return m_enemySpawnSize; }
-
 private:
     void StartNextWave();
     bool AreAllEnemiesDead() const;
@@ -36,6 +33,4 @@ private:
     int  m_currentWave = 0;
     int  m_bossWaveInterval = 5;
     bool m_waveActive = false;
-
-    Vec2 m_enemySpawnSize = Vec2(70.f, 70.f);
 };

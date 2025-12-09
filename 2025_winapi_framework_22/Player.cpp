@@ -2,9 +2,10 @@
 #include "Player.h"
 #include "InputManager.h"
 #include "SceneManager.h"
+#include "ResourceManager.h"
+#include "EffectManager.h"
 #include "Scene.h"
 #include "Texture.h"
-#include "ResourceManager.h"
 #include "Collider.h"
 #include "Animator.h"
 #include "Animation.h"
@@ -17,6 +18,9 @@
 #include "PlayerDeadState.h"
 #include "BaseEnemy.h"
 #include "PlayerBullet.h"
+#include "PlayerAttackEffect.h"
+#include "PlayerHitEffect.h"
+#include "PlayerLevelUpEffect.h"
 
 #include <cmath>
 
@@ -321,6 +325,7 @@ void Player::StopMoving()
 void Player::TakeDamage(int _damage)
 {
 	if (m_isInvincibility == true) return;
+	GET_SINGLE(EffectManager)->CreateEffect<PlayerHitEffect>(GetPos(), { 100.f,100.f }, 2.f);
 	Entity::TakeDamage(_damage);
 }
 
@@ -364,6 +369,8 @@ void Player::Attack()
 
 		curScene->AddObject(bullet, Layer::PLAYERBULLET);
 
+		GET_SINGLE(EffectManager)->CreateEffect<PlayerAttackEffect>(GetPos(), { 100.f,100.f }, 2.f);
+
 		m_canAttack = false;
 		m_attackElapsedTime = 0.f;
 	}
@@ -371,7 +378,6 @@ void Player::Attack()
 
 void Player::Dead()
 {
-	cout << "플레이어 죽음" << endl;
 	m_isDeadState = true;
 	if (m_stateMachine && m_deadState)
 	{
@@ -401,6 +407,7 @@ void Player::ChangeAnimation(wstring animationName, bool isLoop)
 
 int Player::LevelUp(int level)
 {
+	GET_SINGLE(EffectManager)->CreateEffect<PlayerLevelUpEffect>(GetPos(), { 100.f,100.f }, 2.f);
 	m_rollingCooltime -= 0.1f;
 	SetAttackCooltime(GetAttackCooltime() - 0.05f);
 	SetAttackPower(GetAttackPower() + 1);

@@ -4,11 +4,11 @@
 class Animator;
 class Texture;
 
-class PlayerAttackEffect : public Effect
+class PlayerHitEffect : public Effect
 {
 public:
-	PlayerAttackEffect();
-	~PlayerAttackEffect() override;
+	PlayerHitEffect();
+	~PlayerHitEffect() override;
 
 public:
 	void Update() override;

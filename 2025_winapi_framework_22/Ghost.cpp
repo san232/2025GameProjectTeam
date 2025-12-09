@@ -105,7 +105,6 @@ void Ghost::Attack()
 	if (isHit)
 	{
 		player->TakeDamage(GetAttackPower());
-		cout << "공격 성공";
 	}
 }
 

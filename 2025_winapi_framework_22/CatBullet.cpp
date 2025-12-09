@@ -13,15 +13,15 @@
 
 CatBullet::CatBullet()
     : m_direction{ 1.f,0.f }
-    , m_speed(150.f)
     , m_lifeTime(0.f)
     , m_maxLifeTime(5.f)
-    , m_homingStrength(2.0f)
+    , m_homingStrength(1.5f)
     , m_target(nullptr)
     , m_damage(1)
 {
     AddComponent<Collider>();
     SetHp(1);
+    SetMoveSpeed(150.f);
     SetAttackPower(10);
     m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"CatBullet");
 }
@@ -90,32 +90,26 @@ void CatBullet::Move()
 
     if (m_target && !m_target->GetIsDead())
     {
-        Vec2 targetPos = m_target->GetPos();
-        Vec2 desired = { targetPos.x - pos.x, targetPos.y - pos.y };
+        Vec2 toTarget = { m_target->GetPos().x - pos.x, m_target->GetPos().y - pos.y };
 
-        float len = std::sqrt(desired.x * desired.x + desired.y * desired.y);
+        float len = std::sqrt(toTarget.x * toTarget.x + toTarget.y * toTarget.y);
         if (len > 0.f)
         {
-            desired.x /= len;
-            desired.y /= len;
+            Vec2 desired = { toTarget.x / len, toTarget.y / len };
 
             float t = m_homingStrength * fDT;
             if (t > 1.f) t = 1.f;
 
             m_direction.x = m_direction.x + (desired.x - m_direction.x) * t;
             m_direction.y = m_direction.y + (desired.y - m_direction.y) * t;
-
-            float lenDir = std::sqrt(m_direction.x * m_direction.x + m_direction.y * m_direction.y);
-            if (lenDir > 0.f)
-            {
-                m_direction.x /= lenDir;
-                m_direction.y /= lenDir;
-            }
         }
     }
 
-    Translate(m_direction * m_speed * fDT);
+    Translate(m_direction * GetMoveSpeed() * fDT);
 }
+
+
+
 
 void CatBullet::Dead()
 {

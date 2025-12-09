@@ -7,8 +7,10 @@
 #include "Defines.h"
 #include "SceneManager.h"
 #include "EnemySpawnManager.h"
+#include "EffectManager.h"
 #include "Scene.h"
 #include "Player.h"
+#include "EnemyHitEffect.h"
 #include "EnemyIdleState.h"
 #include "EnemyMoveState.h"
 #include "EnemyAttackState.h"
@@ -146,6 +148,7 @@ bool BaseEnemy::IsInAttackRange() const
 
 void BaseEnemy::OnHit(int damage)
 {
+    GET_SINGLE(EffectManager)->CreateEffect<EnemyHitEffect>(GetPos(), { 100.f,100.f }, 2.f);
     Entity::TakeDamage(damage);
 
     if (m_hp <= 0 || GetIsDead())
