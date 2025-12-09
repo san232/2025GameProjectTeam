@@ -89,3 +89,10 @@ enum class EffectType
 {
 	PLAYER_HIT, ENEMY_HIT, ENEMY_DEAD, END
 };
+
+enum class TransitionMode
+{
+	None,
+	FadeOut,
+	FadeIn
+};
