@@ -96,3 +96,11 @@ enum class TransitionMode
 	FadeOut,
 	FadeIn
 };
+
+enum class LevelUpType
+{
+	FullHp,
+	DamageUp,
+	RollingCoolTimeDown,
+	AttackCoolTimeDown
+};

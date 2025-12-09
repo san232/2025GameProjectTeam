@@ -25,9 +25,9 @@ void LevelUpManager::Update()
     else if (GET_KEYDOWN(KEY_TYPE::NUM_2))
         LevelUp(LevelUpType::DamageUp);
     else if (GET_KEYDOWN(KEY_TYPE::NUM_3))
-        LevelUp(LevelUpType::RollingCollTimeDown);
+        LevelUp(LevelUpType::RollingCoolTimeDown);
     else if (GET_KEYDOWN(KEY_TYPE::NUM_4))
-        LevelUp(LevelUpType::AttackCollTimeDown);
+        LevelUp(LevelUpType::AttackCoolTimeDown);
 }
 
 void LevelUpManager::Render(HDC _hdc)
@@ -132,10 +132,10 @@ void LevelUpManager::LevelUp(LevelUpType _type)
     case LevelUpType::DamageUp:
         m_player->SetAttackPower(m_player->GetAttackPower() + 2);
         break;
-    case LevelUpType::RollingCollTimeDown:
+    case LevelUpType::RollingCoolTimeDown:
         m_player->SetRollingCooltime(m_player->GetRollingCooltime() - 0.1f);
         break;
-    case LevelUpType::AttackCollTimeDown:
+    case LevelUpType::AttackCoolTimeDown:
         m_player->SetAttackCooltime(m_player->GetAttackCooltime() - 0.1f);
         break;
     }
