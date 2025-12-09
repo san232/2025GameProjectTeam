@@ -90,10 +90,9 @@ enum class EffectType
 	PLAYER_HIT, ENEMY_HIT, ENEMY_DEAD, END
 };
 
-enum class LevelUpType
+enum class TransitionMode
 {
-	FullHp, 
-	DamageUp, 
-	RollingCollTimeDown,
-	AttackCollTimeDown
+	None,
+	FadeOut,
+	FadeIn
 };
