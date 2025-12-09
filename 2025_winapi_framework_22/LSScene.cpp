@@ -51,6 +51,6 @@ LSScene::~LSScene()
 
 void LSScene::Release()
 {
-    SAFE_DELETE(subWindowManager);
     Scene::Release();
+    SAFE_DELETE(subWindowManager);
 }

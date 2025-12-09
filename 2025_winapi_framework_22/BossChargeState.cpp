@@ -28,11 +28,11 @@ void BossChargeState::Enter(StateMachine& _owner)
 	{
 		Vec2 myPos = m_boss->GetPos();
 		Vec2 targetPos = target->GetPos();
-		
+		/*
 		if (targetPos.x < myPos.x)
 			m_boss->SetDefaultLookRight(false);
 		else
-			m_boss->SetDefaultLookRight(true);
+			m_boss->SetDefaultLookRight(true);*/
 	}
 
 	m_boss->ChangeAnimation(L"Charge", false);

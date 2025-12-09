@@ -41,12 +41,14 @@ void BossDashState::Update(StateMachine& _owner)
 	if (Rigidbody* rb = m_boss->GetComponent<Rigidbody>())
 	{
 		float currentSpeed = m_boss->GetMoveSpeed();
-		float dashSpeed = currentSpeed * 4.0f; 
+		float dashSpeed = currentSpeed * 8.0f; 
 		rb->SetVelocity(m_dashDir * dashSpeed);
 	}
 
-	if (m_timer >= m_duration)
+	Vec2 pos = m_boss->GetPos();
+	if (pos.x <= 0.f || pos.x >= WINDOW_WIDTH || pos.y <= 0.f || pos.y >= WINDOW_HEIGHT)
 	{
+		_owner.ChangeState(m_boss->GetIdleState());
 	}
 }
 

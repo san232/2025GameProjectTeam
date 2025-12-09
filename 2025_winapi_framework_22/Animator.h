@@ -34,6 +34,8 @@ public:
     void SetFlipX(bool flip) { m_flipX = flip; }
     bool GetFlipX() const { return m_flipX; }
 
+    void SetScaleRatio(float ratio) { m_scaleRatio = ratio; }
+    float GetScaleRatio() const { return m_scaleRatio; }
 public:
     Animation* GetCurrent() const { return m_curAnimation; }
     bool IsPaused() const { return m_paused; }
@@ -43,4 +45,5 @@ private:
     Animation* m_curAnimation; // º±≈√∏∏
     bool m_paused;
     bool m_flipX;
+    float m_scaleRatio;
 };
