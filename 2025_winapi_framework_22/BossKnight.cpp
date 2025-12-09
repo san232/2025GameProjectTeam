@@ -36,14 +36,14 @@ BossKnight::BossKnight()
 
 	m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"Zombie"); 
 
-	m_animator->CreateAnimation(L"Idle", m_pTex, { 0.f, 192.f }, { 64.f, 64.f }, { 64.f,0.f }, 4, 0.1f);
-	m_animator->CreateAnimation(L"Move", m_pTex, { 0.f, 0.f }, { 64.f, 64.f }, { 64.f,0.f }, 7, 0.1f);
-	m_animator->CreateAnimation(L"Attack", m_pTex, { 0.f, 128.f }, { 64.f, 64.f }, { 64.f,0.f }, 6, 0.1f);
-	m_animator->CreateAnimation(L"Hit", m_pTex, { 0.f, 256.f }, { 64.f, 64.f }, { 64.f,  0.f }, 3, 0.1f);
-	m_animator->CreateAnimation(L"Dead", m_pTex, { 0.f, 64.f }, { 64.f, 64.f }, { 64.f, 0.f }, 7, 0.1f);
+	m_animator->CreateAnimation(L"Idle", m_pTex, { 0.f, 0.f }, { 128.f, 128.f }, { 128.f,0.f }, 4, 0.1f);
+	m_animator->CreateAnimation(L"Move", m_pTex, { 0.f, 128.f }, { 128.f, 128.f }, { 128.f,0.f }, 4, 0.1f);
+	m_animator->CreateAnimation(L"Attack", m_pTex, { 0.f, 640.f }, { 128.f, 128.f }, { 128.f,0.f }, 11, 0.1f);
+	m_animator->CreateAnimation(L"Hit", m_pTex, { 0.f, 256.f }, { 128.f, 128.f }, { 128.f,  0.f }, 2, 0.1f);
+	m_animator->CreateAnimation(L"Dead", m_pTex, { 0.f, 512.f }, { 64.f, 64.f }, { 64.f, 0.f }, 7, 0.1f);
 	
-	m_animator->CreateAnimation(L"Charge", m_pTex, { 0.f, 192.f }, { 64.f, 64.f }, { 64.f,0.f }, 4, 0.05f); 
-	m_animator->CreateAnimation(L"Dash", m_pTex, { 0.f, 0.f }, { 64.f, 64.f }, { 64.f,0.f }, 7, 0.05f);
+	m_animator->CreateAnimation(L"Dash", m_pTex, { 0.f, 384.f }, { 128.f, 128.f }, { 128.f,0.f }, 8, 0.1f);
+	m_animator->CreateAnimation(L"Charge", m_pTex, { 0.f, 0.f }, { 128.f, 128.f }, { 128.f,0.f }, 4, 0.1f);
 
 	m_chargeState = new BossChargeState(this);
 	m_dashState = new BossDashState(this);
