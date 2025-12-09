@@ -148,7 +148,7 @@ bool BaseEnemy::IsInAttackRange() const
 
 void BaseEnemy::OnHit(int damage)
 {
-    GET_SINGLE(EffectManager)->CreateEffect<EnemyHitEffect>(GetPos(), { 100.f,100.f }, 2.f);
+    GET_SINGLE(EffectManager)->CreateEffect<EnemyHitEffect>(GetPos(), { 50.f,50.f }, 2.f);
     Entity::TakeDamage(damage);
 
     if (m_hp <= 0 || GetIsDead())

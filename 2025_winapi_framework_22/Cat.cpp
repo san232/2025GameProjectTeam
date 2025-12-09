@@ -52,7 +52,7 @@ void Cat::Update()
         {
             m_attackShotTimer = 0.f;
             m_isShotCharging = false;
-            SpawnBullet();
+            Attack();
         }
     }
 }
@@ -80,8 +80,7 @@ void Cat::Attack()
     if (!player || player->GetIsDead())
         return;
 
-    m_isShotCharging = true;
-    m_attackShotTimer = 0.f;
+    SpawnBullet();
 }
 
 void Cat::Dead()

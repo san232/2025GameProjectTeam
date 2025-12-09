@@ -220,6 +220,7 @@ void ResourceManager::RegisterTexture()
 	LoadTexture(L"PlayerHitEffect", L"Texture\\PlayerHitEffect.bmp");
 	LoadTexture(L"EnemyHitEffect", L"Texture\\EnemyHitEffect.bmp");
 	LoadTexture(L"PlayerLevelUpEffect", L"Texture\\PlayerLevelUpEffect.bmp");
+	LoadTexture(L"PlayerRollingEffect", L"Texture\\PlayerRollingEffect.bmp");
 }
 
 void ResourceManager::LoadTexture(const wstring& _key, const wstring& _path)

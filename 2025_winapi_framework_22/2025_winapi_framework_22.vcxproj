@@ -205,6 +205,7 @@
     <ClInclude Include="PlayerIdleState.h" />
     <ClInclude Include="PlayerLevelUpEffect.h" />
     <ClInclude Include="PlayerMoveState.h" />
+    <ClInclude Include="PlayerRollingEffect.h" />
     <ClInclude Include="PlayerRollingState.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceBase.h" />
@@ -213,6 +214,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Snail.h" />
+    <ClInclude Include="SnailBullet.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="SubWindow.h" />
@@ -268,6 +270,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerLevelUpEffect.cpp" />
     <ClCompile Include="PlayerMoveState.cpp" />
+    <ClCompile Include="PlayerRollingEffect.cpp" />
     <ClCompile Include="PlayerRollingState.cpp" />
     <ClCompile Include="ResourceBase.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
@@ -275,6 +278,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Snail.cpp" />
+    <ClCompile Include="SnailBullet.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="StateMachine.cpp" />
     <ClCompile Include="SubWindow.cpp" />

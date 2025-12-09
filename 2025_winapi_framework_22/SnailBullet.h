@@ -5,11 +5,11 @@ class Collider;
 class Player;
 class Texture;
 
-class CatBullet : public Entity
+class SnailBullet : public Entity
 {
 public:
-    CatBullet();
-    ~CatBullet() override;
+    SnailBullet();
+    ~SnailBullet() override;
 
 public:
     void Update() override;
@@ -21,7 +21,6 @@ public:
 
 public:
     void SetDirection(const Vec2& dir) { m_direction = dir; }
-    void SetTarget(Player* target) { m_target = target; }
 
 protected:
     void Attack() override {}
@@ -34,6 +33,4 @@ private:
     float m_lifeTime;
     float m_maxLifeTime;
     float m_homingStrength;
-
-    Player* m_target;
 };

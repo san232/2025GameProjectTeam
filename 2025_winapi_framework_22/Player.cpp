@@ -21,6 +21,7 @@
 #include "PlayerAttackEffect.h"
 #include "PlayerHitEffect.h"
 #include "PlayerLevelUpEffect.h"
+#include "PlayerRollingEffect.h"
 
 #include <cmath>
 
@@ -33,7 +34,7 @@ Player::Player()
 	, m_curTime(0.f)
 	, m_canRolling(true)
 	, m_rollingStateRemainTime(0.f)
-	, m_rollingCooltime(2.f)
+	, m_rollingCooltime(1.5f)
 	, m_canAttack(true)
 	, m_attackElapsedTime(0.f)
 	, m_level(1)
@@ -65,6 +66,7 @@ Player::Player()
 	m_maxHp = GetHp();
 	SetMoveSpeed(200.0f);
 	SetAttackCooltime(0.7f);
+	SetAttackPower(5);
 }
 
 Player::~Player()
@@ -325,15 +327,14 @@ void Player::StopMoving()
 void Player::TakeDamage(int _damage)
 {
 	if (m_isInvincibility == true) return;
-	GET_SINGLE(EffectManager)->CreateEffect<PlayerHitEffect>(GetPos(), { 100.f,100.f }, 2.f);
+	GET_SINGLE(EffectManager)->CreateEffect<PlayerHitEffect>(GetPos(), { 50.f,50.f }, 2.f);
 	Entity::TakeDamage(_damage);
 }
 
 void Player::Rolling()
 {
-	if (m_rigidCompo)
-		m_rigidCompo->AddImpulse(m_moveDirection * m_dashPower);
-
+	m_rigidCompo->AddImpulse(m_moveDirection * m_dashPower);
+	GET_SINGLE(EffectManager)->CreateEffect<PlayerRollingEffect>(GetPos(), { 50.f,50.f }, 2.f);
 	m_rollingStateRemainTime = 0.6f;
 }
 
@@ -366,10 +367,11 @@ void Player::Attack()
 		bullet->SetPos(bulletPos);
 		bullet->SetSize(bulletSize);
 		bullet->SetDirection(dir);
+		bullet->SetAttackPower(GetAttackPower());
 
 		curScene->AddObject(bullet, Layer::PLAYERBULLET);
 
-		GET_SINGLE(EffectManager)->CreateEffect<PlayerAttackEffect>(GetPos(), { 100.f,100.f }, 2.f);
+		GET_SINGLE(EffectManager)->CreateEffect<PlayerAttackEffect>(GetPos(), { 50.f,50.f }, 2.f);
 
 		m_canAttack = false;
 		m_attackElapsedTime = 0.f;
@@ -407,7 +409,7 @@ void Player::ChangeAnimation(wstring animationName, bool isLoop)
 
 int Player::LevelUp(int level)
 {
-	GET_SINGLE(EffectManager)->CreateEffect<PlayerLevelUpEffect>(GetPos(), { 100.f,100.f }, 2.f);
+	GET_SINGLE(EffectManager)->CreateEffect<PlayerLevelUpEffect>(GetPos(), { 70.f,70.f }, 2.f);
 	m_rollingCooltime -= 0.1f;
 	SetAttackCooltime(GetAttackCooltime() - 0.05f);
 	SetAttackPower(GetAttackPower() + 1);

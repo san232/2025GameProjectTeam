@@ -113,7 +113,6 @@ void EnemySpawnManager::SpawnWaveEnemies(Scene* scene, bool bossWave)
 
 		int typeCount = 5;
 		int rand = std::rand() % typeCount;
-		rand = 4;
 
 		BaseEnemy* enemy = nullptr;
 
