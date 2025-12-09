@@ -175,6 +175,7 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="Core.h" />
     <ClInclude Include="BaseEnemy.h" />
+    <ClInclude Include="DeadScene.h" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="EffectManager.h" />
@@ -187,7 +188,6 @@
     <ClInclude Include="EnemySpawnManager.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Enums.h" />
-    <ClInclude Include="EventManager.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GDISelector.h" />
     <ClInclude Include="Ghost.h" />
@@ -222,6 +222,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TimeManager.h" />
+    <ClInclude Include="TitleScene.h" />
     <ClInclude Include="Vec2.h" />
     <ClInclude Include="WindowManager.h" />
     <ClInclude Include="Zombie.h" />
@@ -241,6 +242,7 @@
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="BaseEnemy.cpp" />
+    <ClCompile Include="DeadScene.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="EnemyAttackState.cpp" />
@@ -281,6 +283,7 @@
     <ClCompile Include="SubWindowRenderer.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TimeManager.cpp" />
+    <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="WindowManager.cpp" />
     <ClCompile Include="Zombie.cpp" />
   </ItemGroup>

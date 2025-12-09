@@ -124,8 +124,6 @@
     <ClInclude Include="EffectManager.h">
       <Filter>Engine\02. Manager</Filter>
     </ClInclude>
-    <ClInclude Include="BuffEffects.h" />
-    <ClInclude Include="ISubWindowEffect.h" />
     <ClInclude Include="EnemyIdleState.h">
       <Filter>Engine\10.State\EnemyState</Filter>
     </ClInclude>
@@ -160,9 +158,6 @@
       <Filter>Engine\03. Object\Enemy\Boss</Filter>
     </ClInclude>
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="SubWindow.h" />
-    <ClInclude Include="SubWindowController.h" />
-    <ClInclude Include="SubWindowRenderer.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Cat.h">
       <Filter>Engine\03. Object\Enemy</Filter>
@@ -195,9 +190,6 @@
       <Filter>Engine\99. Headers</Filter>
     </ClInclude>
     <ClInclude Include="WindowManager.h">
-      <Filter>Engine\02. Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="EventManager.h">
       <Filter>Engine\02. Manager</Filter>
     </ClInclude>
     <ClInclude Include="ResourceManager.h">
@@ -239,29 +231,38 @@
     <ClInclude Include="SubWindowManager.h">
       <Filter>Engine\02. Manager</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerAttackEffect.h">
+      <Filter>Engine\03. Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerBullet.h">
+      <Filter>Engine\03. Object\Player\Effect</Filter>
+    </ClInclude>
     <ClInclude Include="Texture.h">
       <Filter>Engine\05. Resource</Filter>
     </ClInclude>
     <ClInclude Include="ResourceBase.h">
       <Filter>Engine\05. Resource</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerHitEffect.h">
-      <Filter>Engine\03. Object\Player\Effect</Filter>
+    <ClInclude Include="SubWindow.h">
+      <Filter>Engine\09.Window</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerAttackEffect.h">
-      <Filter>Engine\03. Object\Player\Effect</Filter>
+    <ClInclude Include="SubWindowController.h">
+      <Filter>Engine\09.Window</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerBullet.h">
-      <Filter>Engine\03. Object\Player</Filter>
+    <ClInclude Include="SubWindowRenderer.h">
+      <Filter>Engine\09.Window</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyHitEffect.h">
-      <Filter>Engine\03. Object\Player\Effect</Filter>
+    <ClInclude Include="ISubWindowEffect.h">
+      <Filter>Engine\99. Headers</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerLevelUpEffect.h">
-      <Filter>Engine\03. Object\Player\Effect</Filter>
+    <ClInclude Include="BuffEffects.h">
+      <Filter>Engine\99. Headers</Filter>
     </ClInclude>
-    <ClInclude Include="Snail.h">
-      <Filter>Engine\03. Object\Enemy</Filter>
+    <ClInclude Include="TitleScene.h">
+      <Filter>Engine\04. Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="DeadScene.h">
+      <Filter>Engine\04. Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -428,23 +429,17 @@
     <ClCompile Include="SubWindowManager.cpp">
       <Filter>Engine\02. Manager</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerHitEffect.cpp">
-      <Filter>Engine\03. Object\Player\Effect</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerAttackEffect.cpp">
-      <Filter>Engine\03. Object\Player\Effect</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerBullet.cpp">
       <Filter>Engine\03. Object\Player</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyHitEffect.cpp">
+    <ClCompile Include="PlayerBullet.cpp">
       <Filter>Engine\03. Object\Player\Effect</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerLevelUpEffect.cpp">
-      <Filter>Engine\03. Object\Player\Effect</Filter>
+    <ClCompile Include="TitleScene.cpp">
+      <Filter>Engine\04. Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Snail.cpp">
-      <Filter>Engine\03. Object\Enemy</Filter>
+    <ClCompile Include="DeadScene.cpp">
+      <Filter>Engine\04. Scene</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

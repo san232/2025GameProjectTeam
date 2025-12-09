@@ -2,6 +2,8 @@
 #include "SceneManager.h"
 #include "LCMScene.h"
 #include "LSScene.h"
+#include "TitleScene.h"
+#include "DeadScene.h"
 #include "Collider.h"
 #include "Object.h"
 void SceneManager::Init()
@@ -12,13 +14,16 @@ void SceneManager::Init()
 	//dynamic_cast<> 
 	//std::dynamic_pointer_cast<>
 
-	// ╬ю ╣Н╥о
+	// О©╫О©╫ О©╫О©╫О©╫
+	RegisterScene(L"TitleScene", std::make_shared<TitleScene>());
+	RegisterScene(L"DeadScene", std::make_shared<DeadScene>());
 	RegisterScene(L"LCMScene", std::make_shared<LCMScene>());
 	RegisterScene(L"LSScene", std::make_shared<LSScene>());
 
-	// ╬ю ╥н╣Е
+	// О©╫О©╫ О©╫н╣О©╫
+	LoadScene(L"TitleScene");
 	//LoadScene(L"LCMScene");
-	LoadScene(L"LSScene");
+	//LoadScene(L"LSScene");
 }
 
 void SceneManager::RegisterScene(const wstring& _name, std::shared_ptr<Scene> _scene)
@@ -38,7 +43,7 @@ void SceneManager::Update()
 
 void SceneManager::FixedUpdate(float _fixedDT)
 {
-	// ©╘╠Б╨нем
+	// О©╫О©╫О©╫О©╫О©╫О©╫О©╫
 	if (m_curScene == nullptr)
 		return;
 	m_curScene->FixedUpdate(_fixedDT);
