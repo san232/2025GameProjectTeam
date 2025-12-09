@@ -224,6 +224,15 @@ void ResourceManager::RegisterTexture()
 	LoadTexture(L"DashBoss", L"Texture\\DashBoss.bmp");
 	LoadTexture(L"DashBossHitEffect", L"Texture\\DashBossHitEffect.bmp");
 	LoadTexture(L"DashBossAttackEffect", L"Texture\\DashBossAttackEffect.bmp");
+	LoadTexture(L"CatBulletDeadEffect", L"Texture\\CatBulletDeadEffect.bmp");
+	LoadTexture(L"WizardBullet", L"Texture\\WizardBullet.bmp");
+	LoadTexture(L"Wizard", L"Texture\\Wizard.bmp");
+	LoadTexture(L"Conch", L"Texture\\Conch.bmp");
+	LoadTexture(L"ConchBullet", L"Texture\\ConchBullet.bmp");
+	LoadTexture(L"AttackPowerUpIcon", L"Texture\\AttackPowerUpIcon.bmp");
+	LoadTexture(L"AttackSpeedUpIcon", L"Texture\\AttackSpeedUpIcon.bmp");
+	LoadTexture(L"HpUpIcon", L"Texture\\HpUpIcon.bmp");
+	LoadTexture(L"RollingCooltimeDownIcon", L"Texture\\RollingCooltimeDownIcon.bmp");
 }
 
 void ResourceManager::LoadTexture(const wstring& _key, const wstring& _path)

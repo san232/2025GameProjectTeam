@@ -13,17 +13,17 @@ public:
     void Init();
     void Update();
 
-    int  GetBossWaveInterval() const { return m_bossWaveInterval; }
     int  GetCurrentWave() const { return m_currentWave; }
+    void ResetWave() { m_currentWave = 1; }
 
 private:
     void StartNextWave();
     bool AreAllEnemiesDead() const;
     Vec2 GetRandomOffScreenSpawnPos() const;
-    void SpawnWaveEnemies(Scene* scene, bool bossWave);
+    void SpawnWaveEnemies(Scene* _scene, bool _bossWave);
 
 private:
-    int  m_currentWave = 0;
+    int  m_currentWave = -1;
     int  m_bossWaveInterval = 5;
     bool m_waveActive = false;
 };

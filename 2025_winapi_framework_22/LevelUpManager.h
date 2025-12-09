@@ -3,6 +3,7 @@
 #include "Enums.h"
 
 class Player;
+class Texture;
 
 class LevelUpManager
 {
@@ -25,4 +26,5 @@ private:
     bool  m_isActive = false;
     float m_elapsed = 0.f;
     float m_appearDuration = 0.3f;
+    Texture* m_cardIcons[4] = {};
 };

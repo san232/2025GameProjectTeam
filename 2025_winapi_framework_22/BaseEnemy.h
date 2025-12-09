@@ -74,6 +74,7 @@ protected:
     StateMachine* m_stateMachine;
     Animator* m_animator;
     Texture* m_pTex;
+    Collider* m_collider;
 
     EnemyIdleState* m_idleState;
     EnemyMoveState* m_moveState;

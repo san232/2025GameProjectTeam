@@ -43,6 +43,7 @@ public:
     void TakeExp(int exp);
     void Destroy();
     int GetMaxHp() { return m_maxHp; }
+    void SetMaxHp(int _maxHp) { m_maxHp = _maxHp; }
     float GetRollingCooltime() { return m_rollingCooltime; }
     void SetRollingCooltime(float _rollingCooltime) { m_rollingCooltime = _rollingCooltime; }
 

@@ -46,7 +46,7 @@ BaseEnemy::BaseEnemy()
     , m_defaultLookRight(true)
 {
     AddComponent<Rigidbody>();
-    AddComponent<Collider>();
+    m_collider = AddComponent<Collider>();
     m_animator = AddComponent<Animator>();
 
     m_stateMachine = new StateMachine;

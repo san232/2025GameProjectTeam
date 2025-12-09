@@ -170,6 +170,7 @@
     <ClInclude Include="BuffEffects.h" />
     <ClInclude Include="Cat.h" />
     <ClInclude Include="CatBullet.h" />
+    <ClInclude Include="CatBulletDeadEffect.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="Component.h" />
@@ -228,6 +229,8 @@
     <ClInclude Include="TitleScene.h" />
     <ClInclude Include="Vec2.h" />
     <ClInclude Include="WindowManager.h" />
+    <ClInclude Include="Wizard.h" />
+    <ClInclude Include="WizardBullet.h" />
     <ClInclude Include="Zombie.h" />
   </ItemGroup>
   <ItemGroup>
@@ -240,6 +243,7 @@
     <ClCompile Include="BossKnight.cpp" />
     <ClCompile Include="Cat.cpp" />
     <ClCompile Include="CatBullet.cpp" />
+    <ClCompile Include="CatBulletDeadEffect.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
     <ClCompile Include="Component.cpp" />
@@ -291,6 +295,8 @@
     <ClCompile Include="TimeManager.cpp" />
     <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="WindowManager.cpp" />
+    <ClCompile Include="Wizard.cpp" />
+    <ClCompile Include="WizardBullet.cpp" />
     <ClCompile Include="Zombie.cpp" />
   </ItemGroup>
   <ItemGroup>

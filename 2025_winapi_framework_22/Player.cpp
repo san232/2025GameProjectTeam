@@ -40,10 +40,10 @@ Player::Player()
 	, m_attackElapsedTime(0.f)
 	, m_level(1)
 	, m_curExp(0)
-	, m_needExp(1)
+	, m_needExp(50)
 {
 	m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"Player");
-	AddComponent<Collider>()->SetSize({ 50.f,50.f });
+	AddComponent<Collider>()->SetSize(GetSize());
 	AddComponent<Rigidbody>();
 	m_animator = AddComponent<Animator>();
 

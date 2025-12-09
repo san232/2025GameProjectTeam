@@ -10,6 +10,7 @@
 #include "Boom.h"
 #include "Cat.h"
 #include "Snail.h"
+#include "Wizard.h"
 
 void EnemySpawnManager::Init()
 {
@@ -18,10 +19,6 @@ void EnemySpawnManager::Init()
 
 void EnemySpawnManager::Update()
 {
-	std::shared_ptr<Scene> curScene = GET_SINGLE(SceneManager)->GetCurScene();
-	if (!curScene)
-		return;
-
 	if (!m_waveActive)
 	{
 		StartNextWave();
@@ -99,44 +96,49 @@ Vec2 EnemySpawnManager::GetRandomOffScreenSpawnPos() const
 	return Vec2(x, y);
 }
 
-void EnemySpawnManager::SpawnWaveEnemies(Scene* scene, bool bossWave)
+void EnemySpawnManager::SpawnWaveEnemies(Scene* _scene, bool _bossWave)
 {
-	if (!scene)
-		return;
-
 	int baseCount = 3;
 	int enemyCount = baseCount + (int)(m_currentWave / 2);
 
 	for (int i = 0; i < enemyCount; ++i)
 	{
 		Vec2 spawnPos = GetRandomOffScreenSpawnPos();
+		int typeCount = 0;
 
-		int typeCount = 5;
+		cout << GetCurrentWave();
+
+		if(GetCurrentWave() == 1)
+			typeCount = 3;
+		else
+			typeCount = 6;
+
 		int rand = std::rand() % typeCount;
-
-		BaseEnemy* enemy = nullptr;
 
 		switch (rand)
 		{
 		case 0:
-			scene->Spawn<Zombie>(Layer::DEFAULTENEMY, spawnPos, {70.f,70.f});
+			_scene->Spawn<Zombie>(Layer::DEFAULTENEMY, spawnPos, {70.f,70.f});
 			break;
 		case 1:
-			scene->Spawn<Ghost>(Layer::DEFAULTENEMY, spawnPos, { 70.f,70.f });
+			_scene->Spawn<Ghost>(Layer::DEFAULTENEMY, spawnPos, { 70.f,70.f });
 			break;
 		case 2:
-			scene->Spawn<Boom>(Layer::DEFAULTENEMY, spawnPos, { 70.f,70.f });
+			_scene->Spawn<Boom>(Layer::DEFAULTENEMY, spawnPos, { 70.f,70.f });
 			break;
 		case 3:
-			scene->Spawn<Cat>(Layer::DEFAULTENEMY, spawnPos, { 70.f,70.f });
+			_scene->Spawn<Cat>(Layer::DEFAULTENEMY, spawnPos, { 70.f,70.f });
 			break;
 		case 4:
-			scene->Spawn<Snail>(Layer::DEFAULTENEMY, spawnPos, { 100.f,50.f });
+			_scene->Spawn<Snail>(Layer::DEFAULTENEMY, spawnPos, { 100.f,50.f });
+			break;
+		case 5:
+			_scene->Spawn<Wizard>(Layer::DEFAULTENEMY, spawnPos, { 70.f,70.f });
 			break;
 		}
 	}
 
-	if (bossWave)
+	if (_bossWave)
 	{
 		// 보스 소환
 	}

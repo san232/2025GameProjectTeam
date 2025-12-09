@@ -5,7 +5,9 @@
 #include "Texture.h"
 #include "SceneManager.h"
 #include "ResourceManager.h"
+#include "EffectManager.h"
 #include "Scene.h"
+#include "CatBulletDeadEffect.h"
 #include "GDISelector.h"
 #include "Defines.h"
 
@@ -112,9 +114,6 @@ void CatBullet::Move()
 
 void CatBullet::Dead()
 {
-    std::shared_ptr<Scene> curScene = GET_SINGLE(SceneManager)->GetCurScene();
-    if (curScene)
-    {
-        curScene->RequestDestroy(this);
-    }
+    GET_SINGLE(EffectManager)->CreateEffect<CatBulletDeadEffect>(GetPos(), { 70.f,70.f }, 2.f);
+    GET_SINGLE(SceneManager)->GetCurScene()->RequestDestroy(this);
 }

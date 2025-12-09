@@ -93,9 +93,5 @@ void SnailBullet::Move()
 
 void SnailBullet::Dead()
 {
-    std::shared_ptr<Scene> curScene = GET_SINGLE(SceneManager)->GetCurScene();
-    if (curScene)
-    {
-        curScene->RequestDestroy(this);
-    }
+    GET_SINGLE(SceneManager)->GetCurScene()->RequestDestroy(this);
 }
