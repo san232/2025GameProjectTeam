@@ -29,10 +29,10 @@ BossKnight::BossKnight()
 	, m_dashDuration(0.8f)
 {
 	SetHp(150);
-	SetMoveSpeed(100.f);
-	SetAttackPower(10);
+	SetMoveSpeed(200.f);
+	SetAttackPower(3.f);
 	SetAttackCooltime(1.5f);
-	SetAttackRange(80.f); 
+	SetAttackRange(120.f); 
 	SetExp(500);
 	SetDefaultLookRight(true);
 	
@@ -148,7 +148,7 @@ void BossKnight::Attack()
 	Vec2 playerPos = player->GetPos();
 
 	float dist = (bossPos - playerPos).Length();
-	if (dist < 100.f) 
+	if (dist < m_attackRange) 
 	{
 		player->TakeDamage(GetAttackPower());
 	}

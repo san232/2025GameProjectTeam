@@ -6,6 +6,7 @@ enum class Layer
 	// 밑에 변경 가능
 	EVIDENCE,
 	DEFAULTENEMY,
+	BOSS,
 	CORE,
 	PLAYER,
 	VFX,
