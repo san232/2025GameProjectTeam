@@ -31,8 +31,8 @@ Snail::Snail()
     m_isShotCharging = false;
 
     m_animator->CreateAnimation(L"Idle", m_pTex, { 0.f, 0.f }, { 64.f, 30.f }, { 64.f,0.f }, 2, 0.12f);
-    m_animator->CreateAnimation(L"Move", m_pTex, { 0.f,  35.f }, { 64.f, 30.f }, { 64.f,0.f }, 4, 0.08f);
-    m_animator->CreateAnimation(L"Attack", m_pTex, { 0.f, 60.f }, { 64.f, 30.f }, { 64.f,0.f }, 7, 0.06f);
+    m_animator->CreateAnimation(L"Move", m_pTex, { 0.f,  40.f }, { 64.f, 30.f }, { 64.f,0.f }, 4, 0.08f);
+    m_animator->CreateAnimation(L"Attack", m_pTex, { 0.f, 70.f }, { 64.f, 30.f }, { 64.f,0.f }, 7, 0.06f);
     m_animator->CreateAnimation(L"Hit", m_pTex, { 0.f, 90.f }, { 64.f, 30.f }, { 64.f,  0.f }, 2, 0.06f);
     m_animator->CreateAnimation(L"Dead", m_pTex, { 0.f, 120.f }, { 64.f, 30.f }, { 64.f, 0.f }, 10, 0.08f);
 }

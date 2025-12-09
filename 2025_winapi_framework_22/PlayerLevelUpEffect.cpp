@@ -8,7 +8,7 @@ PlayerLevelUpEffect::PlayerLevelUpEffect()
 {
 	m_animator = AddComponent<Animator>();
 
-	m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"PlayerLevelUp");
+	m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"PlayerLevelUpEffect");
 
 	m_animator->CreateAnimation(L"Effect", m_pTex, { 0.f, 0.f }, { 64.f, 64.f }, { 64.f, 0.f }, 8, 0.08f);
 	m_animator->Play(L"Effect", PlayMode::Once);
