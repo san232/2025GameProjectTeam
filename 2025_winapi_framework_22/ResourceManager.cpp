@@ -221,6 +221,8 @@ void ResourceManager::RegisterTexture()
 	LoadTexture(L"EnemyHitEffect", L"Texture\\EnemyHitEffect.bmp");
 	LoadTexture(L"PlayerLevelUpEffect", L"Texture\\PlayerLevelUpEffect.bmp");
 	LoadTexture(L"DashBoss", L"Texture\\DashBoss.bmp");
+	LoadTexture(L"DashBossHitEffect", L"Texture\\DashBossHitEffect.bmp");
+	LoadTexture(L"DashBossAttackEffect", L"Texture\\DashBossAttackEffect.bmp");
 }
 
 void ResourceManager::LoadTexture(const wstring& _key, const wstring& _path)
