@@ -66,7 +66,7 @@ void TitleScene::Render(HDC _hdc)
     RECT rect;
     GetClientRect(GET_SINGLE(Core)->GetHwnd(), &rect);
 
-    Texture* pTex = GET_SINGLE(ResourceManager)->GetTexture(L"TitleBG");
+    Texture* pTex = GET_SINGLE(ResourceManager)->GetTexture(L"Title");
     if (nullptr != pTex)
     {
         int texWidth = pTex->GetWidth();
