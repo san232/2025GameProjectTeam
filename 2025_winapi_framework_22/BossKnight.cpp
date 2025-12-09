@@ -34,7 +34,7 @@ BossKnight::BossKnight()
 	SetExp(500);
 	SetDefaultLookRight(true);
 
-	m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"Zombie"); 
+	m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"DashBoss"); 
 
 	m_animator->CreateAnimation(L"Idle", m_pTex, { 0.f, 0.f }, { 128.f, 128.f }, { 128.f,0.f }, 4, 0.1f);
 	m_animator->CreateAnimation(L"Move", m_pTex, { 0.f, 128.f }, { 128.f, 128.f }, { 128.f,0.f }, 4, 0.1f);
