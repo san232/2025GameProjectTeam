@@ -41,7 +41,7 @@ public:
     void MoveToTarget();
     bool IsInAttackRange() const;
 
-    void OnHit(int damage);
+    virtual void OnHit(int damage);
 
     Player* GetTargetPlayer() const { return m_targetPlayer; }
     void ChangeAnimation(wstring animationName, bool isLoop = true);

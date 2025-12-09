@@ -25,7 +25,6 @@ SubWindowManager::~SubWindowManager()
         if (hWnd)
         {
             
-            
         }
     }
 

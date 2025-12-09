@@ -3,6 +3,7 @@
 #include "Core.h"
 #include "InputManager.h"
 #include "SceneManager.h"
+#include "EnemySpawnManager.h"
 #include "ResourceManager.h"
 #include "GDISelector.h"
 
@@ -41,6 +42,7 @@ void DeadScene::Update()
 
         if (PtInRect(&m_btnRetry, mousePos))
         {
+            //GET_SINGLE(EnemySpawnManager)->ResetWave();
             GET_SINGLE(SceneManager)->LoadSceneWithTransition(L"LSScene");
         }
     }

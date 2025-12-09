@@ -126,8 +126,9 @@ void Animation::Render(HDC hdc)
     int sh = (int)fr.vSlice.y;
 
     Vec2 objSize = obj->GetSize();
-    int dw = (int)objSize.x;
-    int dh = (int)objSize.y;
+    float scale = m_owner->GetScaleRatio();
+    int dw = (int)(objSize.x * scale);
+    int dh = (int)(objSize.y * scale);
 
     int dx = (int)(pos.x - dw / 2);
     int dy = (int)(pos.y - dh / 2);

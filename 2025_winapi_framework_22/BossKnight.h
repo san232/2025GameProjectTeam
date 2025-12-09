@@ -28,6 +28,8 @@ protected:
 	void Attack() override; 
 	void Dead() override;
 
+	void OnHit(int damage) override;
+
 private:
 	void UpdateBossFSM();
 

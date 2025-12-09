@@ -5,6 +5,7 @@
 #include "CollisionManager.h"
 #include "Player.h"
 #include "Zombie.h"
+#include "BossKnight.h"
 
 void LSScene::Init()
 {
@@ -14,6 +15,8 @@ void LSScene::Init()
     subWindowManager->Init(mainWindowHwnd, this);
 
     Spawn<Player>(Layer::PLAYER, { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 4 }, { 80.f, 80.f });
+    Spawn<BossKnight>(Layer::DEFAULTENEMY, { WINDOW_WIDTH / 2, WINDOW_HEIGHT - 200 }, { 100.f, 100.f });
+
     GET_SINGLE(CollisionManager)->CheckLayer(Layer::DEFAULTENEMY, Layer::DEFAULTENEMY);
     GET_SINGLE(CollisionManager)->CheckLayer(Layer::DEFAULTENEMY, Layer::PLAYERBULLET);
     GET_SINGLE(CollisionManager)->CheckLayer(Layer::PLAYER, Layer::ENEMYBULLET);
@@ -48,6 +51,6 @@ LSScene::~LSScene()
 
 void LSScene::Release()
 {
-    SAFE_DELETE(subWindowManager);
     Scene::Release();
+    SAFE_DELETE(subWindowManager);
 }

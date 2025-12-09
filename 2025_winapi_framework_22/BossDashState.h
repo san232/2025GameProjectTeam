@@ -1,6 +1,5 @@
 #pragma once
 #include "State.h"
-#include "Vec2.h"
 
 class BossKnight;
 
