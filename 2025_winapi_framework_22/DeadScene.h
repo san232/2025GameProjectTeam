@@ -16,4 +16,5 @@ public:
 
 private:
     RECT m_btnRetry;
+    RECT m_btnExit;
 };
