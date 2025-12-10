@@ -37,15 +37,15 @@ class MoveSpeedBuffEffect : public ISubWindowEffect
 {
 private:
     float m_speedBuffAmount = 2.f;
-    std::wstring m_name = L"Speed Buff";
-    COLORREF m_color = RGB(100, 100, 255);
+    std::wstring m_name = L"Attack Speed Buff";
+    COLORREF m_color = RGB(255, 255, 100);
 
 public:
     void OnEnter(Entity* entity) override {
         if (entity)
         {
-            float currentSpeed = entity->GetMoveSpeed();
-            entity->SetMoveSpeed(currentSpeed * m_speedBuffAmount);
+            float currentAtkSpeed = entity->GetAttackCooltime();
+            entity->SetAttackCooltime(currentAtkSpeed * m_speedBuffAmount);
         }
     }
     void OnStay(Entity* entity, float dt) override {
@@ -53,8 +53,8 @@ public:
     void OnExit(Entity* entity) override {
         if (entity)
         {
-            float currentSpeed = entity->GetMoveSpeed();
-            entity->SetMoveSpeed(currentSpeed / m_speedBuffAmount);
+            float currentSpeed = entity->GetAttackCooltime();
+            entity->SetAttackCooltime(currentSpeed / m_speedBuffAmount);
         }
     }
 
@@ -67,7 +67,7 @@ class TimeSlowEffect : public ISubWindowEffect
 private:
     float m_slowFactor = 0.3f;
     std::wstring m_name = L"Time Slow";
-    COLORREF m_color = RGB(100, 255, 100);
+    COLORREF m_color = RGB(100, 100, 255);
 
 public:
     void OnEnter(Entity* entity) override {
