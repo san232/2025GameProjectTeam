@@ -9,7 +9,7 @@ class AttackBuffEffect : public ISubWindowEffect
 private:
     int m_buffAmount = 2;
     std::wstring m_name = L"Attack Buff";
-    COLORREF m_color = RGB(255, 100, 100);
+    COLORREF m_color = RGB(255, 0, 0);
 
 public:
     void OnEnter(Entity* entity) override {
@@ -33,12 +33,12 @@ public:
     COLORREF GetColor() const override { return m_color; }
 };
 
-class MoveSpeedBuffEffect : public ISubWindowEffect
+class AttackSpeedDebuffEffect : public ISubWindowEffect
 {
 private:
-    float m_speedBuffAmount = 2.f;
-    std::wstring m_name = L"Attack Speed Buff";
-    COLORREF m_color = RGB(255, 255, 100);
+    float m_speedBuffAmount = 0.7f;
+    std::wstring m_name = L"Attack Speed DeBuff";
+    COLORREF m_color = RGB(255, 0, 255);
 
 public:
     void OnEnter(Entity* entity) override {
@@ -65,9 +65,9 @@ public:
 class TimeSlowEffect : public ISubWindowEffect
 {
 private:
-    float m_slowFactor = 0.3f;
+    float m_slowFactor = 0.7f;
     std::wstring m_name = L"Time Slow";
-    COLORREF m_color = RGB(100, 100, 255);
+    COLORREF m_color = RGB(0, 255, 0);
 
 public:
     void OnEnter(Entity* entity) override {

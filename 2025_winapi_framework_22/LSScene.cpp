@@ -44,7 +44,7 @@ void LSScene::Update()
             }
         }
         subWindowManager->Update(fDT, entities);
-        subWindowManager->Render(); // Render 함수로 이동
+        subWindowManager->Render();
     }
 }
 
@@ -64,9 +64,6 @@ void LSScene::Render(HDC _hdc)
     }
 
     Scene::Render(_hdc);
-
-    /*if (subWindowManager)
-        subWindowManager->Render();*/
 }
 
 LSScene::~LSScene()
