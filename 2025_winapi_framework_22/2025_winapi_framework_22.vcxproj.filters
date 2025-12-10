@@ -77,6 +77,9 @@
     <Filter Include="Engine\03. Object\Player\Effect">
       <UniqueIdentifier>{5840983b-77d8-4d21-a015-846f8aac0186}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\03. Object\Enemy\Effect">
+      <UniqueIdentifier>{930103c0-cdda-41f2-ad5d-cf374c59942e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="2025_winapi_framework_22.h">
@@ -264,6 +267,31 @@
     <ClInclude Include="DeadScene.h">
       <Filter>Engine\04. Scene</Filter>
     </ClInclude>
+    <ClInclude Include="CatBulletDeadEffect.h" />
+    <ClInclude Include="EnemyHitEffect.h" />
+    <ClInclude Include="LevelUpManager.h" />
+    <ClInclude Include="PlayerHitEffect.h" />
+    <ClInclude Include="PlayerLevelUpEffect.h" />
+    <ClInclude Include="PlayerRollingEffect.h" />
+    <ClInclude Include="Snail.h" />
+    <ClInclude Include="SnailBullet.h" />
+    <ClInclude Include="Wizard.h" />
+    <ClInclude Include="WizardBullet.h" />
+    <ClInclude Include="Conch.h">
+      <Filter>Engine\03. Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="ConchBullet.h">
+      <Filter>Engine\03. Object\Enemy\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="ConchBulletDeadEffect.h">
+      <Filter>Engine\03. Object\Enemy\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Necromancer.h">
+      <Filter>Engine\03. Object\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="NecromancerBullet.h">
+      <Filter>Engine\03. Object\Enemy\Bullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2025_winapi_framework_22.rc">
@@ -440,6 +468,31 @@
     </ClCompile>
     <ClCompile Include="DeadScene.cpp">
       <Filter>Engine\04. Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CatBulletDeadEffect.cpp" />
+    <ClCompile Include="EnemyHitEffect.cpp" />
+    <ClCompile Include="LevelUpManager.cpp" />
+    <ClCompile Include="PlayerHitEffect.cpp" />
+    <ClCompile Include="PlayerLevelUpEffect.cpp" />
+    <ClCompile Include="PlayerRollingEffect.cpp" />
+    <ClCompile Include="Snail.cpp" />
+    <ClCompile Include="SnailBullet.cpp" />
+    <ClCompile Include="Wizard.cpp" />
+    <ClCompile Include="WizardBullet.cpp" />
+    <ClCompile Include="Conch.cpp">
+      <Filter>Engine\03. Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="ConchBullet.cpp">
+      <Filter>Engine\03. Object\Enemy\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="ConchBulletDeadEffect.cpp">
+      <Filter>Engine\03. Object\Enemy\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Necromancer.cpp">
+      <Filter>Engine\03. Object\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="NecromancerBullet.cpp">
+      <Filter>Engine\03. Object\Enemy\Bullet</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -233,6 +233,11 @@ void ResourceManager::RegisterTexture()
 	LoadTexture(L"AttackSpeedUpIcon", L"Texture\\AttackSpeedUpIcon.bmp");
 	LoadTexture(L"HpUpIcon", L"Texture\\HpUpIcon.bmp");
 	LoadTexture(L"RollingCooltimeDownIcon", L"Texture\\RollingCooltimeDownIcon.bmp");
+	LoadTexture(L"ConchBulletDeadEffect", L"Texture\\ConchBulletDeadEffect.bmp");
+	LoadTexture(L"Necromancer", L"Texture\\Necromancer.bmp");
+	LoadTexture(L"NecromancerBullet", L"Texture\\NecromancerBullet.bmp");
+	LoadTexture(L"Slime", L"Texture\\Slime.bmp");
+	LoadTexture(L"SlimeBullet", L"Texture\\SlimeBullet.bmp");
 }
 
 void ResourceManager::LoadTexture(const wstring& _key, const wstring& _path)
