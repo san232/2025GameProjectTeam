@@ -26,15 +26,13 @@ Slime::Slime()
 
     m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"Slime");
 
-    m_attackShotDelay = 0.3f;
-    m_attackShotTimer = 0.f;
-    m_isShotCharging = false;
-
     m_animator->CreateAnimation(L"Idle", m_pTex, { 0.f,  10.f }, { 64.f, 64.f }, { 64.f, 0.f }, 6, 0.12f);
     m_animator->CreateAnimation(L"Move", m_pTex, { 0.f, 75.f }, { 64.f, 64.f }, { 64.f, 0.f }, 6, 0.08f);
     m_animator->CreateAnimation(L"Dead", m_pTex, { 0.f, 135.f }, { 64.f, 64.f }, { 64.f, 0.f }, 5, 0.08f);
     m_animator->CreateAnimation(L"Attack", m_pTex, { 0.f, 200.f }, { 64.f, 64.f }, { 64.f, 0.f }, 7, 0.06f);
     m_animator->CreateAnimation(L"Hit", m_pTex, { 0.f, 265.f }, { 64.f, 64.f }, { 64.f, 0.f }, 3, 0.06f);
+
+    m_collider->SetOffSetPos({ 0.f,3.f });
 }
 
 Slime::~Slime()

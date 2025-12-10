@@ -20,7 +20,7 @@ ConchBullet::ConchBullet()
     , m_homingStrength(3.5f)
     , m_target(nullptr)
 {
-    AddComponent<Collider>();
+    AddComponent<Collider>()->SetSize({15.f,15.f});
     SetHp(1);
     SetMoveSpeed(250.f);
     SetAttackPower(1);

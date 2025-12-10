@@ -26,15 +26,14 @@ Cat::Cat()
 
     m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"Cat");
 
-    m_attackShotDelay = 0.3f;
-    m_attackShotTimer = 0.f;
-    m_isShotCharging = false;
-
     m_animator->CreateAnimation(L"Idle", m_pTex, { 0.f, 0.f }, { 64.f, 64.f }, { 64.f,0.f }, 5, 0.12f);
     m_animator->CreateAnimation(L"Move", m_pTex, { 0.f,  60.f }, { 64.f, 64.f }, { 64.f,0.f }, 3, 0.08f);
     m_animator->CreateAnimation(L"Hit", m_pTex, { 0.f, 115.f }, { 64.f, 64.f }, { 64.f,  0.f }, 2, 0.06f);
     m_animator->CreateAnimation(L"Attack", m_pTex, { 0.f, 170.f }, { 64.f, 64.f }, { 64.f,0.f }, 7, 0.06f);
     m_animator->CreateAnimation(L"Dead", m_pTex, { 0.f, 225.f }, { 64.f, 64.f }, { 64.f, 0.f }, 8, 0.08f);
+
+    m_collider->SetSize({ 40.f,37.f });
+    m_collider->SetOffSetPos({ 0.f,-8.f });
 }
 
 Cat::~Cat()

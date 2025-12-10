@@ -16,7 +16,7 @@ SnailBullet::SnailBullet()
     , m_lifeTime(0.f)
     , m_maxLifeTime(20.f)
 {
-    AddComponent<Collider>();
+    AddComponent<Collider>()->SetSize({ 20.f,20.f });
     SetHp(1);
     SetMoveSpeed(300.f);
     SetAttackPower(1);

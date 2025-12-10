@@ -35,6 +35,8 @@ Worm::Worm()
     m_animator->CreateAnimation(L"Hit", m_pTex, { 0.f, 120.f }, { 64.f, 64.f }, { 64.f,  0.f }, 5, 0.06f);
     m_animator->CreateAnimation(L"Attack", m_pTex, { 0.f, 180.f }, { 64.f, 64.f }, { 64.f,0.f }, 7, 0.06f);
     m_animator->CreateAnimation(L"Dead", m_pTex, { 0.f, 240.f }, { 64.f, 64.f }, { 64.f, 0.f }, 6, 0.08f);
+
+    m_collider->SetSize({ 45.f,35.f });
 }
 
 Worm::~Worm()

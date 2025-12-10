@@ -20,6 +20,8 @@ Ghost::Ghost()
 	SetExp(20);
 	SetDefaultLookRight(true);
 
+	m_attackDelay = 0.1f;
+
 	SetStatMulti();
 
 	m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"Ghost");
@@ -29,6 +31,8 @@ Ghost::Ghost()
 	m_animator->CreateAnimation(L"Hit", m_pTex, { 0.f, 100.f }, { 64.f, 64.f }, { 64.f,  0.f }, 3, 0.06f);
 	m_animator->CreateAnimation(L"Attack", m_pTex, { 0.f, 155.f }, { 64.f, 64.f }, { 64.f,0.f }, 8, 0.06f);
 	m_animator->CreateAnimation(L"Dead", m_pTex, { 0.f, 210.f }, { 64.f, 64.f }, { 64.f, 0.f }, 9, 0.08f);
+
+	m_collider->SetSize({ 35.f,35.f });
 }
 
 Ghost::~Ghost()

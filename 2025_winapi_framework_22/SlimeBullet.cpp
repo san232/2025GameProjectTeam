@@ -16,7 +16,7 @@ SlimeBullet::SlimeBullet()
     , m_lifeTime(0.f)
     , m_maxLifeTime(20.f)
 {
-    AddComponent<Collider>();
+    AddComponent<Collider>()->SetSize({ 15.f,15.f });
     SetHp(1);
     SetMoveSpeed(300.f);
     SetAttackPower(1);

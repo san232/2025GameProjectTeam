@@ -16,7 +16,7 @@ Snail::Snail()
 {
     SetHp(5);
     SetMoveSpeed(70.f);
-    SetAttackCooltime(0.5f);
+    SetAttackCooltime(0.9f);
     SetAttackRange(300.f);
     SetExp(15);
     SetAttackDelay(0.f);
@@ -26,15 +26,14 @@ Snail::Snail()
 
     m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"Snail");
 
-    m_attackShotDelay = 0.3f;
-    m_attackShotTimer = 0.f;
-    m_isShotCharging = false;
-
     m_animator->CreateAnimation(L"Idle", m_pTex, { 0.f,  7.f }, { 64.f, 30.f }, { 64.f, 0.f }, 2, 0.12f);
     m_animator->CreateAnimation(L"Move", m_pTex, { 0.f, 35.f }, { 64.f, 30.f }, { 64.f, 0.f }, 4, 0.08f);
     m_animator->CreateAnimation(L"Attack", m_pTex, { 0.f, 62.f }, { 64.f, 30.f }, { 64.f, 0.f }, 7, 0.06f);
     m_animator->CreateAnimation(L"Hit", m_pTex, { 0.f, 90.f }, { 64.f, 30.f }, { 64.f, 0.f }, 2, 0.06f);
     m_animator->CreateAnimation(L"Dead", m_pTex, { 0.f,120.f }, { 64.f, 30.f }, { 64.f, 0.f }, 10, 0.08f);
+
+    m_collider->SetSize({30.f,25.f});
+    m_collider->SetOffSetPos({ 0.f,10.f });
 }
 
 Snail::~Snail()

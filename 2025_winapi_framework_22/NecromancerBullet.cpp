@@ -17,7 +17,7 @@ NecromancerBullet::NecromancerBullet()
     , m_maxLifeTime(5.f)
     , m_homingStrength(1.5f)
 {
-    AddComponent<Collider>();
+    AddComponent<Collider>()->SetSize({ 20.f,20.f });
     SetHp(1);
     SetMoveSpeed(200.f);
     SetAttackPower(1);

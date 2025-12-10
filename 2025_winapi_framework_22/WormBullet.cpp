@@ -20,7 +20,7 @@ WormBullet::WormBullet()
     , m_homingStrength(0.4f)
     , m_target(nullptr)
 {
-    AddComponent<Collider>();
+    AddComponent<Collider>()->SetSize({ 15.f,15.f });
     SetHp(1);
     SetMoveSpeed(350.f);
     SetAttackPower(1);

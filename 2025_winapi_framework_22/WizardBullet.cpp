@@ -16,7 +16,7 @@ WizardBullet::WizardBullet()
     , m_lifeTime(0.f)
     , m_maxLifeTime(20.f)
 {
-    AddComponent<Collider>();
+    AddComponent<Collider>()->SetSize({10.f,12.f});
     SetHp(1);
     SetMoveSpeed(200.f);
     SetAttackPower(2);

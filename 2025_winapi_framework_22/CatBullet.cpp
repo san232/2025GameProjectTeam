@@ -20,11 +20,12 @@ CatBullet::CatBullet()
     , m_homingStrength(1.5f)
     , m_target(nullptr)
 {
-    AddComponent<Collider>();
+    AddComponent<Collider>()->SetSize({ 10.f,10.f });
     SetHp(1);
     SetMoveSpeed(200.f);
     SetAttackPower(1);
     m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"CatBullet");
+    
 }
 
 CatBullet::~CatBullet()

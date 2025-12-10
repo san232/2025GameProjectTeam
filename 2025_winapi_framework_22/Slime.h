@@ -23,7 +23,7 @@ private:
     void SpawnBullet();
 
 private:
-    float m_attackShotDelay = 0.3f;
+    float m_attackShotDelay = 0.2f;
     float m_attackShotTimer = 0.f;
     bool m_isShotCharging = false;
 };

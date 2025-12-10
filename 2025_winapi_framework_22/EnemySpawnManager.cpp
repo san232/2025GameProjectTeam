@@ -4,6 +4,7 @@
 #include "GDISelector.h"
 #include "SceneManager.h"
 #include "Scene.h"
+#include "LSScene.h"
 #include "Object.h"
 #include "BaseEnemy.h"
 #include "Zombie.h"
@@ -39,18 +40,19 @@ void EnemySpawnManager::Update()
 
 void EnemySpawnManager::Render(HDC _hdc)
 {
-	if (m_currentWave <= 0)
+	auto curScene = GET_SINGLE(SceneManager)->GetCurScene();
+	if (m_currentWave <= 0 || dynamic_cast<LSScene*>(curScene.get()) == nullptr)
 		return;
 
 	std::wstring text = L"WAVE " + std::to_wstring(m_currentWave);
 
-	int margin = 20;
+	int margin = 25;
 
 	SIZE textSize{};
-	GetTextExtentPoint32W(_hdc, text.c_str(), (int)text.length(), &textSize);
+	GetTextExtentPoint32(_hdc, text.c_str(), (int)text.length(), &textSize);
 
-	int paddingX = 10;
-	int paddingY = 6;
+	int paddingX = 20;
+	int paddingY = 12;
 
 	int right = WINDOW_WIDTH - margin;
 	int top = margin;
@@ -62,13 +64,10 @@ void EnemySpawnManager::Render(HDC _hdc)
 
 	Rectangle(_hdc, left, top, right, bottom);
 
-	SetBkMode(_hdc, TRANSPARENT);
-	SetTextColor(_hdc, RGB(255, 255, 255));
-
 	int textX = left + paddingX;
 	int textY = top + paddingY;
 
-	TextOutW(_hdc, textX, textY, text.c_str(), (int)text.length());
+	TextOut(_hdc, textX, textY, text.c_str(), (int)text.length());
 }
 
 

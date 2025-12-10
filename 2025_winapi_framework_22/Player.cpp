@@ -43,8 +43,7 @@ Player::Player()
 	, m_needExp(50)
 {
 	m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"Player");
-	AddComponent<Collider>();
-	AddComponent<Rigidbody>();
+	AddComponent<Collider>()->SetSize({ 30.f,40.f });;	AddComponent<Rigidbody>();
 	m_animator = AddComponent<Animator>();
 
 	m_animator->CreateAnimation(L"Idle", m_pTex, { 0.f, 10.f }, { 64.f, 64.f }, { 64.f, 0.f }, 6, 0.1f);
