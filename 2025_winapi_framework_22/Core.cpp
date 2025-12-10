@@ -105,7 +105,7 @@ void Core::MainRender()
 
 void Core::GameLoop()
 {
-    INT A = 0;
+    //INT A = 0;
     //static int cnt = 0;
     //++cnt;
     //static int prev = GetTickCount64();

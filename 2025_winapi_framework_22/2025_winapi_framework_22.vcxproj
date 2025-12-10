@@ -201,6 +201,10 @@
     <ClInclude Include="LCMScene.h" />
     <ClInclude Include="LevelUpManager.h" />
     <ClInclude Include="LSScene.h" />
+    <ClInclude Include="MirrorBoss.h" />
+    <ClInclude Include="MirrorBossAttackState.h" />
+    <ClInclude Include="MirrorBossChargeState.h" />
+    <ClInclude Include="MirrorBossIdleState.h" />
     <ClInclude Include="Necromancer.h" />
     <ClInclude Include="NecromancerBullet.h" />
     <ClInclude Include="Object.h" />
@@ -225,6 +229,7 @@
     <ClInclude Include="SlimeBullet.h" />
     <ClInclude Include="Snail.h" />
     <ClInclude Include="SnailBullet.h" />
+    <ClInclude Include="SpecialBullet.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="SubWindow.h" />
@@ -278,6 +283,10 @@
     <ClCompile Include="GDISelector.cpp" />
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="LevelUpManager.cpp" />
+    <ClCompile Include="MirrorBoss.cpp" />
+    <ClCompile Include="MirrorBossAttackState.cpp" />
+    <ClCompile Include="MirrorBossChargeState.cpp" />
+    <ClCompile Include="MirrorBossIdleState.cpp" />
     <ClCompile Include="Necromancer.cpp" />
     <ClCompile Include="NecromancerBullet.cpp" />
     <ClCompile Include="PlayerAttackEffect.cpp" />
@@ -304,6 +313,7 @@
     <ClCompile Include="SlimeBullet.cpp" />
     <ClCompile Include="Snail.cpp" />
     <ClCompile Include="SnailBullet.cpp" />
+    <ClCompile Include="SpecialBullet.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="StateMachine.cpp" />
     <ClCompile Include="SubWindow.cpp" />
