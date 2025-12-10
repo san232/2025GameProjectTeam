@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "DeadScene.h"
+#include "Texture.h"
 #include "Core.h"
 #include "InputManager.h"
 #include "SceneManager.h"
@@ -30,6 +31,11 @@ void DeadScene::Init()
     m_btnRetry.top = centerY + 50; 
     m_btnRetry.right = centerX + (btnWidth / 2);
     m_btnRetry.bottom = centerY + 50 + btnHeight;
+
+    m_btnExit.left = centerX - (btnWidth / 2);
+    m_btnExit.top = centerY + 120;
+    m_btnExit.right = centerX + (btnWidth / 2);
+    m_btnExit.bottom = centerY + 120 + btnHeight;
 }
 
 void DeadScene::Update()
@@ -45,6 +51,11 @@ void DeadScene::Update()
             GET_SINGLE(EnemySpawnManager)->ResetWave();
             GET_SINGLE(SceneManager)->LoadSceneWithTransition(L"LSScene");
         }
+
+        if (PtInRect(&m_btnExit, mousePos))
+        {
+            PostQuitMessage(0);
+        }
     }
 }
 
@@ -53,17 +64,19 @@ void DeadScene::Render(HDC _hdc)
     Scene::Render(_hdc);
 
     RECT rect;
-    GetClientRect(GET_SINGLE(Core)->GetHwnd(), &rect);
+    ::GetClientRect(GET_SINGLE(Core)->GetHwnd(), &rect);
 
+    Texture* pTex = GET_SINGLE(ResourceManager)->GetTexture(L"GameOverScene");
+    if (pTex != nullptr)
     {
-        GDISelector fontSel(_hdc, FontType::TITLE);
-        
-        RECT textRect = rect;
-        textRect.bottom = rect.bottom / 2;
+        int texWidth = pTex->GetWidth();
+        int texHeight = pTex->GetHeight();
 
-        SetTextColor(_hdc, RGB(255, 0, 0));
-        DrawText(_hdc, L"GAME OVER", -1, &textRect, DT_CENTER | DT_BOTTOM | DT_SINGLELINE);
+        StretchBlt(_hdc, 0, 0, rect.right, rect.bottom,
+            pTex->GetTextureDC(), 0, 0, texWidth, texHeight, SRCCOPY);
     }
+
+    int oldBkMode = SetBkMode(_hdc, TRANSPARENT);
 
     {
         GDISelector brushSel(_hdc, BrushType::LIGHTGRAY);
@@ -74,6 +87,18 @@ void DeadScene::Render(HDC _hdc)
         SetTextColor(_hdc, RGB(0, 0, 0));
         DrawText(_hdc, L"RETRY", -1, &m_btnRetry, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
     }
+
+    {
+        GDISelector brushSel(_hdc, BrushType::GRAY);
+        GDISelector penSel(_hdc, PenType::BLACK);
+
+        Rectangle(_hdc, m_btnExit.left, m_btnExit.top, m_btnExit.right, m_btnExit.bottom);
+
+        SetTextColor(_hdc, RGB(0, 0, 0));
+        DrawText(_hdc, L"EXIT", -1, &m_btnExit, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+    }
+
+    SetBkMode(_hdc, oldBkMode);
 }
 
 void DeadScene::Release()

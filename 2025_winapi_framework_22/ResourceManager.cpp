@@ -240,6 +240,7 @@ void ResourceManager::RegisterTexture()
 	LoadTexture(L"SlimeBullet", L"Texture\\SlimeBullet.bmp");
 	LoadTexture(L"Map", L"Texture\\Map.bmp");
 	LoadTexture(L"MirrorBoss", L"Texture\\MirrorBoss.bmp");
+	LoadTexture(L"GameOverScene", L"Texture\\GameOverScene.bmp");
 }
 
 void ResourceManager::LoadTexture(const wstring& _key, const wstring& _path)
