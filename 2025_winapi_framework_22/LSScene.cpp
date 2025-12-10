@@ -6,6 +6,9 @@
 #include "Player.h"
 #include "Zombie.h"
 #include "BossKnight.h"
+#include "Core.h"
+#include "ResourceManager.h"
+#include "Texture.h"
 
 void LSScene::Init()
 {
@@ -15,10 +18,10 @@ void LSScene::Init()
     subWindowManager->Init(mainWindowHwnd, this);
 
     Spawn<Player>(Layer::PLAYER, { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 4 }, { 80.f, 80.f });
-    Spawn<BossKnight>(Layer::BOSS, { WINDOW_WIDTH / 2, WINDOW_HEIGHT - 200 }, { 100.f, 100.f });
+    Spawn<BossKnight>(Layer::DEFAULTENEMY, { WINDOW_WIDTH / 2, WINDOW_HEIGHT - 200 }, { 100.f, 100.f });
 
     GET_SINGLE(CollisionManager)->CheckLayer(Layer::DEFAULTENEMY, Layer::DEFAULTENEMY);
-    GET_SINGLE(CollisionManager)->CheckLayer(Layer::PLAYER, Layer::BOSS);
+    GET_SINGLE(CollisionManager)->CheckLayer(Layer::PLAYER, Layer::DEFAULTENEMY);
     GET_SINGLE(CollisionManager)->CheckLayer(Layer::DEFAULTENEMY, Layer::PLAYERBULLET);
     GET_SINGLE(CollisionManager)->CheckLayer(Layer::PLAYER, Layer::ENEMYBULLET);
 }
@@ -41,8 +44,29 @@ void LSScene::Update()
             }
         }
         subWindowManager->Update(fDT, entities);
-        subWindowManager->Render();
+        // subWindowManager->Render(); // Render 함수로 이동
     }
+}
+
+void LSScene::Render(HDC _hdc)
+{
+    RECT rect;
+    GetClientRect(GET_SINGLE(Core)->GetHwnd(), &rect);
+
+    Texture* pTex = GET_SINGLE(ResourceManager)->GetTexture(L"Map");
+    if (pTex)
+    {
+        int texWidth = pTex->GetWidth();
+        int texHeight = pTex->GetHeight();
+        
+        StretchBlt(_hdc, 0, 0, rect.right, rect.bottom, 
+                   pTex->GetTextureDC(), 0, 0, texWidth, texHeight, SRCCOPY);
+    }
+
+    Scene::Render(_hdc);
+
+    if (subWindowManager)
+        subWindowManager->Render();
 }
 
 LSScene::~LSScene()

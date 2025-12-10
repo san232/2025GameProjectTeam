@@ -224,6 +224,7 @@ void ResourceManager::RegisterTexture()
 	LoadTexture(L"DashBoss", L"Texture\\DashBoss.bmp");
 	LoadTexture(L"DashBossHitEffect", L"Texture\\DashBossHitEffect.bmp");
 	LoadTexture(L"DashBossAttackEffect", L"Texture\\DashBossAttackEffect.bmp");
+	LoadTexture(L"Map", L"Texture\\Map.bmp");
 }
 
 void ResourceManager::LoadTexture(const wstring& _key, const wstring& _path)
