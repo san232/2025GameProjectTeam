@@ -17,24 +17,28 @@
 #include "Scene.h"
 #include "EffectManager.h"
 #include "EnemyHitEffect.h"
+#include "BossBullet.h"
 
 BossKnight::BossKnight()
 	: m_chargeState(nullptr)
 	, m_dashState(nullptr)
-	, m_patternCooldown(5.0f)
+	, m_patternCooldown(1.0f)
 	, m_patternTimer(0.f)
 	, m_chargeTimer(0.f)
-	, m_chargeDuration(0.6f)
+	, m_chargeDuration(0.5f)
 	, m_dashTimer(0.f)
 	, m_dashDuration(0.8f)
+	, m_hasAttacked(false)
+	, m_maxHp(150)
 {
-	SetHp(150);
-	SetMoveSpeed(200.f);
+	SetHp(m_maxHp);
+	SetMoveSpeed(300.f);
 	SetAttackPower(3.f);
 	SetAttackCooltime(1.5f);
 	SetAttackRange(120.f); 
 	SetExp(500);
 	SetDefaultLookRight(true);
+	m_hitStunDuration = 0.1f;
 	
 	m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"DashBoss"); 
 
@@ -43,14 +47,16 @@ BossKnight::BossKnight()
 	m_animator->CreateAnimation(L"Idle", m_pTex, { 0.f, 0.f }, { 128.f, 128.f }, { 128.f,0.f }, 4, 0.1f);
 	m_animator->CreateAnimation(L"Move", m_pTex, { 0.f, 128.f }, { 128.f, 128.f }, { 128.f,0.f }, 4, 0.1f);
 	m_animator->CreateAnimation(L"Attack", m_pTex, { 0.f, 640.f }, { 128.f, 128.f }, { 128.f,0.f }, 11, 0.1f);
-	m_animator->CreateAnimation(L"Hit", m_pTex, { 0.f, 256.f }, { 128.f, 128.f }, { 128.f,  0.f }, 2, 0.1f);
+	m_animator->CreateAnimation(L"Hit", m_pTex, { 0.f, 256.f }, { 128.f, 128.f }, { 128.f,  0.f }, 2, 0.04f);
 	m_animator->CreateAnimation(L"Dead", m_pTex, { 0.f, 256.f }, { 128.f, 128.f }, { 128.f, 0.f }, 7, 0.1f);
 	
-	m_animator->CreateAnimation(L"Charge", m_pTex, { 0.f, 0.f }, { 128.f, 128.f }, { 128.f,0.f }, 4, 0.1f); 
-	m_animator->CreateAnimation(L"Dash", m_pTex, { 0.f, 384.f }, { 128.f, 128.f }, { 128.f,0.f }, 8, 0.1f);
+	m_animator->CreateAnimation(L"Charge", m_pTex, { 0.f, 384.f }, { 128.f, 128.f }, { 128.f,0.f }, 4, 0.1f); 
+	m_animator->CreateAnimation(L"Dash", m_pTex, { 0.f, 768.f }, { 128.f, 128.f }, { 128.f,0.f }, 8, 0.1f);
 
 	m_chargeState = new BossChargeState(this);
 	m_dashState = new BossDashState(this);
+
+	m_attackStateDuration = 1.1f;
 
 	if (Collider* col = GetComponent<Collider>())
 	{
@@ -89,6 +95,7 @@ void BossKnight::Update()
 void BossKnight::Render(HDC _hdc)
 {
 	BaseEnemy::Render(_hdc);
+	RenderBossHpUI(_hdc);
 }
 
 void BossKnight::EnterCollision(Collider* _other)
@@ -104,7 +111,12 @@ void BossKnight::StayCollision(Collider* _other)
 
 		if (target && !target->GetIsDead())
 		{
-			target->TakeDamage(GetAttackPower());
+            if (m_dashHitEntities.find(target) != m_dashHitEntities.end())
+                return;
+
+            m_dashHitEntities.insert(target);
+
+			target->TakeDamage(GetAttackPower() * 0.5f);
 			
 			Vec2 bossPos = GetPos();
 			Vec2 targetPos = target->GetPos();
@@ -113,7 +125,7 @@ void BossKnight::StayCollision(Collider* _other)
 			
 			if (Rigidbody* trb = target->GetComponent<Rigidbody>())
 			{
-				trb->AddForce(pushDir * 500.f); 
+				trb->AddImpulse(pushDir * 800.f); 
 			}
 		}
 	}
@@ -140,6 +152,10 @@ State* BossKnight::GetAttackState() const
 
 void BossKnight::Attack()
 {
+}
+
+void BossKnight::ApplyDamage()
+{
 	Player* player = GetTargetPlayer();
 	if (!player || player->GetIsDead())
 		return;
@@ -151,6 +167,36 @@ void BossKnight::Attack()
 	if (dist < m_attackRange) 
 	{
 		player->TakeDamage(GetAttackPower());
+
+		Vec2 pushDir = playerPos - bossPos;
+		pushDir.Normalize();
+
+		if (Rigidbody* rb = player->GetComponent<Rigidbody>())
+		{
+			rb->AddImpulse(pushDir * 800.f);
+		}
+	}
+	Fire8DirectionBullets();
+}
+
+void BossKnight::Fire8DirectionBullets()
+{
+	std::shared_ptr<Scene> curScene = GET_SINGLE(SceneManager)->GetCurScene();
+	if (!curScene) return;
+
+	Vec2 bossPos = GetPos();
+	Vec2 offsets[] = {
+		{1.f, 0.f}, {0.7071f, 0.7071f}, {0.f, 1.f}, {-0.7071f, 0.7071f},
+		{-1.f, 0.f}, {-0.7071f, -0.7071f}, {0.f, -1.f}, {0.7071f, -0.7071f}
+	};
+
+	for (int i = 0; i < 8; ++i)
+	{
+		BossBullet* bullet = new BossBullet;
+		bullet->SetPos(bossPos);
+		bullet->SetSize(Vec2(20.f, 20.f));
+		bullet->SetDirection(offsets[i]);
+		curScene->AddObject(bullet, Layer::ENEMYBULLET);
 	}
 }
 
@@ -233,13 +279,28 @@ void BossKnight::UpdateBossFSM()
 
 	if (curState == m_attackState)
 	{
-		m_stateMachine->Update();
+		m_attackStateTimer += fDT;
+		if (m_attackStateTimer >= 0.6f && !m_hasAttacked)
+		{
+			ApplyDamage();
+			m_hasAttacked = true;
+		}
+
+		if (m_attackStateTimer >= m_attackStateDuration)
+		{
+			m_stateMachine->ChangeState(m_idleState);
+			m_attackStateTimer = 0.f;
+		}
+		else
+		{
+			m_stateMachine->Update();
+		}
 		return;
 	}
 
 	m_patternTimer += fDT;
 
-	if (!m_targetPlayer)
+	if (!m_targetPlayer || m_targetPlayer->GetIsDead())
 	{
 		if (m_stateMachine && m_idleState)
 		{
@@ -263,6 +324,8 @@ void BossKnight::UpdateBossFSM()
 	if (dist <= m_attackRange && m_canAttack)
 	{
 		m_canAttack = false;
+		m_attackStateTimer = 0.f;
+		m_hasAttacked = false;
 		m_stateMachine->ChangeState(m_attackState);
 		m_stateMachine->Update();
 	}
@@ -274,5 +337,55 @@ void BossKnight::UpdateBossFSM()
 		}
 		m_stateMachine->Update();
 	}
+}
+
+void BossKnight::RenderBossHpUI(HDC _hdc)
+{
+	float ratio = 0.f;
+	if (m_maxHp > 0)
+	{
+		ratio = static_cast<float>(m_hp) / static_cast<float>(m_maxHp);
+		if (ratio < 0.f) ratio = 0.f;
+		if (ratio > 1.f) ratio = 1.f;
+	}
+
+	int barWidth = 600;
+	int barHeight = 20;
+	int barMarginBottom = 50; 
+
+	int left = (WINDOW_WIDTH - barWidth) / 2;
+	int right = left + barWidth;
+	int top = 50; 
+	int bottom = top + barHeight;
+
+	HPEN oldPen = (HPEN)::SelectObject(_hdc, ::GetStockObject(BLACK_PEN));
+	HBRUSH oldBrush = (HBRUSH)::SelectObject(_hdc, ::GetStockObject(BLACK_BRUSH));
+	::Rectangle(_hdc, left, top, right, bottom);
+
+	int innerLeft = left + 1;
+	int innerTop = top + 1;
+	int innerRight = right - 1;
+	int innerBottom = bottom - 1;
+	int innerWidth = innerRight - innerLeft;
+
+	int filledWidth = static_cast<int>(innerWidth * ratio);
+	int filledRight = innerLeft + filledWidth;
+
+	if (filledWidth > 0)
+	{
+		GDISelector redBrush(_hdc, BrushType::RED);
+		::Rectangle(_hdc, innerLeft, innerTop, filledRight, innerBottom);
+	}
+
+	if (filledRight < innerRight)
+	{
+		HBRUSH whiteBrush = (HBRUSH)::GetStockObject(WHITE_BRUSH);
+		HBRUSH prevBrush = (HBRUSH)::SelectObject(_hdc, whiteBrush);
+		::Rectangle(_hdc, filledRight, innerTop, innerRight, innerBottom);
+		::SelectObject(_hdc, prevBrush);
+	}
+
+	::SelectObject(_hdc, oldBrush);
+	::SelectObject(_hdc, oldPen);
 }
 

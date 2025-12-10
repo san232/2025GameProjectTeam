@@ -9,9 +9,20 @@ class BossKnight : public BaseEnemy
 public:
 	BossKnight();
 	~BossKnight() override;
-
-public:
-	void Update() override;
+    
+    	void ClearDashHits() { m_dashHitEntities.clear(); }
+    
+    
+    
+    	void Fire8DirectionBullets();
+    
+    
+    
+    public:
+    
+    	void Update() override;
+    
+    
 	void Render(HDC _hdc) override;
 
 	void EnterCollision(Collider* _other) override;
@@ -31,17 +42,27 @@ protected:
 	void OnHit(int damage) override;
 
 private:
-	void UpdateBossFSM();
+		void UpdateBossFSM();
+	void RenderBossHpUI(HDC _hdc);
+	
+	private:
+		void ApplyDamage();
+	
+		BossChargeState* m_chargeState;
+		BossDashState* m_dashState;
+		
+		int m_maxHp;
 
-private:
-	BossChargeState* m_chargeState;
-	BossDashState* m_dashState;
-
-	float m_patternCooldown; 
-	float m_patternTimer;
-
-	float m_chargeTimer;
-	float m_chargeDuration;
-	float m_dashTimer;
-	float m_dashDuration;
-};
+		float m_patternCooldown;
+		float m_patternTimer;
+	
+		float m_chargeTimer;
+		float m_chargeDuration;
+	
+		float m_dashTimer;
+			float m_dashDuration;
+		
+			bool m_hasAttacked;
+		    std::set<Entity*> m_dashHitEntities;
+		};
+		
