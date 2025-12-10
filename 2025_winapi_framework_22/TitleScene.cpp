@@ -64,7 +64,7 @@ void TitleScene::Render(HDC _hdc)
     Scene::Render(_hdc);
 
     RECT rect;
-    GetClientRect(GET_SINGLE(Core)->GetHwnd(), &rect);
+    ::GetClientRect(GET_SINGLE(Core)->GetHwnd(), &rect);
 
     Texture* pTex = GET_SINGLE(ResourceManager)->GetTexture(L"Title");
     if (pTex != nullptr)
@@ -74,14 +74,6 @@ void TitleScene::Render(HDC _hdc)
         
         StretchBlt(_hdc, 0, 0, rect.right, rect.bottom, 
                    pTex->GetTextureDC(), 0, 0, texWidth, texHeight, SRCCOPY);
-    }
-
-    {
-        GDISelector fontSel(_hdc, FontType::TITLE);
-        
-        wstring titleText = L"Lantern Hero";
-        SetTextColor(_hdc, RGB(255, 255, 255)); 
-        DrawText(_hdc, titleText.c_str(), -1, &rect, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
     }
 
     {

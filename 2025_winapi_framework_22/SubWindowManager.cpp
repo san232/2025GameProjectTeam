@@ -42,7 +42,7 @@ void SubWindowManager::Init(HWND hMainWnd, Scene* ownerScene)
     m_renderer = new SubWindowRenderer(hMainWnd, ownerScene);
 
     ISubWindowEffect* attackBuff = new AttackBuffEffect();
-    ISubWindowEffect* speedBuff = new MoveSpeedBuffEffect();
+    ISubWindowEffect* speedBuff = new AttackSpeedDebuffEffect();
     ISubWindowEffect* timeSlowBuff = new TimeSlowEffect();
     m_buffEffects.push_back(attackBuff);
     m_buffEffects.push_back(speedBuff);
