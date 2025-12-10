@@ -238,6 +238,7 @@ void ResourceManager::RegisterTexture()
 	LoadTexture(L"NecromancerBullet", L"Texture\\NecromancerBullet.bmp");
 	LoadTexture(L"Slime", L"Texture\\Slime.bmp");
 	LoadTexture(L"SlimeBullet", L"Texture\\SlimeBullet.bmp");
+	LoadTexture(L"Map", L"Texture\\Map.bmp");
 }
 
 void ResourceManager::LoadTexture(const wstring& _key, const wstring& _path)
