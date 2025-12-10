@@ -17,6 +17,7 @@
 #include "Scene.h"
 #include "EffectManager.h"
 #include "EnemyHitEffect.h"
+#include "BossBullet.h"
 
 BossKnight::BossKnight()
 	: m_chargeState(nullptr)
@@ -174,6 +175,28 @@ void BossKnight::ApplyDamage()
 		{
 			rb->AddImpulse(pushDir * 800.f);
 		}
+	}
+	Fire8DirectionBullets();
+}
+
+void BossKnight::Fire8DirectionBullets()
+{
+	std::shared_ptr<Scene> curScene = GET_SINGLE(SceneManager)->GetCurScene();
+	if (!curScene) return;
+
+	Vec2 bossPos = GetPos();
+	Vec2 offsets[] = {
+		{1.f, 0.f}, {0.7071f, 0.7071f}, {0.f, 1.f}, {-0.7071f, 0.7071f},
+		{-1.f, 0.f}, {-0.7071f, -0.7071f}, {0.f, -1.f}, {0.7071f, -0.7071f}
+	};
+
+	for (int i = 0; i < 8; ++i)
+	{
+		BossBullet* bullet = new BossBullet;
+		bullet->SetPos(bossPos);
+		bullet->SetSize(Vec2(20.f, 20.f));
+		bullet->SetDirection(offsets[i]);
+		curScene->AddObject(bullet, Layer::ENEMYBULLET);
 	}
 }
 

@@ -10,10 +10,19 @@ public:
 	BossKnight();
 	~BossKnight() override;
     
-    void ClearDashHits() { m_dashHitEntities.clear(); }
-
-public:
-	void Update() override;
+    	void ClearDashHits() { m_dashHitEntities.clear(); }
+    
+    
+    
+    	void Fire8DirectionBullets();
+    
+    
+    
+    public:
+    
+    	void Update() override;
+    
+    
 	void Render(HDC _hdc) override;
 
 	void EnterCollision(Collider* _other) override;

@@ -33,6 +33,7 @@ void BossDashState::Enter(StateMachine& _owner)
 
 	m_boss->ChangeAnimation(L"Dash", true);
     m_boss->ClearDashHits();
+	m_boss->Fire8DirectionBullets();
 }
 
 void BossDashState::Update(StateMachine& _owner)
