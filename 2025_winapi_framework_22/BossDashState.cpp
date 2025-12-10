@@ -32,6 +32,7 @@ void BossDashState::Enter(StateMachine& _owner)
 	}
 
 	m_boss->ChangeAnimation(L"Dash", true);
+    m_boss->ClearDashHits();
 }
 
 void BossDashState::Update(StateMachine& _owner)
@@ -41,7 +42,7 @@ void BossDashState::Update(StateMachine& _owner)
 	if (Rigidbody* rb = m_boss->GetComponent<Rigidbody>())
 	{
 		float currentSpeed = m_boss->GetMoveSpeed();
-		float dashSpeed = currentSpeed * 8.0f; 
+		float dashSpeed = currentSpeed * 15.0f; 
 		rb->SetVelocity(m_dashDir * dashSpeed);
 	}
 
