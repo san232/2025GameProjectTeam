@@ -15,8 +15,8 @@ Boom::Boom()
 	SetHp(15);
 	SetMoveSpeed(200.f);
 	SetAttackPower(1);
-	SetAttackCooltime(0.8f);
-	SetAttackRange(30.f);
+	SetAttackCooltime(0.5f);
+	SetAttackRange(50.f);
 	SetExp(20);
 	SetDefaultLookRight(false);
 
@@ -39,73 +39,73 @@ Boom::~Boom()
 void Boom::Update()
 {
 	BaseEnemy::Update();
+
+	if (m_isDashing)
+	{
+		m_dashTimer += fDT;
+		if (m_dashTimer >= m_dashDuration)
+		{
+			m_dashTimer = 0.f;
+			m_isDashing = false;
+			m_hasHitPlayerThisDash = false;
+
+			m_rigidbody->SetVelocity(Vec2(0.f, 0.f));
+		}
+	}
 }
 
 void Boom::Render(HDC _hdc)
 {
 	BaseEnemy::Render(_hdc);
-
-	Vec2 pos = GetPos();
-	Vec2 size = GetSize();
-
-	BrushType brush = BrushType::HOLLOW;
-	PenType   pen = PenType::RED;
-
-	GDISelector brushSelector(_hdc, brush);
-	GDISelector penSelector(_hdc, pen);
-
-	Vec2 attackSize = { size.x * m_attackHitboxScale,
-						size.y * m_attackHitboxScale };
-
-	RECT_RENDER(_hdc, pos.x, pos.y, attackSize.x, attackSize.y);
 }
 
 void Boom::EnterCollision(Collider* _other)
 {
+	if (!m_isDashing || m_hasHitPlayerThisDash || !_other)
+		return;
 
+	Object* otherObj = _other->GetOwner();
+	Player* player = dynamic_cast<Player*>(otherObj);
+	if (!player || player->GetIsDead())
+		return;
+
+	player->TakeDamage(GetAttackPower());
+	m_hasHitPlayerThisDash = true;
 }
 
 void Boom::StayCollision(Collider* _other)
 {
-
 }
 
 void Boom::ExitCollision(Collider* _other)
 {
-
 }
 
 void Boom::Attack()
 {
+	if (m_isDashing)
+		return;
+
 	Player* player = GetTargetPlayer();
 	if (!player || player->GetIsDead())
 		return;
 
-	Vec2 zombiePos = GetPos();
-	Vec2 zombieSize = GetSize();
+	Vec2 toPlayer = player->GetPos();
+	toPlayer -= GetPos();
 
-	Vec2 playerPos = player->GetPos();
-	Vec2 playerSize = player->GetSize();
+	float lenSq = toPlayer.x * toPlayer.x + toPlayer.y * toPlayer.y;
+	if (lenSq <= 0.f)
+		return;
 
-	Vec2 attackSize = { zombieSize.x * m_attackHitboxScale,
-						zombieSize.y * m_attackHitboxScale };
+	float len = std::sqrt(lenSq);
+	Vec2 dir(toPlayer.x / len, toPlayer.y / len);
 
-	float halfAw = attackSize.x * 0.5f;
-	float halfAh = attackSize.y * 0.5f;
-	float halfPw = playerSize.x * 0.5f;
-	float halfPh = playerSize.y * 0.5f;
+	m_isDashing = true;
+	m_dashTimer = 0.f;
+	m_hasHitPlayerThisDash = false;
 
-	float dx = std::fabs(playerPos.x - zombiePos.x);
-	float dy = std::fabs(playerPos.y - zombiePos.y);
-
-	bool isHit =
-		(dx <= (halfAw + halfPw)) &&
-		(dy <= (halfAh + halfPh));
-
-	if (isHit)
-	{
-		player->TakeDamage(GetAttackPower());
-	}
+	m_rigidbody->SetVelocity(Vec2(0.f, 0.f));
+	m_rigidbody->AddImpulse(dir * m_dashImpulse);
 }
 
 void Boom::Dead()

@@ -20,5 +20,10 @@ protected:
     void Dead() override;
 
 private:
-    float m_attackHitboxScale = 1.1f;
+    float m_dashDuration = 0.25f;
+    float m_dashTimer = 0.f;
+    bool  m_isDashing = false;
+    bool  m_hasHitPlayerThisDash = false;
+
+    float m_dashImpulse = 700.f;
 };

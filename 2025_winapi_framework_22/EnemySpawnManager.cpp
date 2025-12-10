@@ -13,6 +13,8 @@
 #include "Wizard.h"
 #include "Conch.h"
 #include "Necromancer.h"
+#include "Slime.h"
+#include "Worm.h"
 
 void EnemySpawnManager::Init()
 {
@@ -113,10 +115,10 @@ void EnemySpawnManager::SpawnWaveEnemies(Scene* _scene, bool _bossWave)
 		if(GetCurrentWave() == 1)
 			typeCount = 3;
 		else
-			typeCount = 8;
+			typeCount = 10;
 
 		int rand = std::rand() % typeCount;
-		rand = 7;
+		rand = 9;
 
 		switch (rand)
 		{
@@ -139,10 +141,16 @@ void EnemySpawnManager::SpawnWaveEnemies(Scene* _scene, bool _bossWave)
 			_scene->Spawn<Wizard>(Layer::DEFAULTENEMY, spawnPos, { 70.f,70.f });
 			break;
 		case 6:
-			_scene->Spawn<Conch>(Layer::DEFAULTENEMY, spawnPos, { 100.f, 100.f });
+			_scene->Spawn<Conch>(Layer::DEFAULTENEMY, spawnPos, { 120.f, 120.f });
 			break;
 		case 7:
 			_scene->Spawn<Necromancer>(Layer::DEFAULTENEMY, spawnPos, { 70.f,70.f });
+			break;
+		case 8:
+			_scene->Spawn<Slime>(Layer::DEFAULTENEMY, spawnPos, { 70.f,70.f });
+			break;
+		case 9:
+			_scene->Spawn<Worm>(Layer::DEFAULTENEMY, spawnPos, { 70.f,70.f });
 			break;
 		}
 	}

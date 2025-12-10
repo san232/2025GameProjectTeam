@@ -220,6 +220,8 @@
     <ClInclude Include="Rigidbody.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="Slime.h" />
+    <ClInclude Include="SlimeBullet.h" />
     <ClInclude Include="Snail.h" />
     <ClInclude Include="SnailBullet.h" />
     <ClInclude Include="State.h" />
@@ -236,6 +238,9 @@
     <ClInclude Include="WindowManager.h" />
     <ClInclude Include="Wizard.h" />
     <ClInclude Include="WizardBullet.h" />
+    <ClInclude Include="Worm.h" />
+    <ClInclude Include="WormBullet.h" />
+    <ClInclude Include="WormBulletDeadEffect.h" />
     <ClInclude Include="Zombie.h" />
   </ItemGroup>
   <ItemGroup>
@@ -293,6 +298,8 @@
     <ClCompile Include="Rigidbody.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="Slime.cpp" />
+    <ClCompile Include="SlimeBullet.cpp" />
     <ClCompile Include="Snail.cpp" />
     <ClCompile Include="SnailBullet.cpp" />
     <ClCompile Include="State.cpp" />
@@ -307,6 +314,9 @@
     <ClCompile Include="WindowManager.cpp" />
     <ClCompile Include="Wizard.cpp" />
     <ClCompile Include="WizardBullet.cpp" />
+    <ClCompile Include="Worm.cpp" />
+    <ClCompile Include="WormBullet.cpp" />
+    <ClCompile Include="WormBulletDeadEffect.cpp" />
     <ClCompile Include="Zombie.cpp" />
   </ItemGroup>
   <ItemGroup>

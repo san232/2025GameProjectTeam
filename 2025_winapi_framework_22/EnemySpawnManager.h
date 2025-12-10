@@ -14,7 +14,7 @@ public:
     void Update();
 
     int  GetCurrentWave() const { return m_currentWave; }
-    void ResetWave() { m_currentWave = 1; }
+    void ResetWave() { m_currentWave = 0; }
 
 private:
     void StartNextWave();
@@ -23,7 +23,7 @@ private:
     void SpawnWaveEnemies(Scene* _scene, bool _bossWave);
 
 private:
-    int  m_currentWave = -1;
+    int  m_currentWave = 0;
     int  m_bossWaveInterval = 5;
-    bool m_waveActive = false;
+    bool m_waveActive = true;
 };

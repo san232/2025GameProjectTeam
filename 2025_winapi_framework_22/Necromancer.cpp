@@ -30,15 +30,16 @@ Necromancer::Necromancer()
     m_attackShotTimer = 0.f;
     m_isShotCharging = false;
 
-    m_animator->CreateAnimation(L"Idle", m_pTex, { 0.f,  00.f }, { 64.f, 64.f }, { 64.f, 0.f }, 6, 0.1f);
-    m_animator->CreateAnimation(L"Move", m_pTex, { 0.f, 60.f }, { 64.f, 64.f }, { 64.f, 0.f }, 5, 0.1f);
-    m_animator->CreateAnimation(L"Hit", m_pTex, { 0.f, 120.f }, { 64.f, 64.f }, { 64.f, 0.f }, 3, 0.1f);
-    m_animator->CreateAnimation(L"Attack", m_pTex, { 0.f, 180. }, { 64.f, 64.f }, { 64.f, 0.f }, 9, 0.05f);
-    m_animator->CreateAnimation(L"Dead", m_pTex, { 0.f, 240.f }, { 64.f, 64.f }, { 64.f, 0.f }, 10, 0.05f);
+    m_animator->CreateAnimation(L"Idle", m_pTex, { 0.f,  5.f }, { 64.f, 64.f }, { 64.f, 0.f }, 6, 0.1f);
+    m_animator->CreateAnimation(L"Move", m_pTex, { 0.f, 70.f }, { 64.f, 64.f }, { 64.f, 0.f }, 5, 0.1f);
+    m_animator->CreateAnimation(L"Hit", m_pTex, { 0.f, 130.f }, { 64.f, 64.f }, { 64.f, 0.f }, 3, 0.1f);
+    m_animator->CreateAnimation(L"Attack", m_pTex, { 0.f, 195. }, { 64.f, 64.f }, { 64.f, 0.f }, 9, 0.03f);
+    m_animator->CreateAnimation(L"Dead", m_pTex, { 0.f, 260.f }, { 64.f, 64.f }, { 64.f, 0.f }, 10, 0.05f);
 }
 
 Necromancer::~Necromancer()
 {
+
 }
 
 void Necromancer::Update()

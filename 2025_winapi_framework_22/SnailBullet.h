@@ -32,5 +32,4 @@ private:
     Vec2 m_direction;
     float m_lifeTime;
     float m_maxLifeTime;
-    float m_homingStrength;
 };

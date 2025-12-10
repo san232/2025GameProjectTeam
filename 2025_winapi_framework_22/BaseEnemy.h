@@ -7,6 +7,7 @@ class Collider;
 class Player;
 class Animator;
 class Texture;
+class Rigidbody;
 
 class EnemyIdleState;
 class EnemyMoveState;
@@ -75,6 +76,7 @@ protected:
     Animator* m_animator;
     Texture* m_pTex;
     Collider* m_collider;
+    Rigidbody* m_rigidbody;
 
     EnemyIdleState* m_idleState;
     EnemyMoveState* m_moveState;

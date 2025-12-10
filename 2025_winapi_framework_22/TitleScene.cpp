@@ -6,6 +6,7 @@
 #include "ResourceManager.h"
 #include "GDISelector.h"
 #include "Texture.h"
+#include "Zombie.h"
 
 TitleScene::TitleScene()
 {
@@ -37,6 +38,8 @@ void TitleScene::Init()
     m_btnExit.top = rect.bottom - 40 - margin;
     m_btnExit.right = rect.right - margin;
     m_btnExit.bottom = rect.bottom - margin;
+
+    Spawn<Zombie>(Layer::DEFAULTENEMY, { 10000.f, 10000.f }, { 100.f, 100.f });
 }
 
 void TitleScene::Update()

@@ -45,9 +45,11 @@ BaseEnemy::BaseEnemy()
     , m_isDeadState(false)
     , m_defaultLookRight(true)
 {
-    AddComponent<Rigidbody>();
+    m_rigidbody = AddComponent<Rigidbody>();
     m_collider = AddComponent<Collider>();
     m_animator = AddComponent<Animator>();
+
+    m_collider->SetTrigger(true);
 
     m_stateMachine = new StateMachine;
 
@@ -90,7 +92,7 @@ void BaseEnemy::Render(HDC _hdc)
     float rng = m_attackRange;
 
     GDISelector brushSelector(_hdc, BrushType::HOLLOW);
-    GDISelector penSelector(_hdc, PenType::GREEN);
+    GDISelector penSelector(_hdc, PenType::CYAN);
     ELLIPSE_RENDER(_hdc, pos.x, pos.y, rng * 2.f, rng * 2.f);
 
     ComponentRender(_hdc);

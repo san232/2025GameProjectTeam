@@ -20,7 +20,7 @@ NecromancerBullet::NecromancerBullet()
     AddComponent<Collider>();
     SetHp(1);
     SetMoveSpeed(200.f);
-    SetAttackPower(2);
+    SetAttackPower(1);
     m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"NecromancerBullet");
 }
 
