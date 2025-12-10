@@ -139,7 +139,7 @@ void EnemySpawnManager::SpawnWaveEnemies(Scene* _scene, bool _bossWave)
 			_scene->Spawn<Wizard>(Layer::DEFAULTENEMY, spawnPos, { 70.f,70.f });
 			break;
 		case 6:
-			_scene->Spawn<Conch>(Layer::DEFAULTENEMY, spawnPos, { 70.f,70.f });
+			_scene->Spawn<Conch>(Layer::DEFAULTENEMY, spawnPos, { 100.f, 100.f });
 			break;
 		case 7:
 			_scene->Spawn<Necromancer>(Layer::DEFAULTENEMY, spawnPos, { 70.f,70.f });

@@ -14,10 +14,10 @@
 
 Conch::Conch()
 {
-    SetHp(5);
+    SetHp(15);
     SetMoveSpeed(70.f);
     SetAttackCooltime(1.2f);
-    SetAttackRange(300.f);
+    SetAttackRange(200.f);
     SetExp(15);
     SetAttackDelay(0.f);
     SetDefaultLookRight(false);
@@ -30,11 +30,11 @@ Conch::Conch()
     m_attackShotTimer = 0.f;
     m_isShotCharging = false;
 
-    m_animator->CreateAnimation(L"Idle", m_pTex, { 0.f, 0.f }, { 64.f, 64.f }, { 64.f,0.f }, 5, 0.12f);
-    m_animator->CreateAnimation(L"Move", m_pTex, { 0.f,  60.f }, { 64.f, 64.f }, { 64.f,0.f }, 3, 0.08f);
-    m_animator->CreateAnimation(L"Hit", m_pTex, { 0.f, 115.f }, { 64.f, 64.f }, { 64.f,  0.f }, 2, 0.06f);
-    m_animator->CreateAnimation(L"Attack", m_pTex, { 0.f, 170.f }, { 64.f, 64.f }, { 64.f,0.f }, 7, 0.06f);
-    m_animator->CreateAnimation(L"Dead", m_pTex, { 0.f, 225.f }, { 64.f, 64.f }, { 64.f, 0.f }, 8, 0.08f);
+    m_animator->CreateAnimation(L"Idle", m_pTex, { 0.f, 15.f }, { 64.f, 64.f }, { 64.f,0.f }, 11, 0.12f);
+    m_animator->CreateAnimation(L"Move", m_pTex, { 0.f,  80.f }, { 64.f, 64.f }, { 64.f,0.f }, 4, 0.08f);
+    m_animator->CreateAnimation(L"Attack", m_pTex, { 0.f, 140.f }, { 64.f, 64.f }, { 64.f,0.f }, 7, 0.06f);
+    m_animator->CreateAnimation(L"Hit", m_pTex, { 0.f, 210.f }, { 64.f, 64.f }, { 64.f,  0.f }, 2, 0.06f);
+    m_animator->CreateAnimation(L"Dead", m_pTex, { 0.f, 270.f }, { 64.f, 64.f }, { 64.f, 0.f }, 7, 0.08f);
 }
 
 Conch::~Conch()

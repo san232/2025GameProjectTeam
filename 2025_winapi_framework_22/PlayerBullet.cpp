@@ -13,7 +13,7 @@
 PlayerBullet::PlayerBullet()
     : m_direction{ 1.f, 0.f }
     , m_lifeTime(0.f)
-    , m_maxLifeTime(2.f)
+    , m_maxLifeTime(20.f)
 {
     m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"PlayerBullet");
     AddComponent<Collider>();

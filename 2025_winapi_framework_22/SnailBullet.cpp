@@ -14,7 +14,7 @@
 SnailBullet::SnailBullet()
     : m_direction{ 1.f,0.f }
     , m_lifeTime(0.f)
-    , m_maxLifeTime(5.f)
+    , m_maxLifeTime(20.f)
     , m_homingStrength(1.5f)
 {
     AddComponent<Collider>();
