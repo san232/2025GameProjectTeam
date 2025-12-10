@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "EnemySpawnManager.h"
 
+#include "GDISelector.h"
 #include "SceneManager.h"
 #include "Scene.h"
 #include "Object.h"
@@ -35,6 +36,41 @@ void EnemySpawnManager::Update()
 		}
 	}
 }
+
+void EnemySpawnManager::Render(HDC _hdc)
+{
+	if (m_currentWave <= 0)
+		return;
+
+	std::wstring text = L"WAVE " + std::to_wstring(m_currentWave);
+
+	int margin = 20;
+
+	SIZE textSize{};
+	GetTextExtentPoint32W(_hdc, text.c_str(), (int)text.length(), &textSize);
+
+	int paddingX = 10;
+	int paddingY = 6;
+
+	int right = WINDOW_WIDTH - margin;
+	int top = margin;
+	int left = right - textSize.cx - paddingX * 2;
+	int bottom = top + textSize.cy + paddingY * 2;
+
+	GDISelector brushSelector(_hdc, BrushType::BROWN);
+	GDISelector penSelector(_hdc, PenType::BLACK);
+
+	Rectangle(_hdc, left, top, right, bottom);
+
+	SetBkMode(_hdc, TRANSPARENT);
+	SetTextColor(_hdc, RGB(255, 255, 255));
+
+	int textX = left + paddingX;
+	int textY = top + paddingY;
+
+	TextOutW(_hdc, textX, textY, text.c_str(), (int)text.length());
+}
+
 
 void EnemySpawnManager::StartNextWave()
 {
@@ -118,7 +154,6 @@ void EnemySpawnManager::SpawnWaveEnemies(Scene* _scene, bool _bossWave)
 			typeCount = 10;
 
 		int rand = std::rand() % typeCount;
-		rand = 9;
 
 		switch (rand)
 		{

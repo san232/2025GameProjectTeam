@@ -39,8 +39,7 @@ Necromancer::Necromancer()
 
 Necromancer::~Necromancer()
 {
-
-}
+} 
 
 void Necromancer::Update()
 {

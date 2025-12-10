@@ -32,7 +32,7 @@ Conch::Conch()
 
     m_animator->CreateAnimation(L"Idle", m_pTex, { 0.f, 15.f }, { 64.f, 64.f }, { 64.f,0.f }, 11, 0.12f);
     m_animator->CreateAnimation(L"Move", m_pTex, { 0.f,  80.f }, { 64.f, 64.f }, { 64.f,0.f }, 4, 0.08f);
-    m_animator->CreateAnimation(L"Attack", m_pTex, { 0.f, 140.f }, { 64.f, 64.f }, { 64.f,0.f }, 7, 0.06f);
+    m_animator->CreateAnimation(L"Attack", m_pTex, { 0.f, 140.f }, { 64.f, 64.f }, { 64.f,0.f }, 6, 0.06f);
     m_animator->CreateAnimation(L"Hit", m_pTex, { 0.f, 210.f }, { 64.f, 64.f }, { 64.f,  0.f }, 2, 0.06f);
     m_animator->CreateAnimation(L"Dead", m_pTex, { 0.f, 270.f }, { 64.f, 64.f }, { 64.f, 0.f }, 7, 0.08f);
 }
@@ -52,7 +52,7 @@ void Conch::Update()
         {
             m_attackShotTimer = 0.f;
             m_isShotCharging = false;
-            Attack();
+            SpawnBullet();
         }
     }
 }
@@ -76,11 +76,15 @@ void Conch::ExitCollision(Collider* _other)
 
 void Conch::Attack()
 {
+    if (m_isShotCharging)
+        return;
+
     Player* player = GetTargetPlayer();
     if (!player || player->GetIsDead())
         return;
 
-    SpawnBullet();
+    m_isShotCharging = true;
+    m_attackShotTimer = 0.f;
 }
 
 void Conch::Dead()

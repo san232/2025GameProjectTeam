@@ -52,7 +52,7 @@ void Cat::Update()
         {
             m_attackShotTimer = 0.f;
             m_isShotCharging = false;
-            Attack();
+            SpawnBullet();
         }
     }
 }
@@ -76,11 +76,15 @@ void Cat::ExitCollision(Collider* _other)
 
 void Cat::Attack()
 {
+    if (m_isShotCharging)
+        return;
+
     Player* player = GetTargetPlayer();
     if (!player || player->GetIsDead())
         return;
 
-    SpawnBullet();
+    m_isShotCharging = true;
+    m_attackShotTimer = 0.f;
 }
 
 void Cat::Dead()

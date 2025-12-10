@@ -17,12 +17,12 @@ WormBullet::WormBullet()
     : m_direction{ 1.f,0.f }
     , m_lifeTime(0.f)
     , m_maxLifeTime(7.f)
-    , m_homingStrength(0.5f)
+    , m_homingStrength(0.4f)
     , m_target(nullptr)
 {
     AddComponent<Collider>();
     SetHp(1);
-    SetMoveSpeed(400.f);
+    SetMoveSpeed(350.f);
     SetAttackPower(1);
     m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"WormBullet");
 }

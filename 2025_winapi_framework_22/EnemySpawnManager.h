@@ -12,6 +12,7 @@ class EnemySpawnManager
 public:
     void Init();
     void Update();
+    void Render(HDC _hdc);
 
     int  GetCurrentWave() const { return m_currentWave; }
     void ResetWave() { m_currentWave = 0; }

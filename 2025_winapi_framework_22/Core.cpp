@@ -94,6 +94,7 @@ void Core::MainRender()
     
     // 2. draw
     GET_SINGLE(SceneManager)->Render(m_hBackDC);
+    GET_SINGLE(EnemySpawnManager)->Render(m_hBackDC);
     GET_SINGLE(LevelUpManager)->Render(m_hBackDC);
 
     // 3. display

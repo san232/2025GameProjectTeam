@@ -30,11 +30,11 @@ Worm::Worm()
     m_attackShotTimer = 0.f;
     m_isShotCharging = false;
 
-    m_animator->CreateAnimation(L"Idle", m_pTex, { 0.f, 0.f }, { 64.f, 64.f }, { 64.f,0.f }, 5, 0.12f);
-    m_animator->CreateAnimation(L"Move", m_pTex, { 0.f,  60.f }, { 64.f, 64.f }, { 64.f,0.f }, 3, 0.08f);
-    m_animator->CreateAnimation(L"Hit", m_pTex, { 0.f, 115.f }, { 64.f, 64.f }, { 64.f,  0.f }, 2, 0.06f);
-    m_animator->CreateAnimation(L"Attack", m_pTex, { 0.f, 170.f }, { 64.f, 64.f }, { 64.f,0.f }, 7, 0.06f);
-    m_animator->CreateAnimation(L"Dead", m_pTex, { 0.f, 225.f }, { 64.f, 64.f }, { 64.f, 0.f }, 8, 0.08f);
+    m_animator->CreateAnimation(L"Idle", m_pTex, { 0.f, 0.f }, { 64.f, 64.f }, { 64.f,0.f }, 4, 0.12f);
+    m_animator->CreateAnimation(L"Move", m_pTex, { 0.f,  60.f }, { 64.f, 64.f }, { 64.f,0.f }, 4, 0.08f);
+    m_animator->CreateAnimation(L"Hit", m_pTex, { 0.f, 120.f }, { 64.f, 64.f }, { 64.f,  0.f }, 5, 0.06f);
+    m_animator->CreateAnimation(L"Attack", m_pTex, { 0.f, 180.f }, { 64.f, 64.f }, { 64.f,0.f }, 7, 0.06f);
+    m_animator->CreateAnimation(L"Dead", m_pTex, { 0.f, 240.f }, { 64.f, 64.f }, { 64.f, 0.f }, 6, 0.08f);
 }
 
 Worm::~Worm()
@@ -52,7 +52,7 @@ void Worm::Update()
         {
             m_attackShotTimer = 0.f;
             m_isShotCharging = false;
-            Attack();
+            SpawnBullet();
         }
     }
 }
@@ -76,11 +76,15 @@ void Worm::ExitCollision(Collider* _other)
 
 void Worm::Attack()
 {
+    if (m_isShotCharging)
+        return;
+
     Player* player = GetTargetPlayer();
     if (!player || player->GetIsDead())
         return;
 
-    SpawnBullet();
+    m_isShotCharging = true;
+    m_attackShotTimer = 0.f;
 }
 
 void Worm::Dead()
@@ -113,7 +117,7 @@ void Worm::SpawnBullet()
         dir = Vec2{ 1.f,0.f };
     }
 
-    Vec2 bulletSize = { 40.f, 40.f };
+    Vec2 bulletSize = { 30.f, 30.f };
 
     WormBullet* bullet = new WormBullet;
     bullet->SetPos(catPos);

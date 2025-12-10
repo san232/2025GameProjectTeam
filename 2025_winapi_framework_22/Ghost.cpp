@@ -16,7 +16,7 @@ Ghost::Ghost()
 	SetMoveSpeed(160.f);
 	SetAttackPower(1);
 	SetAttackCooltime(0.8f);
-	SetAttackRange(30.f);
+	SetAttackRange(50.f);
 	SetExp(20);
 	SetDefaultLookRight(true);
 
