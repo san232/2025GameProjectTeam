@@ -243,7 +243,7 @@ void Player::UpdateInput()
 
 	bool hasInput = m_moveDirection != Vec2{ 0.f, 0.f };
 
-	if (GET_KEYDOWN(KEY_TYPE::SPACE) && m_canAttack)
+	if (GET_KEYDOWN(KEY_TYPE::LBUTTON) && m_canAttack)
 	{
 		Attack();
 	}
@@ -266,7 +266,7 @@ void Player::UpdateInput()
 		m_stateMachine->ChangeState(m_idleState);
 	}
 
-	if (GET_KEYDOWN(KEY_TYPE::LSHIFT) && hasInput && m_canRolling)
+	if (GET_KEYDOWN(KEY_TYPE::SPACE) && hasInput && m_canRolling)
 	{
 		m_stateMachine->ChangeState(m_rollingState);
 		m_canRolling = false;

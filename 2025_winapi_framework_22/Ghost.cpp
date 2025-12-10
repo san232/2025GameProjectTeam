@@ -12,7 +12,7 @@
 
 Ghost::Ghost()
 {
-	SetHp(6);
+	SetHp(15);
 	SetMoveSpeed(160.f);
 	SetAttackPower(1);
 	SetAttackCooltime(0.8f);

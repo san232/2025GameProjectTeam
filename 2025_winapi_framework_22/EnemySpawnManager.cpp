@@ -17,6 +17,8 @@
 #include "Necromancer.h"
 #include "Slime.h"
 #include "Worm.h"
+#include "BossKnight.h"
+#include "MirrorBoss.h"
 
 void EnemySpawnManager::Init()
 {
@@ -191,6 +193,6 @@ void EnemySpawnManager::SpawnWaveEnemies(Scene* _scene, bool _bossWave)
 
 	if (_bossWave)
 	{
-		// 보스 소환
+		_scene->Spawn<BossKnight>(Layer::DEFAULTENEMY, {300.f,300.f}, { 70.f,70.f });
 	}
 }
