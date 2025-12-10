@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Zombie.h"
 #include "BossKnight.h"
+#include "MirrorBoss.h"
 #include "Core.h"
 #include "ResourceManager.h"
 #include "Texture.h"
@@ -18,7 +19,7 @@ void LSScene::Init()
     subWindowManager->Init(mainWindowHwnd, this);
 
     Spawn<Player>(Layer::PLAYER, { WINDOW_WIDTH / 2, WINDOW_HEIGHT / 4 }, { 80.f, 80.f });
-    Spawn<BossKnight>(Layer::DEFAULTENEMY, { WINDOW_WIDTH / 2, WINDOW_HEIGHT - 200 }, { 100.f, 100.f });
+    Spawn<MirrorBoss>(Layer::DEFAULTENEMY, { WINDOW_WIDTH / 2, WINDOW_HEIGHT - 200 }, { 100.f, 100.f });
 
     GET_SINGLE(CollisionManager)->CheckLayer(Layer::DEFAULTENEMY, Layer::DEFAULTENEMY);
     GET_SINGLE(CollisionManager)->CheckLayer(Layer::PLAYER, Layer::DEFAULTENEMY);
@@ -29,7 +30,7 @@ void LSScene::Init()
 void LSScene::Update()
 {
     Scene::Update();
-    
+  
     if (subWindowManager)
     {
         vector<Entity*> entities;

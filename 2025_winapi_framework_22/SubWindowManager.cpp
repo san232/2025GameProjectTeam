@@ -72,7 +72,7 @@ void SubWindowManager::Init(HWND hMainWnd, Scene* ownerScene)
 
 void SubWindowManager::Update(float deltaTime, const std::vector<Entity*>& allEntities)
 {
-    if (GET_KEYDOWN(KEY_TYPE::TAB))
+    if (GET_KEYDOWN(KEY_TYPE::RBUTTON))
     {
         if (!m_buffEffects.empty() && m_subWindow)
         {
@@ -80,25 +80,6 @@ void SubWindowManager::Update(float deltaTime, const std::vector<Entity*>& allEn
 
             m_currentBuffIndex = (m_currentBuffIndex + 1) % m_buffEffects.size();
             m_subWindow->SetEffect(m_buffEffects[m_currentBuffIndex]);
-        }
-    }
-
-    if (GET_SINGLE(InputManager)->IsDown(KEY_TYPE::LBUTTON))
-    {
-        POINT mousePos = GET_MOUSE_SCREEN_POS;
-
-        if (m_controller && m_controller->IsMoving())
-        {
-            m_controller->ToggleMovement();
-        }
-        else if (m_subWindow && m_subWindow->IsActive())
-        {
-            RECT subRect = m_subWindow->GetRect();
-            if (::PtInRect(&subRect, mousePos))
-            {
-                if (m_controller)
-                    m_controller->ToggleMovement();
-            }
         }
     }
 
