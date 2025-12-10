@@ -76,6 +76,8 @@ void TitleScene::Render(HDC _hdc)
                    pTex->GetTextureDC(), 0, 0, texWidth, texHeight, SRCCOPY);
     }
 
+    int oldBkMode = SetBkMode(_hdc, TRANSPARENT);
+
     {
         GDISelector brushSel(_hdc, BrushType::LIGHTGRAY);
         GDISelector penSel(_hdc, PenType::BLACK);
@@ -95,6 +97,8 @@ void TitleScene::Render(HDC _hdc)
         SetTextColor(_hdc, RGB(0, 0, 0));
         DrawText(_hdc, L"EXIT", -1, &m_btnExit, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
     }
+
+    SetBkMode(_hdc, oldBkMode);
 }
 
 void TitleScene::Release()
