@@ -14,13 +14,13 @@ public:
     void Update();
     void Render(HDC _hdc);
 
-    int  GetCurrentWave() const { return m_currentWave; }
+    int  GetCurrentWave() { return m_currentWave; }
     void ResetWave() { m_currentWave = 0; }
 
 private:
     void StartNextWave();
-    bool AreAllEnemiesDead() const;
-    Vec2 GetRandomOffScreenSpawnPos() const;
+    bool AreAllEnemiesDead();
+    Vec2 GetRandomOffScreenSpawnPos();
     void SpawnWaveEnemies(Scene* _scene, bool _bossWave);
 
 private:

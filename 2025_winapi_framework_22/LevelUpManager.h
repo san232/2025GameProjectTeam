@@ -16,7 +16,6 @@ public:
 
 public:
     void LevelUpPlayer(Player* _player);
-    bool IsActive() const { return m_isActive; }
 
 private:
     void LevelUp(LevelUpType _type);

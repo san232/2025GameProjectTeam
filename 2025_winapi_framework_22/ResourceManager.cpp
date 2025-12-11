@@ -9,6 +9,8 @@ bool ResourceManager::Init()
 	fs::path resourceDir = exeDir.parent_path() / L"build" / L"Resource\\"; // release����϶� build �ѹ��� ���̴°� ����
 	m_resourcePath = resourceDir.native();
 
+	if (!RegisterFontFile(L"Font\\MemomentKkukkukk.ttf"))
+		return false;
 	RegisterTexture();
 	RegisterGDI();
 
@@ -165,7 +167,7 @@ void ResourceManager::RegisterGDI()
 	m_Pens[(UINT)PenType::LIGHTGREEN] = ::CreatePen(PS_SOLID, 1, RGB(173, 255, 47));
 
 
-	// ��Ʈ ���
+	RegisterFont(FontType::TITLE, L"MemomentKkukkukk", 0);
 }
 
 void ResourceManager::ReleaseGDI()
