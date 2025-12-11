@@ -3,6 +3,8 @@
 #include "Collider.h"
 #include "Player.h"
 #include "SceneManager.h"
+#include "ResourceManager.h"
+#include "Texture.h"
 #include "Scene.h"
 #include "GDISelector.h"
 
@@ -16,6 +18,7 @@ FragmentBullet::FragmentBullet()
     SetHp(1);
     SetMoveSpeed(350.f);
     SetAttackPower(5);
+    m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"MirrorBossBullet");
 }
 
 FragmentBullet::~FragmentBullet() {}
@@ -40,21 +43,34 @@ void FragmentBullet::Render(HDC _hdc)
 {
     Vec2 pos = GetPos();
     Vec2 size = GetSize();
-    GDISelector brush(_hdc, BrushType::YELLOW);
-    ELLIPSE_RENDER(_hdc, pos.x, pos.y, size.x, size.y);
-    ComponentRender(_hdc);
+    if (m_pTex)
+    {
+        LONG width = m_pTex->GetWidth();
+        LONG height = m_pTex->GetHeight();
+
+        ::TransparentBlt(_hdc
+            , (int)(pos.x - size.x / 2)
+            , (int)(pos.y - size.y / 2)
+            , size.x
+            , size.y
+            , m_pTex->GetTextureDC()
+            , 0, 0, width, height,
+            RGB(255, 0, 255));
+    }
 }
 
 void FragmentBullet::EnterCollision(Collider* _other)
 {
     Object* otherObj = _other->GetOwner();
-    if (!otherObj || otherObj->GetIsDead()) return;
+    if (!otherObj)
+        return;
 
-    if (dynamic_cast<Player*>(otherObj))
-    {
-        otherObj->TakeDamage(GetAttackPower());
-        Dead();
-    }
+    Player* player = dynamic_cast<Player*>(otherObj);
+    if (!player)
+        return;
+
+    player->TakeDamage(GetAttackPower());
+    Dead();
 }
 
 void FragmentBullet::Dead()

@@ -18,6 +18,7 @@
 #include "EffectManager.h"
 #include "EnemyHitEffect.h"
 #include "BossBullet.h"
+#include "Texture.h"
 
 BossKnight::BossKnight()
 	: m_chargeState(nullptr)
@@ -38,9 +39,11 @@ BossKnight::BossKnight()
 	SetAttackRange(120.f); 
 	SetExp(500);
 	SetDefaultLookRight(true);
+	SetStatMulti();
 	m_hitStunDuration = 0.1f;
 	
 	m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"DashBoss"); 
+	m_hpBarTex = GET_SINGLE(ResourceManager)->GetTexture(L"DashBossHpBar");
 
 	m_animator->SetScaleRatio(2.5f);
 
@@ -387,5 +390,19 @@ void BossKnight::RenderBossHpUI(HDC _hdc)
 
 	::SelectObject(_hdc, oldBrush);
 	::SelectObject(_hdc, oldPen);
+
+	HDC texDC = m_hpBarTex->GetTextureDC();
+
+	::TransparentBlt(_hdc, left
+		, top - 20
+		, barWidth
+		, barHeight + 40
+		, texDC
+		, 0
+		, 0
+		, m_hpBarTex->GetWidth()
+		, m_hpBarTex->GetHeight()
+		, RGB(255,0,255));
+
 }
 

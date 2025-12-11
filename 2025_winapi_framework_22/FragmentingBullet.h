@@ -1,6 +1,7 @@
 #pragma once
 #include "Entity.h"
 
+class Texture;
 class FragmentingBullet : public Entity
 {
 public:
@@ -20,6 +21,7 @@ protected:
 private:
     void Explode();
 
+	Texture* m_pTex;
     Vec2 m_direction;
     float m_lifeTime;
     float m_explodeTime;

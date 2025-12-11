@@ -50,7 +50,8 @@ private:
 	
 		BossChargeState* m_chargeState;
 		BossDashState* m_dashState;
-		
+		Texture* m_hpBarTex;
+
 		int m_maxHp;
 
 		float m_patternCooldown;
@@ -60,9 +61,9 @@ private:
 		float m_chargeDuration;
 	
 		float m_dashTimer;
-			float m_dashDuration;
+		float m_dashDuration;
 		
-			bool m_hasAttacked;
-		    std::set<Entity*> m_dashHitEntities;
-		};
+		bool m_hasAttacked;
+		std::set<Entity*> m_dashHitEntities;
+};
 		

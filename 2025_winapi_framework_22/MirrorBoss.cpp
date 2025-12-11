@@ -98,6 +98,31 @@ void MirrorBoss::Render(HDC _hdc)
 	}
 }
 
+void MirrorBoss::Move()
+{
+
+}
+
+void MirrorBoss::Attack()
+{
+
+}
+
+void MirrorBoss::EnterCollision(Collider* _other)
+{
+	BaseEnemy::EnterCollision(_other);
+}
+
+void MirrorBoss::StayCollision(Collider* _other)
+{
+	BaseEnemy::StayCollision(_other);
+}
+
+void MirrorBoss::ExitCollision(Collider* _other)
+{
+	BaseEnemy::ExitCollision(_other);
+}
+
 void MirrorBoss::OnHit(int damage)
 {
 	if (m_isCharging)

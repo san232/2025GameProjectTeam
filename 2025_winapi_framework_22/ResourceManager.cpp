@@ -256,6 +256,7 @@ void ResourceManager::RegisterTexture()
 	LoadTexture(L"GameOverScene", L"Texture\\GameOverScene.bmp");
 	LoadTexture(L"KnightBossBullet", L"Texture\\KnightBossBullet.bmp");
 	LoadTexture(L"MirrorBossBullet", L"Texture\\MirrorBossBullet.bmp");
+	LoadTexture(L"DashBossHpBar", L"Texture\\DashBossHpBar.bmp");
 }
 
 void ResourceManager::LoadTexture(const wstring& _key, const wstring& _path)

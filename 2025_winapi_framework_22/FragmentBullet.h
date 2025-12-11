@@ -1,6 +1,7 @@
 #pragma once
 #include "Entity.h"
 
+class Texture;
 class FragmentBullet : public Entity
 {
 public:
@@ -18,6 +19,7 @@ protected:
     void Move() override;
 
 private:
+	Texture* m_pTex;
     Vec2 m_direction;
     float m_lifeTime;
     float m_maxLifeTime;

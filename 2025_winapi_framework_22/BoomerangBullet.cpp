@@ -6,6 +6,7 @@
 #include "ResourceManager.h"
 #include "Scene.h"
 #include "GDISelector.h"
+#include "Texture.h"
 
 BoomerangBullet::BoomerangBullet()
     : m_direction{ 1.f, 0.f }
@@ -17,7 +18,8 @@ BoomerangBullet::BoomerangBullet()
     AddComponent<Collider>()->SetSize({ 25.f, 25.f });
     SetHp(1);
     SetMoveSpeed(400.f);
-    SetAttackPower(15);
+    SetAttackPower(5);
+    m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"MirrorBossBullet");
 }
 
 BoomerangBullet::~BoomerangBullet() {}
@@ -49,21 +51,34 @@ void BoomerangBullet::Render(HDC _hdc)
 {
     Vec2 pos = GetPos();
     Vec2 size = GetSize();
-    GDISelector brush(_hdc, BrushType::MAGENTA);
-    ELLIPSE_RENDER(_hdc, pos.x, pos.y, size.x, size.y);
-    ComponentRender(_hdc);
+    if (m_pTex)
+    {
+        LONG width = m_pTex->GetWidth();
+        LONG height = m_pTex->GetHeight();
+
+        ::TransparentBlt(_hdc
+            , (int)(pos.x - size.x / 2)
+            , (int)(pos.y - size.y / 2)
+            , size.x
+            , size.y
+            , m_pTex->GetTextureDC()
+            , 0, 0, width, height,
+            RGB(255, 0, 255));
+    }
 }
 
 void BoomerangBullet::EnterCollision(Collider* _other)
 {
-    Entity* otherObj = dynamic_cast<Entity*>(_other->GetOwner());
-    if (!otherObj || otherObj->GetIsDead()) return;
+    Object* otherObj = _other->GetOwner();
+    if (!otherObj)
+        return;
 
-    if (dynamic_cast<Player*>(otherObj))
-    {
-        otherObj->TakeDamage(GetAttackPower());
-        Dead();
-    }
+    Player* player = dynamic_cast<Player*>(otherObj);
+    if (!player)
+        return;
+
+    player->TakeDamage(GetAttackPower());
+    Dead();
 }
 
 void BoomerangBullet::Dead()

@@ -22,7 +22,7 @@ HomingBullet::HomingBullet()
 	SetMoveSpeed(250.f);
 	SetAttackPower(10);
 	
-	m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"WizardBullet"); 
+	m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"MirrorBossBullet");
 }
 
 HomingBullet::~HomingBullet()
@@ -31,7 +31,6 @@ HomingBullet::~HomingBullet()
 
 void HomingBullet::Update()
 {
-	Entity::Update();
 	Move();
 
 	m_lifeTime += fDT;
@@ -43,7 +42,7 @@ void HomingBullet::Update()
 
 void HomingBullet::Move()
 {
-	if (m_target && !m_target->GetIsDead())
+	if (m_target != nullptr)
 	{
 		Vec2 targetPos = m_target->GetPos();
 		Vec2 myPos = GetPos();
@@ -87,13 +86,16 @@ void HomingBullet::Render(HDC _hdc)
 
 void HomingBullet::EnterCollision(Collider* _other)
 {
-	Object* obj = _other->GetOwner();
-	Player* player = dynamic_cast<Player*>(obj);
-	if (player && !player->GetIsDead())
-	{
-		player->TakeDamage(GetAttackPower());
-		Dead();
-	}
+	Object* otherObj = _other->GetOwner();
+	if (!otherObj)
+		return;
+
+	Player* player = dynamic_cast<Player*>(otherObj);
+	if (!player)
+		return;
+
+	player->TakeDamage(GetAttackPower());
+	Dead();
 }
 
 void HomingBullet::Dead()

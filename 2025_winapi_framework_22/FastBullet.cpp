@@ -30,7 +30,6 @@ FastBullet::~FastBullet()
 
 void FastBullet::Update()
 {
-	Entity::Update();
 	Move();
 
 	m_lifeTime += fDT;
@@ -77,13 +76,16 @@ void FastBullet::Render(HDC _hdc)
 
 void FastBullet::EnterCollision(Collider* _other)
 {
-	Object* obj = _other->GetOwner();
-    Player* player = dynamic_cast<Player*>(obj);
-	if (player && !player->GetIsDead())
-	{
-		player->TakeDamage(GetAttackPower());
-		Dead();
-	}
+	Object* otherObj = _other->GetOwner();
+	if (!otherObj)
+		return;
+
+	Player* player = dynamic_cast<Player*>(otherObj);
+	if (!player)
+		return;
+
+	player->TakeDamage(GetAttackPower());
+	Dead();
 }
 
 void FastBullet::Dead()

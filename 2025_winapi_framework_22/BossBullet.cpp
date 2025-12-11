@@ -17,7 +17,7 @@ BossBullet::BossBullet()
     AddComponent<Collider>();
     SetHp(1);
     SetMoveSpeed(300.f); 
-    SetAttackPower(5); 
+    SetAttackPower(2); 
     m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"KnightBossBullet"); 
     
     if (Collider* col = GetComponent<Collider>())
@@ -62,20 +62,13 @@ void BossBullet::Render(HDC _hdc)
             , 0, 0, width, height,
             RGB(255, 0, 255));
     }
-    else
-    {
-        // Fallback rendering if texture is missing
-        GDISelector brush(_hdc, BrushType::RED);
-        ELLIPSE_RENDER(_hdc, pos.x, pos.y, size.x, size.y);
-    }
-
     ComponentRender(_hdc);
 }
 
 void BossBullet::EnterCollision(Collider* _other)
 {
     Object* otherObj = _other->GetOwner();
-    if (!otherObj || otherObj->GetIsDead())
+    if (!otherObj)
         return;
 
     Player* player = dynamic_cast<Player*>(otherObj);

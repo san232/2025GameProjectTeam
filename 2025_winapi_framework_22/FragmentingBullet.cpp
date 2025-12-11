@@ -6,6 +6,8 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include "GDISelector.h"
+#include "ResourceManager.h"
+#include "Texture.h"
 
 FragmentingBullet::FragmentingBullet()
     : m_direction{ 1.f, 0.f }
@@ -16,6 +18,7 @@ FragmentingBullet::FragmentingBullet()
     SetHp(1);
     SetMoveSpeed(300.f);
     SetAttackPower(5);
+    m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"MirrorBossBullet");
 }
 
 FragmentingBullet::~FragmentingBullet() {}
@@ -41,21 +44,29 @@ void FragmentingBullet::Render(HDC _hdc)
 {
     Vec2 pos = GetPos();
     Vec2 size = GetSize();
-    GDISelector brush(_hdc, BrushType::YELLOW);
-    RECT_RENDER(_hdc, pos.x, pos.y, size.x, size.y);
-    ComponentRender(_hdc);
+    if (m_pTex)
+    {
+        LONG width = m_pTex->GetWidth();
+        LONG height = m_pTex->GetHeight();
+
+        ::TransparentBlt(_hdc
+            , (int)(pos.x - size.x / 2)
+            , (int)(pos.y - size.y / 2)
+            , size.x
+            , size.y
+            , m_pTex->GetTextureDC()
+            , 0, 0, width, height,
+            RGB(255, 0, 255));
+    }
 }
 
 void FragmentingBullet::EnterCollision(Collider* _other)
 {
-    Object* otherObj = _other->GetOwner();
+    Entity* otherObj = dynamic_cast<Entity*>(_other->GetOwner());
     if (!otherObj || otherObj->GetIsDead()) return;
 
-    if (dynamic_cast<Player*>(otherObj))
-    {
-        otherObj->TakeDamage(GetAttackPower());
-        Dead();
-    }
+    otherObj->TakeDamage(GetAttackPower());
+    Dead();
 }
 
 void FragmentingBullet::Dead()
