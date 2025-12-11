@@ -38,7 +38,7 @@ ATOM BaseWindow::MyRegisterClass()
     wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
     wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW);
     wcex.lpszMenuName = nullptr; 
-    wcex.lpszClassName = L"GameP";
+    wcex.lpszClassName = L"BuffSlinger";
     wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_ICON1));
 
     return ::RegisterClassExW(&wcex);
@@ -51,7 +51,7 @@ void BaseWindow::createWindow()
     int winposx = (screenX - WINDOW_WIDTH) / 2;
     int winposy = (screenY - WINDOW_HEIGHT) / 2;
 
-    m_hWnd = ::CreateWindowW(L"GameP", L"2025 GameP", WS_OVERLAPPEDWINDOW,
+    m_hWnd = ::CreateWindowW(L"BuffSlinger", L"BuffSlinger", WS_OVERLAPPEDWINDOW,
         winposx, winposy, WINDOW_WIDTH, WINDOW_HEIGHT, nullptr, nullptr, m_hInst, nullptr);
 
     RECT rtWindow = { winposx, winposy, winposx + WINDOW_WIDTH, winposy + WINDOW_HEIGHT };

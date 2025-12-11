@@ -15,7 +15,7 @@ void PlayerIdleState::Enter(StateMachine& _owner)
 
 void PlayerIdleState::Update(StateMachine& _owner)
 {
-
+	
 }
 
 void PlayerIdleState::Exit(StateMachine& _owner)

@@ -39,7 +39,7 @@ void TimeManager::Update()
 		//::TextOut(GET_SINGLE(Core)->GetMainDC(),0,0, str.c_str(), str.length());
 		POINT mousepos = GET_MOUSEPOS;
 		wstring str =  std::format(L"FPS: {0}, DT: {1:.6f}, Mouse: {2}, {3} ",m_fps, m_deltaTime,mousepos.x, mousepos.y);
-		::SetWindowText(GET_SINGLE(Core)->GetHwnd(), str.c_str());
+		//::SetWindowText(GET_SINGLE(Core)->GetHwnd(), str.c_str());
 	}
 
 }

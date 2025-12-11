@@ -66,6 +66,8 @@ void TitleScene::Render(HDC _hdc)
 {
     Scene::Render(_hdc);
 
+    GDISelector fontSelector(_hdc, FontType::TITLE);
+
     RECT rect;
     ::GetClientRect(GET_SINGLE(Core)->GetHwnd(), &rect);
 
