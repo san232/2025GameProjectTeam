@@ -292,6 +292,21 @@
     <ClInclude Include="NecromancerBullet.h">
       <Filter>Engine\03. Object\Enemy\Bullet</Filter>
     </ClInclude>
+    <ClInclude Include="BossBullet.h" />
+    <ClInclude Include="MirrorBoss.h" />
+    <ClInclude Include="MirrorBossAttackState.h" />
+    <ClInclude Include="MirrorBossChargeState.h" />
+    <ClInclude Include="MirrorBossIdleState.h" />
+    <ClInclude Include="Slime.h" />
+    <ClInclude Include="SlimeBullet.h" />
+    <ClInclude Include="Worm.h" />
+    <ClInclude Include="WormBullet.h" />
+    <ClInclude Include="WormBulletDeadEffect.h" />
+    <ClInclude Include="FastBullet.h" />
+    <ClInclude Include="HomingBullet.h" />
+    <ClInclude Include="BoomerangBullet.h" />
+    <ClInclude Include="FragmentingBullet.h" />
+    <ClInclude Include="FragmentBullet.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2025_winapi_framework_22.rc">
@@ -494,5 +509,20 @@
     <ClCompile Include="NecromancerBullet.cpp">
       <Filter>Engine\03. Object\Enemy\Bullet</Filter>
     </ClCompile>
+    <ClCompile Include="BossBullet.cpp" />
+    <ClCompile Include="MirrorBoss.cpp" />
+    <ClCompile Include="MirrorBossAttackState.cpp" />
+    <ClCompile Include="MirrorBossChargeState.cpp" />
+    <ClCompile Include="MirrorBossIdleState.cpp" />
+    <ClCompile Include="Slime.cpp" />
+    <ClCompile Include="SlimeBullet.cpp" />
+    <ClCompile Include="Worm.cpp" />
+    <ClCompile Include="WormBullet.cpp" />
+    <ClCompile Include="WormBulletDeadEffect.cpp" />
+    <ClCompile Include="FastBullet.cpp" />
+    <ClCompile Include="HomingBullet.cpp" />
+    <ClCompile Include="BoomerangBullet.cpp" />
+    <ClCompile Include="FragmentingBullet.cpp" />
+    <ClCompile Include="FragmentBullet.cpp" />
   </ItemGroup>
 </Project>

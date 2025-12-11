@@ -5,6 +5,15 @@ class MirrorBossIdleState;
 class MirrorBossChargeState;
 class MirrorBossAttackState;
 
+enum class BossAttackType
+{
+	FAST,
+	HOMING,
+	BOOMERANG,
+	FRAGMENTING,
+	MAX_TYPES
+};
+
 class MirrorBoss : public BaseEnemy
 {
 public:
@@ -25,7 +34,7 @@ public:
 
 	void StartCharge();
 	void EndCharge();
-	void FireSpecialBullet();
+	void FireRandomBullet();
 
 	void AddAccumulatedDamage(int damage) { m_accumulatedDamage += damage; }
 	bool IsCharging() const { return m_isCharging; }
@@ -55,5 +64,17 @@ private:
 
 	float m_attackStateTimer;
 	float m_attackStateDuration;
-	bool m_hasAttacked;
+
+	bool m_isWarningPhase;
+	float m_warningTimer;
+	float m_warningDuration;
+
+	bool m_showWarningLine;
+	Vec2 m_warningDir;
+
+	// New volley mechanics
+	float m_attackSpeed; // Shots per second
+	int m_volleyCount;
+	int m_bulletsFiredInVolley;
+	float m_timeSinceLastShot;
 };

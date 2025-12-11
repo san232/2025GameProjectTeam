@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "SpecialBullet.h"
+#include "HomingBullet.h"
 #include "Collider.h"
 #include "Rigidbody.h"
 #include "ResourceManager.h"
@@ -9,9 +9,8 @@
 #include "Texture.h"
 #include "GDISelector.h"
 
-SpecialBullet::SpecialBullet()
-	: m_type(SpecialBulletType::FAST)
-	, m_direction{}
+HomingBullet::HomingBullet()
+	: m_direction{}
 	, m_target(nullptr)
 	, m_lifeTime(0.f)
 	, m_maxLifeTime(5.f)
@@ -19,35 +18,18 @@ SpecialBullet::SpecialBullet()
 {
 	SetSize(Vec2(30.f, 30.f));
 	AddComponent<Collider>()->SetSize({ 30.f, 30.f });
-	AddComponent<Rigidbody>(); 
 	
-	SetMoveSpeed(0.f);
+	SetMoveSpeed(250.f);
 	SetAttackPower(10);
 	
 	m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"WizardBullet"); 
 }
 
-SpecialBullet::~SpecialBullet()
+HomingBullet::~HomingBullet()
 {
 }
 
-void SpecialBullet::SetType(SpecialBulletType type)
-{
-	m_type = type;
-	switch (m_type)
-	{
-	case SpecialBulletType::FAST:
-		SetMoveSpeed(1500.f); 
-		m_maxLifeTime = 3.f;
-		break;
-	case SpecialBulletType::HOMING:
-		SetMoveSpeed(100.f); 
-		m_maxLifeTime = 25.f; 
-		break;
-	}
-}
-
-void SpecialBullet::Update()
+void HomingBullet::Update()
 {
 	Entity::Update();
 	Move();
@@ -59,15 +41,14 @@ void SpecialBullet::Update()
 	}
 }
 
-void SpecialBullet::Move()
+void HomingBullet::Move()
 {
-	if (m_type == SpecialBulletType::HOMING && m_target && !m_target->GetIsDead())
+	if (m_target && !m_target->GetIsDead())
 	{
 		Vec2 targetPos = m_target->GetPos();
 		Vec2 myPos = GetPos();
 		Vec2 dir = targetPos - myPos;
 		dir.Normalize();
-		
 		m_direction = dir; 
 	}
 
@@ -76,7 +57,7 @@ void SpecialBullet::Move()
 	SetPos(pos);
 }
 
-void SpecialBullet::Render(HDC _hdc)
+void HomingBullet::Render(HDC _hdc)
 {
 	Vec2 pos = GetPos();
 	Vec2 size = GetSize();
@@ -97,20 +78,17 @@ void SpecialBullet::Render(HDC _hdc)
 	}
 	else
 	{
-		BrushType color = BrushType::RED;
-		if (m_type == SpecialBulletType::HOMING) color = BrushType::GREEN;
-
-		GDISelector brush(_hdc, color);
+		GDISelector brush(_hdc, BrushType::GREEN);
 		ELLIPSE_RENDER(_hdc, pos.x, pos.y, size.x, size.y);
 	}
 
 	ComponentRender(_hdc);
 }
 
-void SpecialBullet::EnterCollision(Collider* _other)
+void HomingBullet::EnterCollision(Collider* _other)
 {
 	Object* obj = _other->GetOwner();
-	Entity* player = dynamic_cast<Entity*>(obj);
+	Player* player = dynamic_cast<Player*>(obj);
 	if (player && !player->GetIsDead())
 	{
 		player->TakeDamage(GetAttackPower());
@@ -118,7 +96,7 @@ void SpecialBullet::EnterCollision(Collider* _other)
 	}
 }
 
-void SpecialBullet::Dead()
+void HomingBullet::Dead()
 {
 	GET_SINGLE(SceneManager)->GetCurScene()->RequestDestroy(this);
 }

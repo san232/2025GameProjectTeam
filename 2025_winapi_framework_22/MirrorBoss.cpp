@@ -2,7 +2,6 @@
 #include "MirrorBoss.h"
 #include "State.h"
 #include "StateMachine.h"
-#include "SpecialBullet.h"
 #include "Player.h"
 #include "SceneManager.h"
 #include "Scene.h"
@@ -16,30 +15,42 @@
 #include "MirrorBossIdleState.h"
 #include "MirrorBossChargeState.h"
 #include "MirrorBossAttackState.h"
+#include "FastBullet.h"
+#include "HomingBullet.h"
+#include "BoomerangBullet.h"
+#include "FragmentingBullet.h"
+
 
 MirrorBoss::MirrorBoss()
 	: m_accumulatedDamage(0)
 	, m_isCharging(false)
-	, m_maxHp(300)
+	, m_maxHp(500)
 	, m_patternTimer(0.f)
 	, m_idleDuration(2.0f)
 	, m_chargeDuration(3.0f)
 	, m_attackStateTimer(0.f)
-	, m_attackStateDuration(1.0f)
-	, m_hasAttacked(false)
+	, m_attackStateDuration(2.0f)
+	, m_isWarningPhase(false)
+	, m_warningTimer(0.f)
+	, m_warningDuration(1.0f)
+	, m_showWarningLine(false)
+	, m_warningDir{}
+	, m_attackSpeed(4.f)
+	, m_volleyCount(5)
+	, m_bulletsFiredInVolley(0)
+	, m_timeSinceLastShot(0.f)
 {
 	SetHp(m_maxHp);
-	SetMoveSpeed(0.f); // Immobile
+	SetMoveSpeed(0.f);
 	SetAttackPower(10);
 	SetExp(1000);
 	
-
 	m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"MirrorBoss"); 
 
 	m_animator->SetScaleRatio(3.0f);
 	m_animator->CreateAnimation(L"Idle", m_pTex, { 0.f,  0.f }, { 128.f, 128.f }, { 128.f, 0.f }, 7, 0.15f);
 	m_animator->CreateAnimation(L"Charge", m_pTex, { 0.f,  128.f }, { 128.f, 128.f }, { 128.f, 0.f }, 7, 0.1f);
-	m_animator->CreateAnimation(L"Attack", m_pTex, { 0.f,  256.f }, { 128.f, 128.f }, { 128.f, 0.f }, 13, 0.1f);
+	m_animator->CreateAnimation(L"Attack", m_pTex, { 0.f,  256.f }, { 128.f, 128.f }, { 128.f, 0.f }, 13, 0.08f);
 	m_animator->CreateAnimation(L"Dead", m_pTex, { 0.f,  384.f }, { 128.f, 128.f }, { 128.f, 0.f }, 7, 0.2f);
 
 	m_idleState = new MirrorBossIdleState(this);
@@ -115,7 +126,7 @@ void MirrorBoss::EndCharge()
 	m_isCharging = false;
 }
 
-void MirrorBoss::FireSpecialBullet()
+void MirrorBoss::FireRandomBullet()
 {
 	Player* target = GetTargetPlayer();
 	if (!target) return;
@@ -125,42 +136,51 @@ void MirrorBoss::FireSpecialBullet()
 	Vec2 dir = targetPos - myPos;
 	dir.Normalize();
 
-	int baseDamage = 10;
-	int totalDamage = baseDamage + (m_accumulatedDamage * 2);
+	int totalDamage = GetAttackPower() + (m_accumulatedDamage / 2);
 
-	int randType = rand() % 2; // Only 0 (FAST) or 1 (HOMING)
-	SpecialBulletType type = static_cast<SpecialBulletType>(randType);
+	int randType = rand() % (int)BossAttackType::MAX_TYPES;
+	BossAttackType bulletType = static_cast<BossAttackType>(randType);
 
-	SpecialBullet* bullet = new SpecialBullet();
-	bullet->SetPos(myPos);
-	bullet->SetType(type);
-	bullet->SetDirection(dir);
-	bullet->SetTarget(target);
-	bullet->SetAttackPower(totalDamage);
-
-	GET_SINGLE(SceneManager)->GetCurScene()->AddObject(bullet, Layer::ENEMYBULLET);
-}
-
-void MirrorBoss::Move()
-{
-	return;
-}
-
-void MirrorBoss::Attack()
-{
-	return;
-}
-
-void MirrorBoss::EnterCollision(Collider* _other)
-{
-}
-
-void MirrorBoss::StayCollision(Collider* _other)
-{
-}
-
-void MirrorBoss::ExitCollision(Collider* _other)
-{
+	switch (bulletType)
+	{
+		case BossAttackType::FAST:
+		{
+			FastBullet* bullet = new FastBullet();
+			bullet->SetPos(myPos);
+			bullet->SetDirection(dir);
+			bullet->SetAttackPower(totalDamage);
+			GET_SINGLE(SceneManager)->GetCurScene()->AddObject(bullet, Layer::ENEMYBULLET);
+			break;
+		}
+		case BossAttackType::HOMING:
+		{
+			HomingBullet* bullet = new HomingBullet();
+			bullet->SetPos(myPos);
+			bullet->SetDirection(dir);
+			bullet->SetTarget(target);
+			bullet->SetAttackPower(totalDamage * 0.8f);
+			GET_SINGLE(SceneManager)->GetCurScene()->AddObject(bullet, Layer::ENEMYBULLET);
+			break;
+		}
+		case BossAttackType::BOOMERANG:
+		{
+			BoomerangBullet* bullet = new BoomerangBullet();
+			bullet->SetPos(myPos);
+			bullet->SetDirection(dir);
+			bullet->SetAttackPower(totalDamage * 1.2f);
+			GET_SINGLE(SceneManager)->GetCurScene()->AddObject(bullet, Layer::ENEMYBULLET);
+			break;
+		}
+		case BossAttackType::FRAGMENTING:
+		{
+			FragmentingBullet* bullet = new FragmentingBullet();
+			bullet->SetPos(myPos);
+			bullet->SetDirection(dir);
+			bullet->SetAttackPower(totalDamage * 0.5f);
+			GET_SINGLE(SceneManager)->GetCurScene()->AddObject(bullet, Layer::ENEMYBULLET);
+			break;
+		}
+	}
 }
 
 void MirrorBoss::UpdateBossFSM()
@@ -177,16 +197,23 @@ void MirrorBoss::UpdateBossFSM()
 	if (curState == m_attackState)
 	{
 		m_attackStateTimer += fDT;
-		if (m_attackStateTimer >= 0.5f && !m_hasAttacked)
-		{
-			FireSpecialBullet();
-			m_hasAttacked = true;
-		}
 
-		if (m_attackStateTimer >= m_attackStateDuration)
+		if (m_bulletsFiredInVolley < m_volleyCount)
+		{
+			m_timeSinceLastShot += fDT;
+			float fireInterval = 1.f / m_attackSpeed;
+
+			if (m_timeSinceLastShot >= fireInterval)
+			{
+				FireRandomBullet();
+				m_bulletsFiredInVolley++;
+				m_timeSinceLastShot = 0.f;
+			}
+		}
+		
+		if (m_bulletsFiredInVolley >= m_volleyCount && m_attackStateTimer >= m_attackStateDuration)
 		{
 			m_stateMachine->ChangeState(m_idleState);
-			m_attackStateTimer = 0.f;
 		}
 		return;
 	}
@@ -208,7 +235,9 @@ void MirrorBoss::UpdateBossFSM()
 			m_patternTimer = 0.f;
 			
 			m_attackStateTimer = 0.f;
-			m_hasAttacked = false;
+			m_bulletsFiredInVolley = 0;
+			m_timeSinceLastShot = 0.f;
+			
 			m_stateMachine->ChangeState(m_attackState);
 		}
 	}

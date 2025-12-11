@@ -3,26 +3,20 @@
 
 class Texture;
 class Collider;
+class Player;
 
-enum class SpecialBulletType
-{
-	FAST,
-	HOMING
-};
-
-class SpecialBullet : public Entity
+class HomingBullet : public Entity
 {
 public:
-	SpecialBullet();
-	~SpecialBullet() override;
+	HomingBullet();
+	~HomingBullet() override;
 
 public:
 	void Update() override;
 	void Render(HDC _hdc) override;
-
 	void EnterCollision(Collider* _other) override;
 
-	void SetType(SpecialBulletType type);
+public:
 	void SetDirection(Vec2 dir) { m_direction = dir; }
 	void SetTarget(Entity* target) { m_target = target; }
 
@@ -32,11 +26,9 @@ protected:
 	void Move() override;
 
 private:
-	SpecialBulletType m_type;
 	Vec2 m_direction;
 	Entity* m_target;
 	Texture* m_pTex;
-
 	float m_lifeTime;
 	float m_maxLifeTime;
 };
