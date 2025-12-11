@@ -244,6 +244,8 @@ void ResourceManager::RegisterTexture()
 	LoadTexture(L"WormBulletDeadEffect", L"Texture\\WormBulletDeadEffect.bmp");
 	LoadTexture(L"MirrorBoss", L"Texture\\MirrorBoss.bmp");
 	LoadTexture(L"GameOverScene", L"Texture\\GameOverScene.bmp");
+	LoadTexture(L"KnightBossBullet", L"Texture\\KnightBossBullet.bmp");
+	LoadTexture(L"MirrorBossBullet", L"Texture\\MirrorBossBullet.bmp");
 }
 
 void ResourceManager::LoadTexture(const wstring& _key, const wstring& _path)
