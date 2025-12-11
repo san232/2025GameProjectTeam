@@ -3,6 +3,7 @@
 
 #include "GDISelector.h"
 #include "SceneManager.h"
+#include "ResourceManager.h"
 #include "Scene.h"
 #include "LSScene.h"
 #include "Object.h"
@@ -194,6 +195,17 @@ void EnemySpawnManager::SpawnWaveEnemies(Scene* _scene, bool _bossWave)
 
 	if (_bossWave)
 	{
-		_scene->Spawn<BossKnight>(Layer::DEFAULTENEMY, {0.f,-600.f}, { 100.f,100.f });
+		switch (m_bossNum)
+		{
+		case 1:
+			m_bossNum++;
+			_scene->Spawn<BossKnight>(Layer::DEFAULTENEMY, {0.f,-600.f}, { 100.f,100.f });
+			break;
+		case 2:
+			m_bossNum = 1;
+			_scene->Spawn<BossKnight>(Layer::DEFAULTENEMY, { 0.f,-600.f }, { 100.f,100.f });
+			break;
+		}
+		GET_SINGLE(ResourceManager)->Play(L"BossWaveSound");
 	}
 }

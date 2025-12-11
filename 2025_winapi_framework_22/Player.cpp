@@ -328,6 +328,7 @@ void Player::TakeDamage(int _damage)
 {
 	if (m_isInvincibility == true) return;
 	GET_SINGLE(EffectManager)->CreateEffect<PlayerHitEffect>(GetPos(), { 50.f,50.f }, 2.f);
+	GET_SINGLE(ResourceManager)->Play(L"PlayerHitSound");
 	Entity::TakeDamage(_damage);
 }
 
@@ -335,6 +336,7 @@ void Player::Rolling()
 {
 	m_rigidCompo->AddImpulse(m_moveDirection * m_dashPower);
 	GET_SINGLE(EffectManager)->CreateEffect<PlayerRollingEffect>(GetPos(), { 50.f,50.f }, 2.f);
+	GET_SINGLE(ResourceManager)->Play(L"PlayerRollingSound");
 	m_rollingStateRemainTime = 0.6f;
 }
 
@@ -372,6 +374,7 @@ void Player::Attack()
 		curScene->AddObject(bullet, Layer::PLAYERBULLET);
 
 		GET_SINGLE(EffectManager)->CreateEffect<PlayerAttackEffect>(GetPos(), { 50.f,50.f }, 2.f);
+		GET_SINGLE(ResourceManager)->Play(L"PlayerAttackSound");
 
 		m_canAttack = false;
 		m_attackElapsedTime = 0.f;
@@ -380,11 +383,14 @@ void Player::Attack()
 
 void Player::Dead()
 {
+	if (m_isDeadState) return;
+
 	m_isDeadState = true;
 	if (m_stateMachine && m_deadState)
 	{
 		m_stateMachine->ChangeState(m_deadState);
 	}
+	GET_SINGLE(ResourceManager)->Play(L"PlayerDeadSound");
 }
 
 void Player::Destroy()
@@ -411,6 +417,7 @@ int Player::LevelUp(int level)
 {
 	GET_SINGLE(EffectManager)->CreateEffect<PlayerLevelUpEffect>(GetPos(), { 70.f,70.f }, 2.f);
 	GET_SINGLE(LevelUpManager)->LevelUpPlayer(this);
+	GET_SINGLE(ResourceManager)->Play(L"PlayerLevelUpSound");
 	return (int)(m_needExp * 1.5f);
 }
 

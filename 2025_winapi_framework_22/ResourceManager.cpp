@@ -43,7 +43,15 @@ void ResourceManager::Release()
 
 void ResourceManager::RegisterSound()
 {
-
+	LoadSound(L"BGM", L"Sound\\BGM.wav", true);
+	LoadSound(L"Title", L"Sound\\Title.wav", true);
+	LoadSound(L"GameOver", L"Sound\\GameOver.wav", true);
+	LoadSound(L"PlayerHitSound", L"Sound\\PlayerHitSound.wav", false);
+	LoadSound(L"PlayerAttackSound", L"Sound\\PlayerAttackSound.wav", false);
+	LoadSound(L"PlayerRollingSound", L"Sound\\PlayerRollingSound.wav", false);
+	LoadSound(L"PlayerDeadSound", L"Sound\\PlayerDeadSound.wav", false);
+	LoadSound(L"PlayerLevelUpSound", L"Sound\\PlayerLevelUpSound.wav", false);
+	LoadSound(L"BossWaveSound", L"Sound\\BossWaveSound.wav", false);
 }
 
 void ResourceManager::FmodUpdate()

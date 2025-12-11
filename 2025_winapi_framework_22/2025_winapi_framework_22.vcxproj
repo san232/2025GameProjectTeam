@@ -335,6 +335,7 @@
     <ResourceCompile Include="2025_winapi_framework_22.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\..\Downloads\GameIcon.ico" />
     <Image Include="2025_winapi_framework_22.ico" />
     <Image Include="small.ico" />
   </ItemGroup>
