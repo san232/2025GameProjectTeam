@@ -7,7 +7,9 @@ class Collider;
 enum class SpecialBulletType
 {
 	FAST,
-	HOMING
+	HOMING,
+	SPREAD,
+	BLAST
 };
 
 class SpecialBullet : public Entity

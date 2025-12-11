@@ -128,7 +128,7 @@ void MirrorBoss::FireSpecialBullet()
 	int baseDamage = 10;
 	int totalDamage = baseDamage + (m_accumulatedDamage * 2);
 
-	int randType = rand() % 2; // Only 0 (FAST) or 1 (HOMING)
+	int randType = rand() % 4; // Only 0 (FAST) or 1 (HOMING)
 	SpecialBulletType type = static_cast<SpecialBulletType>(randType);
 
 	SpecialBullet* bullet = new SpecialBullet();
