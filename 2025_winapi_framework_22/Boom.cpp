@@ -13,14 +13,14 @@
 Boom::Boom()
 {
 	SetHp(15);
-	SetMoveSpeed(150.f);
+	SetMoveSpeed(400.f);
 	SetAttackPower(1);
 	SetAttackCooltime(0.5f);
 	SetAttackRange(50.f);
 	SetExp(20);
 	SetDefaultLookRight(false);
 
-	m_attackDelay = 0.1f;
+	m_attackDelay = 0.f;
 
 	m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"BoomEnemy");
 

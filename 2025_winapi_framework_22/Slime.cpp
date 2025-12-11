@@ -14,11 +14,11 @@
 
 Slime::Slime()
 {
-    SetHp(15);
+    SetHp(10);
     SetMoveSpeed(70.f);
     SetAttackCooltime(2.f);
     SetAttackRange(300.f);
-    SetExp(15);
+    SetExp(20);
     SetAttackDelay(0.f);
     SetDefaultLookRight(true);
 

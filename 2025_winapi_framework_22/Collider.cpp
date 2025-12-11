@@ -26,13 +26,13 @@ void Collider::Render(HDC _hDC)
 	//GET_SINGLE(ResourceManager)->GetPen();
 
 	// RAII
-	PenType colorPen = PenType::GREEN;
+	/*PenType colorPen = PenType::GREEN;
 	if (m_showDebug)
 		colorPen = PenType::RED;
 	GDISelector pen(_hDC, colorPen);
 	GDISelector brush(_hDC, BrushType::HOLLOW);
 	RECT_RENDER(_hDC, m_updatedPos.x, m_updatedPos.y,
-		m_size.x, m_size.y);
+		m_size.x, m_size.y);*/
 }
 void Collider::EnterCollision(Collider* _other)
 {
