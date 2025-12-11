@@ -18,7 +18,7 @@ BossBullet::BossBullet()
     SetHp(1);
     SetMoveSpeed(300.f); 
     SetAttackPower(5); 
-    m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"WizardBullet"); 
+    m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"KnightBossBullet"); 
     
     if (Collider* col = GetComponent<Collider>())
     {

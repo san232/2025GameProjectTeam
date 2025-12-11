@@ -307,6 +307,9 @@
     <ClInclude Include="BoomerangBullet.h" />
     <ClInclude Include="FragmentingBullet.h" />
     <ClInclude Include="FragmentBullet.h" />
+    <ClInclude Include="Worm.h" />
+    <ClInclude Include="WormBullet.h" />
+    <ClInclude Include="WormBulletDeadEffect.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2025_winapi_framework_22.rc">
@@ -524,5 +527,8 @@
     <ClCompile Include="BoomerangBullet.cpp" />
     <ClCompile Include="FragmentingBullet.cpp" />
     <ClCompile Include="FragmentBullet.cpp" />
+    <ClCompile Include="Worm.cpp" />
+    <ClCompile Include="WormBullet.cpp" />
+    <ClCompile Include="WormBulletDeadEffect.cpp" />
   </ItemGroup>
 </Project>

@@ -14,10 +14,10 @@
 
 Conch::Conch()
 {
-    SetHp(15);
+    SetHp(10);
     SetMoveSpeed(70.f);
     SetAttackCooltime(1.2f);
-    SetAttackRange(200.f);
+    SetAttackRange(220.f);
     SetExp(15);
     SetAttackDelay(0.f);
     SetDefaultLookRight(false);

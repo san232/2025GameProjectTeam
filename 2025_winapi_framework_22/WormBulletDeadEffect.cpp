@@ -12,6 +12,7 @@ WormBulletDeadEffect::WormBulletDeadEffect()
 
 	m_animator->CreateAnimation(L"Effect", m_pTex, { 0.f, 0.f }, { 64.f, 64.f }, { 64.f, 0.f }, 7, 0.05f);
 	m_animator->Play(L"Effect", PlayMode::Once);
+	m_animator->SetScaleRatio(2.f);
 }
 
 WormBulletDeadEffect::~WormBulletDeadEffect()

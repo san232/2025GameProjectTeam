@@ -12,7 +12,7 @@
 
 Ghost::Ghost()
 {
-	SetHp(6);
+	SetHp(15);
 	SetMoveSpeed(160.f);
 	SetAttackPower(1);
 	SetAttackCooltime(0.8f);
@@ -20,7 +20,7 @@ Ghost::Ghost()
 	SetExp(20);
 	SetDefaultLookRight(true);
 
-	m_attackDelay = 0.1f;
+	m_attackDelay = 0.05f;
 
 	SetStatMulti();
 

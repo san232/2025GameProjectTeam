@@ -12,9 +12,9 @@
 
 Zombie::Zombie()
 {
-	SetHp(15);
+	SetHp(30);
 	SetMoveSpeed(150.f);
-	SetAttackPower(1);
+	SetAttackPower(2);
 	SetAttackCooltime(0.f);
 	SetAttackRange(50.f);
 	SetExp(20);
@@ -22,7 +22,7 @@ Zombie::Zombie()
 
 	SetStatMulti();
 
-	m_attackDelay = 0.1f;
+	m_attackDelay = 0.15f;
 
 	m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"Zombie");
 

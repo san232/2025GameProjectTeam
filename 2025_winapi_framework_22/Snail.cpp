@@ -16,13 +16,15 @@ Snail::Snail()
 {
     SetHp(5);
     SetMoveSpeed(70.f);
-    SetAttackCooltime(0.9f);
+    SetAttackCooltime(0.3f);
     SetAttackRange(300.f);
     SetExp(15);
     SetAttackDelay(0.f);
     SetDefaultLookRight(false);
 
     SetStatMulti();
+
+    m_attackStateDuration = 0.25f;
 
     m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"Snail");
 

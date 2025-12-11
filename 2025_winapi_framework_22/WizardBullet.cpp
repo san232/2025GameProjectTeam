@@ -18,8 +18,8 @@ WizardBullet::WizardBullet()
 {
     AddComponent<Collider>()->SetSize({10.f,12.f});
     SetHp(1);
-    SetMoveSpeed(200.f);
-    SetAttackPower(2);
+    SetMoveSpeed(400.f);
+    SetAttackPower(1);
     m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"WizardBullet");
 }
 

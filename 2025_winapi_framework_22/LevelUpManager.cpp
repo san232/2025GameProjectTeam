@@ -58,6 +58,7 @@ void LevelUpManager::Render(HDC _hdc)
 
     GDISelector penSelector(_hdc, PenType::BLACK);
     GDISelector bgBrush(_hdc, BrushType::WHITE);
+    GDISelector fontSelector(_hdc, FontType::TITLE);
 
     float uiW = totalW + 80.f;
     float uiH = panelH + 100.f;

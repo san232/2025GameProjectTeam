@@ -88,12 +88,12 @@ void BaseEnemy::Update()
 
 void BaseEnemy::Render(HDC _hdc)
 {
-    Vec2 pos = GetPos();
+    /*Vec2 pos = GetPos();
     float rng = m_attackRange;
 
     GDISelector brushSelector(_hdc, BrushType::HOLLOW);
     GDISelector penSelector(_hdc, PenType::CYAN);
-    ELLIPSE_RENDER(_hdc, pos.x, pos.y, rng * 2.f, rng * 2.f);
+    ELLIPSE_RENDER(_hdc, pos.x, pos.y, rng * 2.f, rng * 2.f);*/
 
     ComponentRender(_hdc);
 }
