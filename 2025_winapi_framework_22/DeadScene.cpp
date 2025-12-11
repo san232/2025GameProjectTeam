@@ -18,6 +18,7 @@ DeadScene::~DeadScene()
 
 void DeadScene::Init()
 {
+    GET_SINGLE(ResourceManager)->Play(L"GameOver");
     RECT rect;
     GetClientRect(GET_SINGLE(Core)->GetHwnd(), &rect);
 
@@ -63,6 +64,7 @@ void DeadScene::Render(HDC _hdc)
 {
     Scene::Render(_hdc);
 
+    GDISelector fontSelector(_hdc, FontType::TITLE);
     RECT rect;
     ::GetClientRect(GET_SINGLE(Core)->GetHwnd(), &rect);
 
@@ -103,5 +105,6 @@ void DeadScene::Render(HDC _hdc)
 
 void DeadScene::Release()
 {
+    GET_SINGLE(ResourceManager)->Stop(SOUND_CHANNEL::BGM);
     Scene::Release();
 }

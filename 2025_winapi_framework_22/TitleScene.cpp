@@ -18,7 +18,7 @@ TitleScene::~TitleScene()
 
 void TitleScene::Init()
 {
-
+    GET_SINGLE(ResourceManager)->Play(L"Title");
     RECT rect;
     GetClientRect(GET_SINGLE(Core)->GetHwnd(), &rect);
 
@@ -66,6 +66,8 @@ void TitleScene::Render(HDC _hdc)
 {
     Scene::Render(_hdc);
 
+    GDISelector fontSelector(_hdc, FontType::TITLE);
+
     RECT rect;
     ::GetClientRect(GET_SINGLE(Core)->GetHwnd(), &rect);
 
@@ -106,5 +108,6 @@ void TitleScene::Render(HDC _hdc)
 
 void TitleScene::Release()
 {
+    GET_SINGLE(ResourceManager)->Stop(SOUND_CHANNEL::BGM);
     Scene::Release();
 }

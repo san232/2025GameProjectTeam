@@ -24,6 +24,8 @@ void LSScene::Init()
     GET_SINGLE(CollisionManager)->CheckLayer(Layer::PLAYER, Layer::DEFAULTENEMY);
     GET_SINGLE(CollisionManager)->CheckLayer(Layer::DEFAULTENEMY, Layer::PLAYERBULLET);
     GET_SINGLE(CollisionManager)->CheckLayer(Layer::PLAYER, Layer::ENEMYBULLET);
+
+    GET_SINGLE(ResourceManager)->Play(L"BGM");
 }
 
 void LSScene::Update()
@@ -73,6 +75,7 @@ LSScene::~LSScene()
 
 void LSScene::Release()
 {
+    GET_SINGLE(ResourceManager)->Stop(SOUND_CHANNEL::BGM);
     Scene::Release();
     SAFE_DELETE(subWindowManager);
 }

@@ -25,6 +25,8 @@ private:
 
 private:
     int  m_currentWave = 0;
-    int  m_bossWaveInterval = 5;
+    int  m_bossWaveInterval = 10;
     bool m_waveActive = true;
+
+    int m_bossNum = 1;
 };
