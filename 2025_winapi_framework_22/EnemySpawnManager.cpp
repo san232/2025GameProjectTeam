@@ -65,12 +65,12 @@ void EnemySpawnManager::Render(HDC _hdc)
 	GDISelector penSelector(_hdc, PenType::BLACK);
 
 	Rectangle(_hdc, left, top, right, bottom);
-
 	SetBkMode(_hdc, TRANSPARENT); 
 
 	int textX = left + paddingX;
 	int textY = top + paddingY;
 
+	GDISelector fontSelector(_hdc, FontType::TITLE);
 	TextOut(_hdc, textX, textY, text.c_str(), (int)text.length());
 }
 
@@ -91,7 +91,7 @@ void EnemySpawnManager::StartNextWave()
 	m_waveActive = true;
 }
 
-bool EnemySpawnManager::AreAllEnemiesDead() const
+bool EnemySpawnManager::AreAllEnemiesDead()
 {
 	int enemyCnt = 0;
 	std::shared_ptr<Scene> curScene = GET_SINGLE(SceneManager)->GetCurScene();
@@ -107,7 +107,7 @@ bool EnemySpawnManager::AreAllEnemiesDead() const
 	return enemyCnt == 0;
 }
 
-Vec2 EnemySpawnManager::GetRandomOffScreenSpawnPos() const
+Vec2 EnemySpawnManager::GetRandomOffScreenSpawnPos()
 {
 	const float margin = 50.f;
 
@@ -151,12 +151,11 @@ void EnemySpawnManager::SpawnWaveEnemies(Scene* _scene, bool _bossWave)
 		int typeCount = 0;
 
 		if(GetCurrentWave() == 1)
-			typeCount = 3;
+			typeCount = 2;
 		else
 			typeCount = 10;
 
 		int rand = std::rand() % typeCount;
-		rand = 4;
 
 		switch (rand)
 		{

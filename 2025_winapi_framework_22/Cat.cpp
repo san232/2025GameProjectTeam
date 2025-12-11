@@ -16,13 +16,15 @@ Cat::Cat()
 {
     SetHp(5);
     SetMoveSpeed(70.f);
-    SetAttackCooltime(1.2f);
+    SetAttackCooltime(0.6f);
     SetAttackRange(300.f);
     SetExp(15);
     SetAttackDelay(0.f);
     SetDefaultLookRight(false);
 
     SetStatMulti();
+
+    m_attackStateDuration = 0.5;
 
     m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"Cat");
 
