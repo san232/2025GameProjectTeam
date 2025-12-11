@@ -20,7 +20,7 @@ Ghost::Ghost()
 	SetExp(20);
 	SetDefaultLookRight(true);
 
-	m_attackDelay = 0.1f;
+	m_attackDelay = 0.05f;
 
 	SetStatMulti();
 

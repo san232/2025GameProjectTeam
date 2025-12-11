@@ -66,11 +66,14 @@ void EnemySpawnManager::Render(HDC _hdc)
 
 	Rectangle(_hdc, left, top, right, bottom);
 
+	SetBkMode(_hdc, TRANSPARENT); 
+
 	int textX = left + paddingX;
 	int textY = top + paddingY;
 
 	TextOut(_hdc, textX, textY, text.c_str(), (int)text.length());
 }
+
 
 
 void EnemySpawnManager::StartNextWave()
@@ -147,14 +150,13 @@ void EnemySpawnManager::SpawnWaveEnemies(Scene* _scene, bool _bossWave)
 		Vec2 spawnPos = GetRandomOffScreenSpawnPos();
 		int typeCount = 0;
 
-		cout << GetCurrentWave();
-
 		if(GetCurrentWave() == 1)
 			typeCount = 3;
 		else
 			typeCount = 10;
 
 		int rand = std::rand() % typeCount;
+		rand = 4;
 
 		switch (rand)
 		{
@@ -193,6 +195,6 @@ void EnemySpawnManager::SpawnWaveEnemies(Scene* _scene, bool _bossWave)
 
 	if (_bossWave)
 	{
-		_scene->Spawn<BossKnight>(Layer::DEFAULTENEMY, {300.f,300.f}, { 70.f,70.f });
+		_scene->Spawn<BossKnight>(Layer::DEFAULTENEMY, {0.f,-600.f}, { 100.f,100.f });
 	}
 }
