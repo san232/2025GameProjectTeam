@@ -47,6 +47,12 @@ void BossDashState::Update(StateMachine& _owner)
 		rb->SetVelocity(m_dashDir * dashSpeed);
 	}
 
+	if (m_timer >= m_duration)
+	{
+		_owner.ChangeState(m_boss->GetIdleState());
+		return;
+	}
+
 	Vec2 pos = m_boss->GetPos();
 	if (pos.x <= 0.f || pos.x >= WINDOW_WIDTH || pos.y <= 0.f || pos.y >= WINDOW_HEIGHT)
 	{
