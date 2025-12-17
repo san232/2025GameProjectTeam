@@ -54,9 +54,13 @@ void SubWindowRenderer::Render(HDC subDC, SubWindow* subWin, HDC mainBackDC)
     int subW = subClientRect.right - subClientRect.left;
     int subH = subClientRect.bottom - subClientRect.top;
 
+    HDC bufferDC = ::CreateCompatibleDC(subDC);
+    HBITMAP bufferBitmap = ::CreateCompatibleBitmap(subDC, subW, subH);
+    HBITMAP oldBitmap = (HBITMAP)::SelectObject(bufferDC, bufferBitmap);
+
     HBRUSH whiteBrush = (HBRUSH)::GetStockObject(WHITE_BRUSH);
     RECT fullRect = { 0, 0, subW, subH };
-    ::FillRect(subDC, &fullRect, whiteBrush);
+    ::FillRect(bufferDC, &fullRect, whiteBrush);
 
     RECT intersect;
     if (::IntersectRect(&intersect, &mainScreenRect, &subScreenRect))
@@ -70,7 +74,7 @@ void SubWindowRenderer::Render(HDC subDC, SubWindow* subWin, HDC mainBackDC)
         int dstX = intersect.left - subScreenRect.left;
         int dstY = intersect.top - subScreenRect.top;
 
-        ::BitBlt(subDC, dstX, dstY, width, height, mainBackDC, srcX, srcY, SRCCOPY);
+        ::BitBlt(bufferDC, dstX, dstY, width, height, mainBackDC, srcX, srcY, SRCCOPY);
     }
 
     if (!m_memDC) m_memDC = ::CreateCompatibleDC(subDC);
@@ -79,7 +83,7 @@ void SubWindowRenderer::Render(HDC subDC, SubWindow* subWin, HDC mainBackDC)
     if (!m_hColorBitmap || m_lastColor != curColor)
     {
         HBITMAP hNewBmp = ::CreateBitmap(1, 1, 1, 32, NULL);
-        ::SelectObject(m_memDC, hNewBmp);
+        HBITMAP oldMemBitmap = (HBITMAP)::SelectObject(m_memDC, hNewBmp);
         
         if (m_hColorBitmap) ::DeleteObject(m_hColorBitmap);
         
@@ -94,7 +98,13 @@ void SubWindowRenderer::Render(HDC subDC, SubWindow* subWin, HDC mainBackDC)
     bf.SourceConstantAlpha = (BYTE)(subWin->GetAlpha() * 255);
     bf.AlphaFormat = 0;
 
-    ::GdiAlphaBlend(subDC, 0, 0, subW, subH, m_memDC, 0, 0, 1, 1, bf);
+    ::GdiAlphaBlend(bufferDC, 0, 0, subW, subH, m_memDC, 0, 0, 1, 1, bf);
+
+    ::BitBlt(subDC, 0, 0, subW, subH, bufferDC, 0, 0, SRCCOPY);
+
+    ::SelectObject(bufferDC, oldBitmap);
+    ::DeleteObject(bufferBitmap);
+    ::DeleteDC(bufferDC);
 }
 
 void SubWindowRenderer::RenderLegacy(HDC hdc)
