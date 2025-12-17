@@ -160,7 +160,7 @@ void LevelUpManager::Render(HDC _hdc)
         descRc.top = top + 20 + 120;
         descRc.bottom = bottom - 60;
 
-        DrawTextW(_hdc, desc.c_str(), (int)desc.length(), &descRc,
+        DrawText(_hdc, desc.c_str(), (int)desc.length(), &descRc,
             DT_CENTER | DT_WORDBREAK);
 
         wchar_t keyMsg[16];
@@ -194,14 +194,14 @@ void LevelUpManager::LevelUp(LevelUpType _type)
     switch (_type)
     {
     case LevelUpType::FullHp:
-        m_player->SetMaxHp(m_player->GetMaxHp() + 2);
+        m_player->SetMaxHp(m_player->GetMaxHp() + 3);
         m_player->SetHp(m_player->GetMaxHp());
         break;
     case LevelUpType::DamageUp:
-        m_player->SetAttackPower(m_player->GetAttackPower() + 2);
+        m_player->SetAttackPower(m_player->GetAttackPower() + 3);
         break;
     case LevelUpType::RollingCoolTimeDown:
-        m_player->SetRollingCooltime(m_player->GetRollingCooltime() - 0.1f);
+        m_player->SetRollingCooltime(m_player->GetRollingCooltime() - 0.15f);
         break;
     case LevelUpType::AttackCoolTimeDown:
         m_player->SetAttackCooltime(m_player->GetAttackCooltime() - 0.1f);

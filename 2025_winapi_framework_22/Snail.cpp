@@ -16,7 +16,7 @@ Snail::Snail()
 {
     SetHp(5);
     SetMoveSpeed(70.f);
-    SetAttackCooltime(0.3f);
+    SetAttackCooltime(0.5f);
     SetAttackRange(300.f);
     SetExp(15);
     SetAttackDelay(0.f);

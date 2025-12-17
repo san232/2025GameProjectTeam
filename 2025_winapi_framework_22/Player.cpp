@@ -243,7 +243,7 @@ void Player::UpdateInput()
 
 	bool hasInput = m_moveDirection != Vec2{ 0.f, 0.f };
 
-	if (GET_KEYDOWN(KEY_TYPE::LBUTTON) && m_canAttack)
+	if (GET_KEY(KEY_TYPE::LBUTTON) && m_canAttack)
 	{
 		Attack();
 	}
