@@ -40,6 +40,7 @@ BossKnight::BossKnight()
 	SetExp(500);
 	SetDefaultLookRight(true);
 	SetStatMulti();
+	m_maxHp = GetHp();
 	m_hitStunDuration = 0.1f;
 	
 	m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"DashBoss"); 
@@ -403,6 +404,5 @@ void BossKnight::RenderBossHpUI(HDC _hdc)
 		, m_hpBarTex->GetWidth()
 		, m_hpBarTex->GetHeight()
 		, RGB(255,0,255));
-
 }
 
