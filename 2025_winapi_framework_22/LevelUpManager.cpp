@@ -201,10 +201,10 @@ void LevelUpManager::LevelUp(LevelUpType _type)
         m_player->SetAttackPower(m_player->GetAttackPower() + 3);
         break;
     case LevelUpType::RollingCoolTimeDown:
-        m_player->SetRollingCooltime(m_player->GetRollingCooltime() - 0.15f);
+        m_player->SetRollingCooltime(m_player->GetRollingCooltime() - 0.1f);
         break;
     case LevelUpType::AttackCoolTimeDown:
-        m_player->SetAttackCooltime(m_player->GetAttackCooltime() - 0.1f);
+        m_player->SetAttackCooltime(m_player->GetAttackCooltime() - 0.05f);
         break;
     }
 

@@ -60,7 +60,6 @@ protected:
     void SetStatMulti()
     {
         SetHp(GetHp() * hPstatMulti);
-        SetMoveSpeed(GetMoveSpeed() * moveSpeedstatMulti);
         SetAttackPower(GetAttackPower() * atkPowerstatMulti);
     }
 
@@ -112,6 +111,5 @@ protected:
     bool m_defaultLookRight;
 
     int hPstatMulti;
-    float moveSpeedstatMulti;
     int atkPowerstatMulti;
 };

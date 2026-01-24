@@ -61,7 +61,6 @@ BaseEnemy::BaseEnemy()
 
     int wave = GET_SINGLE(EnemySpawnManager)->GetCurrentWave() - 1;
     hPstatMulti = (wave / 5) + 1;
-    moveSpeedstatMulti = ((float)wave / 50) + 1.f;
     atkPowerstatMulti = (wave / 10) + 1;
 }
 

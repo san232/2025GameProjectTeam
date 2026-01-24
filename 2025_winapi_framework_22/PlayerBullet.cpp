@@ -18,7 +18,7 @@ PlayerBullet::PlayerBullet()
     m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"PlayerBullet");
     AddComponent<Collider>()->SetSize({ 22.f,22.f });
     SetHp(1);
-    SetMoveSpeed(800.f);
+    SetMoveSpeed(1000.f);
 }
 
 PlayerBullet::~PlayerBullet()

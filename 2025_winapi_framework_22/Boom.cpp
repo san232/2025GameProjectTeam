@@ -13,7 +13,7 @@
 Boom::Boom()
 {
 	SetHp(15);
-	SetMoveSpeed(300.f);
+	SetMoveSpeed(350.f);
 	SetAttackPower(1);
 	SetAttackCooltime(0.5f);
 	SetAttackRange(50.f);
