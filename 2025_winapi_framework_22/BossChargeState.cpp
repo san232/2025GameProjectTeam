@@ -24,16 +24,18 @@ void BossChargeState::Enter(StateMachine& _owner)
 	}
 
 	Player* target = m_boss->GetTargetPlayer();
+	Vec2 dashDir = Vec2(1.f, 0.f); // Default direction
+
 	if (target)
 	{
 		Vec2 myPos = m_boss->GetPos();
 		Vec2 targetPos = target->GetPos();
-		/*
-		if (targetPos.x < myPos.x)
-			m_boss->SetDefaultLookRight(false);
-		else
-			m_boss->SetDefaultLookRight(true);*/
+		dashDir = targetPos - myPos;
+		dashDir.Normalize();
 	}
+
+	// Lock the dash direction now, so it doesn't change during the 0.6s charge duration.
+	m_boss->GetDashState()->SetDashDir(dashDir);
 
 	m_boss->ChangeAnimation(L"Charge", false);
 }
