@@ -1,26 +1,20 @@
 #include "pch.h"
 #include "HomingBullet.h"
 #include "Collider.h"
-#include "Rigidbody.h"
 #include "ResourceManager.h"
-#include "SceneManager.h"
-#include "Scene.h"
-#include "Player.h"
 #include "Texture.h"
 #include "GDISelector.h"
 
 HomingBullet::HomingBullet()
-	: m_direction{}
-	, m_target(nullptr)
-	, m_lifeTime(0.f)
-	, m_maxLifeTime(5.f)
-	, m_pTex(nullptr)
+	: m_target(nullptr)
 {
 	SetSize(Vec2(30.f, 30.f));
-	AddComponent<Collider>()->SetSize({ 30.f, 30.f });
+	if (Collider* col = GetComponent<Collider>())
+		col->SetSize({ 30.f, 30.f });
 	
 	SetMoveSpeed(250.f);
 	SetAttackPower(10);
+	SetLifeTime(5.f);
 	
 	m_pTex = GET_SINGLE(ResourceManager)->GetTexture(L"MirrorBossBullet");
 }
@@ -29,20 +23,9 @@ HomingBullet::~HomingBullet()
 {
 }
 
-void HomingBullet::Update()
-{
-	Move();
-
-	m_lifeTime += fDT;
-	if (m_lifeTime >= m_maxLifeTime)
-	{
-		Dead();
-	}
-}
-
 void HomingBullet::Move()
 {
-	if (m_target != nullptr)
+	if (m_target != nullptr && !m_target->GetIsDead())
 	{
 		Vec2 targetPos = m_target->GetPos();
 		Vec2 myPos = GetPos();
@@ -51,9 +34,7 @@ void HomingBullet::Move()
 		m_direction = dir; 
 	}
 
-	Vec2 pos = GetPos();
-	pos += m_direction * GetMoveSpeed() * fDT;
-	SetPos(pos);
+	Bullet::Move();
 }
 
 void HomingBullet::Render(HDC _hdc)
@@ -82,23 +63,4 @@ void HomingBullet::Render(HDC _hdc)
 	}
 
 	ComponentRender(_hdc);
-}
-
-void HomingBullet::EnterCollision(Collider* _other)
-{
-	Object* otherObj = _other->GetOwner();
-	if (!otherObj)
-		return;
-
-	Player* player = dynamic_cast<Player*>(otherObj);
-	if (!player)
-		return;
-
-	player->TakeDamage(GetAttackPower());
-	Dead();
-}
-
-void HomingBullet::Dead()
-{
-	GET_SINGLE(SceneManager)->GetCurScene()->RequestDestroy(this);
 }

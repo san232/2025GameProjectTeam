@@ -1,22 +1,15 @@
 #include "pch.h"
 #include "FastBullet.h"
 #include "Collider.h"
-#include "Rigidbody.h"
 #include "ResourceManager.h"
-#include "SceneManager.h"
-#include "Scene.h"
-#include "Player.h"
 #include "Texture.h"
 #include "GDISelector.h"
 
 FastBullet::FastBullet()
-	: m_direction{}
-	, m_lifeTime(0.f)
-	, m_maxLifeTime(3.f)
-	, m_pTex(nullptr)
 {
 	SetSize(Vec2(30.f, 30.f));
-	AddComponent<Collider>()->SetSize({ 30.f, 30.f });
+	if (Collider* col = GetComponent<Collider>())
+		col->SetSize({ 30.f, 30.f });
 	
 	SetMoveSpeed(1500.f);
 	SetAttackPower(10);
@@ -28,22 +21,9 @@ FastBullet::~FastBullet()
 {
 }
 
-void FastBullet::Update()
-{
-	Move();
-
-	m_lifeTime += fDT;
-	if (m_lifeTime >= m_maxLifeTime)
-	{
-		Dead();
-	}
-}
-
 void FastBullet::Move()
 {
-	Vec2 pos = GetPos();
-	pos += m_direction * GetMoveSpeed() * fDT;
-	SetPos(pos);
+	Bullet::Move();
 }
 
 void FastBullet::Render(HDC _hdc)
@@ -72,23 +52,4 @@ void FastBullet::Render(HDC _hdc)
 	}
 
 	ComponentRender(_hdc);
-}
-
-void FastBullet::EnterCollision(Collider* _other)
-{
-	Object* otherObj = _other->GetOwner();
-	if (!otherObj)
-		return;
-
-	Player* player = dynamic_cast<Player*>(otherObj);
-	if (!player)
-		return;
-
-	player->TakeDamage(GetAttackPower());
-	Dead();
-}
-
-void FastBullet::Dead()
-{
-	GET_SINGLE(SceneManager)->GetCurScene()->RequestDestroy(this);
 }

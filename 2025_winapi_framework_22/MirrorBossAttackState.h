@@ -15,4 +15,7 @@ public:
 
 private:
 	MirrorBoss* m_boss;
+	float m_timer;
+	float m_shotTimer;
+	int m_firedCount;
 };
