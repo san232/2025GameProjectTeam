@@ -41,6 +41,11 @@ void BossChargeState::Enter(StateMachine& _owner)
 void BossChargeState::Update(StateMachine& _owner)
 {
 	m_timer += fDT;
+
+	if (m_timer >= m_duration)
+	{
+		_owner.ChangeState(m_boss->GetDashState());
+	}
 }
 
 void BossChargeState::Exit(StateMachine& _owner)
