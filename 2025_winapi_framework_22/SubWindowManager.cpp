@@ -101,13 +101,13 @@ void SubWindowManager::Update(float deltaTime, const std::vector<Entity*>& allEn
         ::ScreenToClient(hMain, &rb);
 
         std::unordered_set<Entity*> currentFrameEntities;
-
+        std::unordered_set<Entity*> validAllEntities;
         for (Entity* entity : allEntities)
         {
             if (entity->GetIsDead()) continue;
+            validAllEntities.insert(entity);
 
             Vec2 pos = entity->GetPos();
-
             if (pos.x >= lt.x && pos.x <= rb.x &&
                 pos.y >= lt.y && pos.y <= rb.y)
             {
@@ -115,7 +115,6 @@ void SubWindowManager::Update(float deltaTime, const std::vector<Entity*>& allEn
             }
         }
 
-        // Handle Entry and Stay
         for (Entity* entity : currentFrameEntities)
         {
             if (m_prevFrameEntities.find(entity) == m_prevFrameEntities.end())
@@ -128,25 +127,14 @@ void SubWindowManager::Update(float deltaTime, const std::vector<Entity*>& allEn
             }
         }
 
-        // Handle Exit (with safety check for destroyed entities)
         for (Entity* entity : m_prevFrameEntities)
         {
             if (currentFrameEntities.find(entity) == currentFrameEntities.end())
             {
-                // Safety check: only call OnExit if the entity is still alive in allEntities.
-                // If it's not in allEntities or is marked dead, we shouldn't attempt OnExit to avoid invalid memory access.
-                bool stillExists = false;
-                for (Entity* e : allEntities)
+                if (validAllEntities.find(entity) != validAllEntities.end())
                 {
-                    if (e == entity && !e->GetIsDead())
-                    {
-                        stillExists = true;
-                        break;
-                    }
+                    if (effect) effect->OnExit(entity);
                 }
-
-                if (stillExists && effect) 
-                    effect->OnExit(entity);
             }
         }
 
@@ -159,7 +147,6 @@ void SubWindowManager::Render()
     if (m_subWindow && m_subWindow->IsActive() && m_subWindow->GetHWnd())
     {
         ::InvalidateRect(m_subWindow->GetHWnd(), nullptr, FALSE);
-        ::UpdateWindow(m_subWindow->GetHWnd());
     }
 }
 

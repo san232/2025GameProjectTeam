@@ -13,8 +13,14 @@ void SubWindowController::Update()
     if (m_subWindow == nullptr)
         return;
 
+    static POINT lastCursorPos = { -1, -1 };
     POINT cursorScreen = GET_MOUSE_SCREEN_POS;
     
+    if (cursorScreen.x == lastCursorPos.x && cursorScreen.y == lastCursorPos.y)
+        return;
+
+    lastCursorPos = cursorScreen;
+
     int targetScreenX = cursorScreen.x - (m_size.cx / 2);
     int targetScreenY = cursorScreen.y - (m_size.cy / 2);
     
@@ -23,6 +29,6 @@ void SubWindowController::Update()
         nullptr,
         targetScreenX, targetScreenY,
         0, 0,
-        SWP_NOSIZE | SWP_NOACTIVATE | SWP_NOZORDER
+        SWP_NOSIZE | SWP_NOACTIVATE | SWP_NOZORDER | SWP_NOCOPYBITS
     );
 }
