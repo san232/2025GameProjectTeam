@@ -1,11 +1,12 @@
 #pragma once
+#include "Enums.h"
 class Component;
 class Collider;
 class Object
 {
 public:
 	Object();
-	virtual ~Object(); // °¡»ó ¼Ò¸êÀÚ 
+	virtual ~Object(); //  Ò¸ 
 public:
 	virtual void Update() abstract;
 	virtual void LateUpdate();
@@ -21,6 +22,8 @@ public:
 	const Vec2& GetSize() const { return m_size; }
 	bool GetIsDead() const { return m_isDie; }
 	void SetDead() { m_isDie = true; }
+	Layer GetLayer() const { return m_layer; }
+	void SetLayer(Layer _layer) { m_layer = _layer; }
 protected:
 	void Translate(Vec2 _delta)
 	{
@@ -36,14 +39,14 @@ public:
 	template<typename T>
 	T* AddComponent()
 	{
-		static_assert(std::is_base_of<Component, T>::value, "Component·ÎºÎÅÍ »ó¼Ó¹Þ¾Æ¾ß ÇÕ´Ï´Ù.");
+		static_assert(std::is_base_of<Component, T>::value, "ComponentÎº Ó¹Þ¾Æ¾ Õ´Ï´.");
 		T* compo = new T;
-		compo->SetOwner(this); // ÁÖÀÎ Ã£±â
-		// ÀÚ±â ÀÚ½ÅÀÇ ±âº» ¼¼ÆÃ ¿Ï·á
-		// setownerÇÏ°í ÀÌ owner·Î getcom¸¦ ÇÏ´øÁö ÇÒ ¼ö ÀÖÀ½
+		compo->SetOwner(this); //  Ã£
+		// Ú± Ú½ âº»  Ï·
+		// setownerÏ°  owner getcom Ï´   
 		compo->Init();
 		m_vecComponents.push_back(compo);
-		return compo; // ¸®ÅÏ°ªÀ» ³ªÁß¿¡ setter µî À¯¿¬ÇÏ°Ô »ç¿ë
+		return compo; // Ï° ß¿ setter  Ï° 
 	}
 	template<typename T>
 	T* GetComponent()
@@ -61,6 +64,7 @@ private:
 	bool m_isDie;
 	Vec2 m_pos;
 	Vec2 m_size;
+	Layer m_layer;
 	vector<Component*> m_vecComponents;
 };
 

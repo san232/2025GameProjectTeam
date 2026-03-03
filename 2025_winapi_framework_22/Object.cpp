@@ -7,13 +7,14 @@ Object::Object()
 	: m_pos{}
 	, m_size{}
 	, m_isDie(false)
+	, m_layer(Layer::DEFAULT)
 {
 	
 }
 
 Object::~Object()
 {
-	// ÄÄÆ÷³ÍÆ® »èÁ¦
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
 	for (Component* com : m_vecComponents)
 		SAFE_DELETE(com);
 	m_vecComponents.clear();

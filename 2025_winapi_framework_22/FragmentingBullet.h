@@ -11,7 +11,7 @@ public:
 
 protected:
     void Move() override;
-
+	void Dead() override;
 private:
     void Explode();
     float m_explodeTime;

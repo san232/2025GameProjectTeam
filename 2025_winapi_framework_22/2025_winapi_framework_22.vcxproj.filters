@@ -225,6 +225,9 @@
     <ClInclude Include="CatBullet.h">
       <Filter>Engine\03. Object\Enemy\Bullet</Filter>
     </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Engine\03. Object\Enemy\Bullet</Filter>
+    </ClInclude>
     <ClInclude Include="Zombie.h">
       <Filter>Engine\03. Object\Enemy</Filter>
     </ClInclude>
@@ -473,6 +476,9 @@
       <Filter>Engine\03. Object\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="CatBullet.cpp">
+      <Filter>Engine\03. Object\Enemy\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
       <Filter>Engine\03. Object\Enemy\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="SubWindowManager.cpp">

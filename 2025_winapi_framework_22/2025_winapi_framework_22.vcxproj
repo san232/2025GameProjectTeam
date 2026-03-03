@@ -171,6 +171,7 @@
     <ClInclude Include="BossDashState.h" />
     <ClInclude Include="BossKnight.h" />
     <ClInclude Include="BuffEffects.h" />
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="Cat.h" />
     <ClInclude Include="CatBullet.h" />
     <ClInclude Include="CatBulletDeadEffect.h" />
@@ -264,6 +265,7 @@
     <ClCompile Include="BossChargeState.cpp" />
     <ClCompile Include="BossDashState.cpp" />
     <ClCompile Include="BossKnight.cpp" />
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Cat.cpp" />
     <ClCompile Include="CatBullet.cpp" />
     <ClCompile Include="CatBulletDeadEffect.cpp" />

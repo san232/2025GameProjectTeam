@@ -1,5 +1,5 @@
 #pragma once
-//#include "Object.h"
+#include "Object.h"
 class Object;
 struct SpawnObject
 {
@@ -27,12 +27,13 @@ public:
 public:
 	void AddObject(Object* _obj, Layer _type)
 	{
+		_obj->SetLayer(_type);
 		m_vecObj[(UINT)_type].push_back(_obj);
 	}
 	template<typename T>
 	void Spawn(Layer _type, Vec2 _pos, Vec2 _size)
 	{
-		static_assert(std::is_base_of<Object, T>::value, "Object∑Œ∫Œ≈Õ ªÛº”πﬁæ∆æﬂ «‘");
+		static_assert(std::is_base_of<Object, T>::value, "ObjectÔøΩŒ∫ÔøΩÔøΩÔøΩ ÔøΩÔøΩ”πﬁæ∆æÔøΩ ÔøΩÔøΩ");
 		T* obj = new T;
 		obj->SetPos(_pos);
 		obj->SetSize(_size);
