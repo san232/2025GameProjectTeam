@@ -138,7 +138,8 @@ LRESULT CALLBACK SubWindow::WndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
 
     case WM_SYSCOMMAND:
     {
-        if ((wp & 0xFFF0) == SC_MOVE || (wp & 0xFFF0) == SC_CLOSE)
+        UINT command = (wp & 0xFFF0);
+        if (command == SC_MOVE || command == SC_CLOSE || command == SC_KEYMENU)
             return 0;
         break;
     }

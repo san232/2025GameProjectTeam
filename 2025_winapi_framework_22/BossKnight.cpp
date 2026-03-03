@@ -25,9 +25,7 @@ BossKnight::BossKnight()
 	, m_dashState(nullptr)
 	, m_patternCooldown(1.0f)
 	, m_patternTimer(0.f)
-	, m_chargeTimer(0.f)
 	, m_chargeDuration(0.5f)
-	, m_dashTimer(0.f)
 	, m_dashDuration(0.8f)
 	, m_hasAttacked(false)
 	, m_maxHp(150)
@@ -235,47 +233,29 @@ void BossKnight::UpdateBossFSM()
 {
 	if (m_hp <= 0 || GetIsDead())
 	{
-		if (m_stateMachine && m_deadState)
-		{
+		if (m_stateMachine->GetCurState() != m_deadState)
 			m_stateMachine->ChangeState(m_deadState);
-		}
-		if (m_stateMachine)
-			m_stateMachine->Update();
+		m_stateMachine->Update();
 		return;
 	}
 
 	if (m_inHitStun)
 	{
+		if (m_stateMachine->GetCurState() != m_hitState)
+			m_stateMachine->ChangeState(m_hitState);
+
 		m_hitStunTimer += fDT;
 		if (m_hitStunTimer >= m_hitStunDuration)
-		{
 			m_inHitStun = false;
-		}
-		else
-		{
-			if (m_stateMachine && m_hitState)
-			{
-				m_stateMachine->ChangeState(m_hitState);
-				m_stateMachine->Update();
-				return;
-			}
-		}
-	}
 
-	State* curState = m_stateMachine->GetCurState();
-	if (curState == m_chargeState)
-	{
-		m_chargeTimer += fDT;
-		if (m_chargeTimer >= m_chargeDuration)
-		{
-			m_dashTimer = 0.f;
-			m_stateMachine->ChangeState(m_dashState);
-		}
 		m_stateMachine->Update();
 		return;
 	}
-	
-	if (curState == m_dashState)
+
+	State* curState = m_stateMachine->GetCurState();
+
+	// Special States (Charge, Dash) handle their own transitions now.
+	if (curState == m_chargeState || curState == m_dashState)
 	{
 		m_stateMachine->Update();
 		return;
@@ -306,11 +286,9 @@ void BossKnight::UpdateBossFSM()
 
 	if (!m_targetPlayer || m_targetPlayer->GetIsDead())
 	{
-		if (m_stateMachine && m_idleState)
-		{
+		if (curState != m_idleState)
 			m_stateMachine->ChangeState(m_idleState);
-			m_stateMachine->Update();
-		}
+		m_stateMachine->Update();
 		return;
 	}
 
@@ -319,7 +297,6 @@ void BossKnight::UpdateBossFSM()
 	if (m_patternTimer >= m_patternCooldown)
 	{
 		m_patternTimer = 0.f;
-		m_chargeTimer = 0.f;
 		m_stateMachine->ChangeState(m_chargeState); 
 		m_stateMachine->Update();
 		return;
@@ -335,7 +312,7 @@ void BossKnight::UpdateBossFSM()
 	}
 	else
 	{
-		if (m_stateMachine && m_moveState)
+		if (curState != m_moveState && curState != m_attackState)
 		{
 			m_stateMachine->ChangeState(m_moveState);
 		}

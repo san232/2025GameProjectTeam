@@ -93,16 +93,23 @@ void SubWindowManager::Update(float deltaTime, const std::vector<Entity*>& allEn
         RECT winRect = m_subWindow->GetRect();
         ISubWindowEffect* effect = m_subWindow->GetEffect();
 
-        std::unordered_set<Entity*> currentFrameEntities;
+        // Convert Window Screen Rect to Client (World) Rect once to optimize.
+        HWND hMain = GET_SINGLE(Core)->GetHwnd();
+        POINT lt = { winRect.left, winRect.top };
+        POINT rb = { winRect.right, winRect.bottom };
+        ::ScreenToClient(hMain, &lt);
+        ::ScreenToClient(hMain, &rb);
 
+        std::unordered_set<Entity*> currentFrameEntities;
+        std::unordered_set<Entity*> validAllEntities;
         for (Entity* entity : allEntities)
         {
             if (entity->GetIsDead()) continue;
+            validAllEntities.insert(entity);
 
-            POINT screenPos = WorldToScreen(entity->GetPos());
-
-            if (screenPos.x >= winRect.left && screenPos.x <= winRect.right &&
-                screenPos.y >= winRect.top && screenPos.y <= winRect.bottom)
+            Vec2 pos = entity->GetPos();
+            if (pos.x >= lt.x && pos.x <= rb.x &&
+                pos.y >= lt.y && pos.y <= rb.y)
             {
                 currentFrameEntities.insert(entity);
             }
@@ -124,7 +131,10 @@ void SubWindowManager::Update(float deltaTime, const std::vector<Entity*>& allEn
         {
             if (currentFrameEntities.find(entity) == currentFrameEntities.end())
             {
-                if (effect) effect->OnExit(entity);
+                if (validAllEntities.find(entity) != validAllEntities.end())
+                {
+                    if (effect) effect->OnExit(entity);
+                }
             }
         }
 
@@ -137,7 +147,6 @@ void SubWindowManager::Render()
     if (m_subWindow && m_subWindow->IsActive() && m_subWindow->GetHWnd())
     {
         ::InvalidateRect(m_subWindow->GetHWnd(), nullptr, FALSE);
-        ::UpdateWindow(m_subWindow->GetHWnd());
     }
 }
 

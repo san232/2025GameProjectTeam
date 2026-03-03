@@ -15,4 +15,5 @@ public:
 
 private:
 	MirrorBoss* m_boss;
+	float m_timer;
 };

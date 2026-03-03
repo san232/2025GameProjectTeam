@@ -1,18 +1,12 @@
 #pragma once
 #include "BaseEnemy.h"
 
+#include <vector>
+
 class MirrorBossIdleState;
 class MirrorBossChargeState;
 class MirrorBossAttackState;
-
-enum class BossAttackType
-{
-	FAST,
-	HOMING,
-	BOOMERANG,
-	FRAGMENTING,
-	MAX_TYPES
-};
+class IBulletStrategy;
 
 class MirrorBoss : public BaseEnemy
 {
@@ -44,6 +38,12 @@ public:
 	State* GetChargeState() const;
 	State* GetAttackState() const;
 
+	float GetIdleDuration() const { return m_idleDuration; }
+	float GetChargeDuration() const { return m_chargeDuration; }
+	float GetAttackDuration() const { return m_attackStateDuration; }
+	float GetAttackSpeed() const { return m_attackSpeed; }
+	int GetVolleyCount() const { return m_volleyCount; }
+
 	void UpdateBossFSM();
 
 private:
@@ -54,19 +54,17 @@ private:
 	MirrorBossChargeState* m_chargeState;
 	MirrorBossAttackState* m_attackState;
 
+	std::vector<IBulletStrategy*> m_strategies;
+
 	int m_accumulatedDamage;
 	bool m_isCharging;
 	int m_maxHp;
 	
-	float m_patternTimer;
 	float m_idleDuration;
 	float m_chargeDuration;
-
-	float m_attackStateTimer;
 	float m_attackStateDuration;
 
 	bool m_isWarningPhase;
-	float m_warningTimer;
 	float m_warningDuration;
 
 	bool m_showWarningLine;
@@ -75,6 +73,4 @@ private:
 	// New volley mechanics
 	float m_attackSpeed; // Shots per second
 	int m_volleyCount;
-	int m_bulletsFiredInVolley;
-	float m_timeSinceLastShot;
 };

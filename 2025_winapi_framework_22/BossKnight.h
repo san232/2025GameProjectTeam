@@ -57,10 +57,7 @@ private:
 		float m_patternCooldown;
 		float m_patternTimer;
 	
-		float m_chargeTimer;
 		float m_chargeDuration;
-	
-		float m_dashTimer;
 		float m_dashDuration;
 		
 		bool m_hasAttacked;

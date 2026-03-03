@@ -7,6 +7,6 @@ public:
 	void Update();
 
 private:
-	HWND subWindow;
-	SIZE size;
+    HWND m_subWindow;
+    SIZE m_size;
 };

@@ -17,19 +17,8 @@ void BossDashState::Enter(StateMachine& _owner)
 {
 	m_timer = 0.f;
 
-	Player* target = m_boss->GetTargetPlayer();
-	if (target)
-	{
-		Vec2 myPos = m_boss->GetPos();
-		Vec2 targetPos = target->GetPos();
-		Vec2 dir = targetPos - myPos;
-		dir.Normalize();
-		m_dashDir = dir;
-	}
-	else
-	{
-		m_dashDir = Vec2(1.f, 0.f);
-	}
+	// Use the pre-calculated direction locked in by BossChargeState.
+	// No recalculation happens here to respect the 0.6s charge delay.
 
 	m_boss->ChangeAnimation(L"Dash", true);
     m_boss->ClearDashHits();

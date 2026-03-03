@@ -13,6 +13,8 @@ public:
 	void Update(StateMachine& _owner) override;
 	void Exit(StateMachine& _owner) override;
 
+	void SetDashDir(const Vec2& _dir) { m_dashDir = _dir; }
+
 private:
 	BossKnight* m_boss;
 	Vec2 m_dashDir;
