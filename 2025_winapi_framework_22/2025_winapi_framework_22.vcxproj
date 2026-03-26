@@ -188,6 +188,7 @@
     <ClInclude Include="Effect.h" />
     <ClInclude Include="EffectManager.h" />
     <ClInclude Include="EnemyAttackState.h" />
+    <ClInclude Include="EnemyBullet.h" />
     <ClInclude Include="EnemyDeadState.h" />
     <ClInclude Include="EnemyHitEffect.h" />
     <ClInclude Include="EnemyHitState.h" />
@@ -208,6 +209,7 @@
     <ClInclude Include="LCMScene.h" />
     <ClInclude Include="LevelUpManager.h" />
     <ClInclude Include="LSScene.h" />
+    <ClInclude Include="MeleeEnemy.h" />
     <ClInclude Include="MirrorBoss.h" />
     <ClInclude Include="MirrorBossAttackState.h" />
     <ClInclude Include="MirrorBossChargeState.h" />
@@ -226,6 +228,7 @@
     <ClInclude Include="PlayerMoveState.h" />
     <ClInclude Include="PlayerRollingEffect.h" />
     <ClInclude Include="PlayerRollingState.h" />
+    <ClInclude Include="ProjectileEnemy.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceBase.h" />
     <ClInclude Include="ResourceManager.h" />
@@ -281,6 +284,7 @@
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="EffectManager.cpp" />
     <ClCompile Include="EnemyAttackState.cpp" />
+    <ClCompile Include="EnemyBullet.cpp" />
     <ClCompile Include="EnemyDeadState.cpp" />
     <ClCompile Include="EnemyHitEffect.cpp" />
     <ClCompile Include="EnemyHitState.cpp" />
@@ -295,6 +299,7 @@
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="HomingBullet.cpp" />
     <ClCompile Include="LevelUpManager.cpp" />
+    <ClCompile Include="MeleeEnemy.cpp" />
     <ClCompile Include="MirrorBoss.cpp" />
     <ClCompile Include="MirrorBossAttackState.cpp" />
     <ClCompile Include="MirrorBossChargeState.cpp" />
@@ -316,6 +321,7 @@
     <ClCompile Include="PlayerMoveState.cpp" />
     <ClCompile Include="PlayerRollingEffect.cpp" />
     <ClCompile Include="PlayerRollingState.cpp" />
+    <ClCompile Include="ProjectileEnemy.cpp" />
     <ClCompile Include="ResourceBase.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Rigidbody.cpp" />

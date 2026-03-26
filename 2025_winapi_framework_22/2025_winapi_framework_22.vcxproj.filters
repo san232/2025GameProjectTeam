@@ -376,6 +376,15 @@
     <ClInclude Include="targetver.h">
       <Filter>Engine\99. Headers</Filter>
     </ClInclude>
+    <ClInclude Include="MeleeEnemy.h">
+      <Filter>Engine\03. Object\Enemy\MeleeEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectileEnemy.h">
+      <Filter>Engine\03. Object\Enemy\ProjectileEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBullet.h">
+      <Filter>Engine\03. Object\Enemy\Bullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2025_winapi_framework_22.rc">
@@ -651,6 +660,15 @@
     </ClCompile>
     <ClCompile Include="WormBulletDeadEffect.cpp">
       <Filter>Engine\03. Object\Enemy\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="MeleeEnemy.cpp">
+      <Filter>Engine\03. Object\Enemy\MeleeEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectileEnemy.cpp">
+      <Filter>Engine\03. Object\Enemy\ProjectileEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyBullet.cpp">
+      <Filter>Engine\03. Object\Enemy\Bullet</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
