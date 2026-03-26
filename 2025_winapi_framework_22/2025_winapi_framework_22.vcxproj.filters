@@ -74,9 +74,6 @@
     <Filter Include="Engine\03. Object\Enemy\Bullet">
       <UniqueIdentifier>{423ec833-768a-4f29-b342-0ad02f6a2273}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\03. Object\Player\Effect">
-      <UniqueIdentifier>{5840983b-77d8-4d21-a015-846f8aac0186}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\03. Object\Enemy\Effect">
       <UniqueIdentifier>{930103c0-cdda-41f2-ad5d-cf374c59942e}</UniqueIdentifier>
     </Filter>
@@ -235,9 +232,6 @@
     <ClInclude Include="PlayerAttackEffect.h">
       <Filter>Engine\03. Object\Player</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerBullet.h">
-      <Filter>Engine\03. Object\Player\Effect</Filter>
-    </ClInclude>
     <ClInclude Include="Texture.h">
       <Filter>Engine\05. Resource</Filter>
     </ClInclude>
@@ -390,6 +384,9 @@
     </ClInclude>
     <ClInclude Include="WormBulletDeadEffect.h">
       <Filter>Engine\03. Object\Enemy\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerBullet.h">
+      <Filter>Engine\03. Object\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -553,9 +550,6 @@
     <ClCompile Include="PlayerAttackEffect.cpp">
       <Filter>Engine\03. Object\Player</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerBullet.cpp">
-      <Filter>Engine\03. Object\Player\Effect</Filter>
-    </ClCompile>
     <ClCompile Include="TitleScene.cpp">
       <Filter>Engine\04. Scene</Filter>
     </ClCompile>
@@ -681,6 +675,9 @@
     </ClCompile>
     <ClCompile Include="WormBulletDeadEffect.cpp">
       <Filter>Engine\03. Object\Enemy\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerBullet.cpp">
+      <Filter>Engine\03. Object\Player</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
