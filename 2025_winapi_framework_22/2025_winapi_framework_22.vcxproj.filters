@@ -80,6 +80,15 @@
     <Filter Include="Engine\03. Object\Enemy\Effect">
       <UniqueIdentifier>{930103c0-cdda-41f2-ad5d-cf374c59942e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\03. Object\Enemy\MeleeEnemy">
+      <UniqueIdentifier>{1c4cc4cf-012a-4339-a86b-80f6fd775608}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\03. Object\Enemy\ProjectileEnemy">
+      <UniqueIdentifier>{f5dea48f-4937-45ae-b2ac-202c333530f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\10.State\MirrorBossState">
+      <UniqueIdentifier>{b0d43aab-c847-4391-837c-07905d49d799}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="2025_winapi_framework_22.h">
@@ -145,12 +154,6 @@
     <ClInclude Include="EnemySpawnManager.h">
       <Filter>Engine\02. Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Ghost.h">
-      <Filter>Engine\03. Object\Enemy</Filter>
-    </ClInclude>
-    <ClInclude Include="Boom.h">
-      <Filter>Engine\03. Object\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="BossChargeState.h">
       <Filter>Engine\10.State\EnemyState\BossState</Filter>
     </ClInclude>
@@ -159,11 +162,6 @@
     </ClInclude>
     <ClInclude Include="BossKnight.h">
       <Filter>Engine\03. Object\Enemy\Boss</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource.h" />
-    <ClInclude Include="targetver.h" />
-    <ClInclude Include="Cat.h">
-      <Filter>Engine\03. Object\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>Engine\99. Headers</Filter>
@@ -228,9 +226,6 @@
     <ClInclude Include="Bullet.h">
       <Filter>Engine\03. Object\Enemy\Bullet</Filter>
     </ClInclude>
-    <ClInclude Include="Zombie.h">
-      <Filter>Engine\03. Object\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="Rigidbody.h">
       <Filter>Engine\06. Component\Physics</Filter>
     </ClInclude>
@@ -270,49 +265,117 @@
     <ClInclude Include="DeadScene.h">
       <Filter>Engine\04. Scene</Filter>
     </ClInclude>
-    <ClInclude Include="CatBulletDeadEffect.h" />
-    <ClInclude Include="EnemyHitEffect.h" />
-    <ClInclude Include="LevelUpManager.h" />
-    <ClInclude Include="PlayerHitEffect.h" />
-    <ClInclude Include="PlayerLevelUpEffect.h" />
-    <ClInclude Include="PlayerRollingEffect.h" />
-    <ClInclude Include="Snail.h" />
-    <ClInclude Include="SnailBullet.h" />
-    <ClInclude Include="Wizard.h" />
-    <ClInclude Include="WizardBullet.h" />
-    <ClInclude Include="Conch.h">
-      <Filter>Engine\03. Object\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="ConchBullet.h">
       <Filter>Engine\03. Object\Enemy\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="ConchBulletDeadEffect.h">
       <Filter>Engine\03. Object\Enemy\Effect</Filter>
     </ClInclude>
-    <ClInclude Include="Necromancer.h">
-      <Filter>Engine\03. Object\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="NecromancerBullet.h">
       <Filter>Engine\03. Object\Enemy\Bullet</Filter>
     </ClInclude>
-    <ClInclude Include="BossBullet.h" />
-    <ClInclude Include="MirrorBoss.h" />
-    <ClInclude Include="MirrorBossAttackState.h" />
-    <ClInclude Include="MirrorBossChargeState.h" />
-    <ClInclude Include="MirrorBossIdleState.h" />
-    <ClInclude Include="Slime.h" />
-    <ClInclude Include="SlimeBullet.h" />
     <ClInclude Include="Worm.h" />
     <ClInclude Include="WormBullet.h" />
     <ClInclude Include="WormBulletDeadEffect.h" />
-    <ClInclude Include="FastBullet.h" />
-    <ClInclude Include="HomingBullet.h" />
-    <ClInclude Include="BoomerangBullet.h" />
-    <ClInclude Include="FragmentingBullet.h" />
-    <ClInclude Include="FragmentBullet.h" />
-    <ClInclude Include="Worm.h" />
-    <ClInclude Include="WormBullet.h" />
-    <ClInclude Include="WormBulletDeadEffect.h" />
+    <ClInclude Include="BoomerangBullet.h">
+      <Filter>Engine\03. Object\Enemy\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="BossBullet.h">
+      <Filter>Engine\03. Object\Enemy\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="FragmentBullet.h">
+      <Filter>Engine\03. Object\Enemy\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="FastBullet.h">
+      <Filter>Engine\03. Object\Enemy\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="SlimeBullet.h">
+      <Filter>Engine\03. Object\Enemy\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="SnailBullet.h">
+      <Filter>Engine\03. Object\Enemy\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="WizardBullet.h">
+      <Filter>Engine\03. Object\Enemy\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="WormBullet.h">
+      <Filter>Engine\03. Object\Enemy\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="FragmentingBullet.h">
+      <Filter>Engine\03. Object\Enemy\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="HomingBullet.h">
+      <Filter>Engine\03. Object\Enemy\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="MirrorBoss.h">
+      <Filter>Engine\03. Object\Enemy\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="Zombie.h">
+      <Filter>Engine\03. Object\Enemy\MeleeEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Ghost.h">
+      <Filter>Engine\03. Object\Enemy\MeleeEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Boom.h">
+      <Filter>Engine\03. Object\Enemy\MeleeEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Cat.h">
+      <Filter>Engine\03. Object\Enemy\ProjectileEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Conch.h">
+      <Filter>Engine\03. Object\Enemy\ProjectileEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Necromancer.h">
+      <Filter>Engine\03. Object\Enemy\ProjectileEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Slime.h">
+      <Filter>Engine\03. Object\Enemy\ProjectileEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Snail.h">
+      <Filter>Engine\03. Object\Enemy\ProjectileEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Wizard.h">
+      <Filter>Engine\03. Object\Enemy\ProjectileEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Worm.h">
+      <Filter>Engine\03. Object\Enemy\ProjectileEnemy</Filter>
+    </ClInclude>
+    <ClInclude Include="MirrorBossAttackState.h">
+      <Filter>Engine\10.State\MirrorBossState</Filter>
+    </ClInclude>
+    <ClInclude Include="MirrorBossChargeState.h">
+      <Filter>Engine\10.State\MirrorBossState</Filter>
+    </ClInclude>
+    <ClInclude Include="MirrorBossIdleState.h">
+      <Filter>Engine\10.State\MirrorBossState</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelUpManager.h">
+      <Filter>Engine\02. Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="CatBulletDeadEffect.h">
+      <Filter>Engine\03. Object\Enemy\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyHitEffect.h">
+      <Filter>Engine\03. Object\Enemy\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerHitEffect.h">
+      <Filter>Engine\03. Object\Enemy\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerLevelUpEffect.h">
+      <Filter>Engine\03. Object\Enemy\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerRollingEffect.h">
+      <Filter>Engine\03. Object\Enemy\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="WormBulletDeadEffect.h">
+      <Filter>Engine\03. Object\Enemy\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Engine\99. Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Engine\99. Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="2025_winapi_framework_22.rc">
@@ -436,9 +499,6 @@
     <ClCompile Include="PlayerDeadState.cpp">
       <Filter>Engine\10.State\PlayerState</Filter>
     </ClCompile>
-    <ClCompile Include="Zombie.cpp">
-      <Filter>Engine\03. Object\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="EnemyIdleState.cpp">
       <Filter>Engine\10.State\EnemyState</Filter>
     </ClCompile>
@@ -457,12 +517,6 @@
     <ClCompile Include="EnemySpawnManager.cpp">
       <Filter>Engine\02. Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Ghost.cpp">
-      <Filter>Engine\03. Object\Enemy</Filter>
-    </ClCompile>
-    <ClCompile Include="Boom.cpp">
-      <Filter>Engine\03. Object\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="BossChargeState.cpp">
       <Filter>Engine\10.State\EnemyState\BossState</Filter>
     </ClCompile>
@@ -471,9 +525,6 @@
     </ClCompile>
     <ClCompile Include="BossKnight.cpp">
       <Filter>Engine\03. Object\Enemy\Boss</Filter>
-    </ClCompile>
-    <ClCompile Include="Cat.cpp">
-      <Filter>Engine\03. Object\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="CatBullet.cpp">
       <Filter>Engine\03. Object\Enemy\Bullet</Filter>
@@ -496,48 +547,110 @@
     <ClCompile Include="DeadScene.cpp">
       <Filter>Engine\04. Scene</Filter>
     </ClCompile>
-    <ClCompile Include="CatBulletDeadEffect.cpp" />
-    <ClCompile Include="EnemyHitEffect.cpp" />
-    <ClCompile Include="LevelUpManager.cpp" />
-    <ClCompile Include="PlayerHitEffect.cpp" />
-    <ClCompile Include="PlayerLevelUpEffect.cpp" />
-    <ClCompile Include="PlayerRollingEffect.cpp" />
-    <ClCompile Include="Snail.cpp" />
-    <ClCompile Include="SnailBullet.cpp" />
-    <ClCompile Include="Wizard.cpp" />
-    <ClCompile Include="WizardBullet.cpp" />
-    <ClCompile Include="Conch.cpp">
-      <Filter>Engine\03. Object\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="ConchBullet.cpp">
       <Filter>Engine\03. Object\Enemy\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="ConchBulletDeadEffect.cpp">
       <Filter>Engine\03. Object\Enemy\Effect</Filter>
     </ClCompile>
-    <ClCompile Include="Necromancer.cpp">
-      <Filter>Engine\03. Object\Enemy</Filter>
-    </ClCompile>
     <ClCompile Include="NecromancerBullet.cpp">
       <Filter>Engine\03. Object\Enemy\Bullet</Filter>
     </ClCompile>
-    <ClCompile Include="BossBullet.cpp" />
-    <ClCompile Include="MirrorBoss.cpp" />
-    <ClCompile Include="MirrorBossAttackState.cpp" />
-    <ClCompile Include="MirrorBossChargeState.cpp" />
-    <ClCompile Include="MirrorBossIdleState.cpp" />
-    <ClCompile Include="Slime.cpp" />
-    <ClCompile Include="SlimeBullet.cpp" />
     <ClCompile Include="Worm.cpp" />
     <ClCompile Include="WormBullet.cpp" />
     <ClCompile Include="WormBulletDeadEffect.cpp" />
-    <ClCompile Include="FastBullet.cpp" />
-    <ClCompile Include="HomingBullet.cpp" />
-    <ClCompile Include="BoomerangBullet.cpp" />
-    <ClCompile Include="FragmentingBullet.cpp" />
-    <ClCompile Include="FragmentBullet.cpp" />
-    <ClCompile Include="Worm.cpp" />
-    <ClCompile Include="WormBullet.cpp" />
-    <ClCompile Include="WormBulletDeadEffect.cpp" />
+    <ClCompile Include="BoomerangBullet.cpp">
+      <Filter>Engine\03. Object\Enemy\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="BossBullet.cpp">
+      <Filter>Engine\03. Object\Enemy\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="FragmentBullet.cpp">
+      <Filter>Engine\03. Object\Enemy\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="FastBullet.cpp">
+      <Filter>Engine\03. Object\Enemy\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="SlimeBullet.cpp">
+      <Filter>Engine\03. Object\Enemy\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="SnailBullet.cpp">
+      <Filter>Engine\03. Object\Enemy\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="WizardBullet.cpp">
+      <Filter>Engine\03. Object\Enemy\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="WormBullet.cpp">
+      <Filter>Engine\03. Object\Enemy\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="FragmentingBullet.cpp">
+      <Filter>Engine\03. Object\Enemy\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="HomingBullet.cpp">
+      <Filter>Engine\03. Object\Enemy\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="MirrorBoss.cpp">
+      <Filter>Engine\03. Object\Enemy\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="Zombie.cpp">
+      <Filter>Engine\03. Object\Enemy\MeleeEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Ghost.cpp">
+      <Filter>Engine\03. Object\Enemy\MeleeEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Boom.cpp">
+      <Filter>Engine\03. Object\Enemy\MeleeEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Cat.cpp">
+      <Filter>Engine\03. Object\Enemy\ProjectileEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Conch.cpp">
+      <Filter>Engine\03. Object\Enemy\ProjectileEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Necromancer.cpp">
+      <Filter>Engine\03. Object\Enemy\ProjectileEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Slime.cpp">
+      <Filter>Engine\03. Object\Enemy\ProjectileEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Snail.cpp">
+      <Filter>Engine\03. Object\Enemy\ProjectileEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Wizard.cpp">
+      <Filter>Engine\03. Object\Enemy\ProjectileEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Worm.cpp">
+      <Filter>Engine\03. Object\Enemy\ProjectileEnemy</Filter>
+    </ClCompile>
+    <ClCompile Include="MirrorBossAttackState.cpp">
+      <Filter>Engine\10.State\MirrorBossState</Filter>
+    </ClCompile>
+    <ClCompile Include="MirrorBossChargeState.cpp">
+      <Filter>Engine\10.State\MirrorBossState</Filter>
+    </ClCompile>
+    <ClCompile Include="MirrorBossIdleState.cpp">
+      <Filter>Engine\10.State\MirrorBossState</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelUpManager.cpp">
+      <Filter>Engine\02. Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="CatBulletDeadEffect.cpp">
+      <Filter>Engine\03. Object\Enemy\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyHitEffect.cpp">
+      <Filter>Engine\03. Object\Enemy\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerHitEffect.cpp">
+      <Filter>Engine\03. Object\Enemy\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerLevelUpEffect.cpp">
+      <Filter>Engine\03. Object\Enemy\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerRollingEffect.cpp">
+      <Filter>Engine\03. Object\Enemy\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="WormBulletDeadEffect.cpp">
+      <Filter>Engine\03. Object\Enemy\Effect</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
