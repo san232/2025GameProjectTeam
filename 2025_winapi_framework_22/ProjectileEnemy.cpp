@@ -73,7 +73,7 @@ void ProjectileEnemy::Dead()
     BaseEnemy::Dead();
 }
 
-bool ProjectileEnemy::Aim(Player* outTarget, Vec2& outOrigin, Vec2& outDir) const
+bool ProjectileEnemy::Aim(Player*& outTarget, Vec2& outOrigin, Vec2& outDir) const
 {
     outTarget = GetTargetPlayer();
     if (!outTarget || outTarget->GetIsDead())
