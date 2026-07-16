@@ -3,6 +3,7 @@
 #include "Animator.h"
 #include "Object.h"
 #include "Texture.h"
+#include "SpriteRenderer.h"
 
 Animation::Animation()
     : m_owner(nullptr)
@@ -32,7 +33,7 @@ void Animation::Create(Texture* _tex, Vec2 _lt, Vec2 _sliceSize,
     m_frames.reserve(_frameCount);
     for (UINT i = 0; i < _frameCount; ++i)
     {
-        // °¡µ¶¼º
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         tAnimFrame _fr;
         _fr.vLT = _lt + _step * i;
         _fr.vSlice = _sliceSize;
@@ -122,52 +123,25 @@ void Animation::Render(HDC hdc)
     const tAnimFrame& fr = m_frames[(size_t)m_curFrame];
     pos = pos + fr.vOffset;
 
-    int sw = (int)fr.vSlice.x;
-    int sh = (int)fr.vSlice.y;
+    float sw = fr.vSlice.x;
+    float sh = fr.vSlice.y;
 
     Vec2 objSize = obj->GetSize();
     float scale = m_owner->GetScaleRatio();
-    int dw = (int)(objSize.x * scale);
-    int dh = (int)(objSize.y * scale);
+    float dw = objSize.x * scale;
+    float dh = objSize.y * scale;
 
-    int dx = (int)(pos.x - dw / 2);
-    int dy = (int)(pos.y - dh / 2);
+    float dx = pos.x - dw / 2.0f;
+    float dy = pos.y - dh / 2.0f;
 
-    int sx = (int)fr.vLT.x;
-    int sy = (int)fr.vLT.y;
+    float sx = fr.vLT.x;
+    float sy = fr.vLT.y;
 
     bool flipX = m_owner->GetFlipX();
 
-    HDC srcDC = m_tex->GetTextureDC();
+    ID3D11ShaderResourceView* srv = m_tex->GetSRV();
+    float texWidth = (float)m_tex->GetWidth();
+    float texHeight = (float)m_tex->GetHeight();
 
-    if (!flipX)
-    {
-        TransparentBlt(hdc,
-            dx, dy, dw, dh,
-            srcDC,
-            sx, sy, sw, sh,
-            RGB(255, 0, 255));
-    }
-    else
-    {
-        HDC backDC = CreateCompatibleDC(hdc);
-        HBITMAP backBmp = CreateCompatibleBitmap(hdc, sw, sh);
-        HBITMAP oldBmp = (HBITMAP)SelectObject(backDC, backBmp);
-
-        StretchBlt(backDC,
-            sw - 1, 0, -sw, sh,
-            srcDC,
-            sx, sy, sw, sh,
-            SRCCOPY);
-
-        TransparentBlt(hdc,
-            dx, dy, dw, dh,
-            backDC,
-            0, 0, sw, sh,
-            RGB(255, 0, 255));
-
-        SelectObject(backDC, oldBmp);
-        DeleteObject(backBmp);
-        DeleteDC(backDC);
-    }
+    GET_SINGLE(SpriteRenderer)->Draw(srv, dx, dy, dw, dh, sx, sy, sw, sh, texWidth, texHeight, flipX);
 }

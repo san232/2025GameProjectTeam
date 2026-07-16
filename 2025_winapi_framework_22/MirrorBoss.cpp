@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "SpriteRenderer.h"
 #include "MirrorBoss.h"
 #include "State.h"
 #include "StateMachine.h"
@@ -99,9 +100,7 @@ void MirrorBoss::Render(HDC _hdc)
 	if (m_isCharging)
 	{
 		Vec2 pos = GetPos();
-		GDISelector pen( _hdc, PenType::RED);
-		GDISelector brush(_hdc, BrushType::HOLLOW);
-		::Ellipse(_hdc, pos.x - 60, pos.y - 60, pos.x + 60, pos.y + 60);
+		GET_SINGLE(SpriteRenderer)->DrawRect((float)(pos.x - 60), (float)(pos.y - 60), 120.0f, 120.0f, XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f));
 	}
 }
 
@@ -209,9 +208,7 @@ void MirrorBoss::RenderHpUI(HDC _hdc)
 	int right = left + barWidth;
 	int bottom = top + barHeight;
 
-	HPEN oldPen = (HPEN)::SelectObject(_hdc, ::GetStockObject(BLACK_PEN));
-	HBRUSH oldBrush = (HBRUSH)::SelectObject(_hdc, ::GetStockObject(BLACK_BRUSH));
-	::Rectangle(_hdc, left, top, right, bottom);
+	GET_SINGLE(SpriteRenderer)->DrawFilledRect((float)left, (float)top, (float)(right - left), (float)(bottom - top), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f));
 
 	int innerLeft = left + 1;
 	int innerTop = top + 1;
@@ -224,17 +221,11 @@ void MirrorBoss::RenderHpUI(HDC _hdc)
 
 	if (filledWidth > 0)
 	{
-		GDISelector colorBrush(_hdc, BrushType::BLUE); 
-		::Rectangle(_hdc, innerLeft, innerTop, filledRight, innerBottom);
+		GET_SINGLE(SpriteRenderer)->DrawFilledRect((float)innerLeft, (float)innerTop, (float)(filledRight - innerLeft), (float)(innerBottom - innerTop), XMFLOAT4(0.0f, 0.0f, 1.0f, 1.0f));
 	}
 	
 	if (filledRight < innerRight)
 	{
-		HBRUSH whiteBrush = (HBRUSH)::GetStockObject(WHITE_BRUSH);
-		RECT emptyRect = { filledRight, innerTop, innerRight, innerBottom };
-		::FillRect(_hdc, &emptyRect, whiteBrush);
+		GET_SINGLE(SpriteRenderer)->DrawFilledRect((float)filledRight, (float)innerTop, (float)(innerRight - filledRight), (float)(innerBottom - innerTop), XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f));
 	}
-
-	::SelectObject(_hdc, oldBrush);
-	::SelectObject(_hdc, oldPen);
 }

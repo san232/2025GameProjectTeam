@@ -72,12 +72,20 @@ bool SubWindow::Create(HWND parent, SubWindowRenderer* renderer, int width, int 
     if (RegisterClassOnce(hInst) == 0)
         return false;
 
+    const DWORD exStyle = WS_EX_WINDOWEDGE;
+    const DWORD style = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_VISIBLE;
+
+    RECT windowRect = { 0, 0, width, height };
+    ::AdjustWindowRectEx(&windowRect, style, FALSE, exStyle);
+    int windowWidth = windowRect.right - windowRect.left;
+    int windowHeight = windowRect.bottom - windowRect.top;
+
     m_hWnd = ::CreateWindowExW(
-        WS_EX_WINDOWEDGE,
+        exStyle,
         kSubWindowClass,
         L"SubWindow",
-        WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_VISIBLE,
-        CW_USEDEFAULT, CW_USEDEFAULT, width, height,
+        style,
+        CW_USEDEFAULT, CW_USEDEFAULT, windowWidth, windowHeight,
         parent, nullptr, hInst, nullptr);
 
     if (m_hWnd == nullptr)
@@ -85,6 +93,39 @@ bool SubWindow::Create(HWND parent, SubWindowRenderer* renderer, int width, int 
 
     g_subWindows[m_hWnd] = this;
     ::SetWindowLongPtr(m_hWnd, GWLP_USERDATA, (LONG_PTR)this);
+
+    RECT clientRect = {};
+    ::GetClientRect(m_hWnd, &clientRect);
+    int clientWidth = clientRect.right - clientRect.left;
+    int clientHeight = clientRect.bottom - clientRect.top;
+    if (clientWidth <= 0) clientWidth = width;
+    if (clientHeight <= 0) clientHeight = height;
+
+    // Create SwapChain and RTV for the drawable client area.
+    DXGI_SWAP_CHAIN_DESC scd = {};
+    scd.BufferCount = 1;
+    scd.BufferDesc.Width = clientWidth;
+    scd.BufferDesc.Height = clientHeight;
+    scd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+    scd.BufferDesc.RefreshRate.Numerator = 60;
+    scd.BufferDesc.RefreshRate.Denominator = 1;
+    scd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+    scd.OutputWindow = m_hWnd;
+    scd.SampleDesc.Count = 1;
+    scd.SampleDesc.Quality = 0;
+    scd.Windowed = TRUE;
+
+    ComPtr<IDXGIDevice> dxgiDevice;
+    GET_SINGLE(Core)->GetDevice()->QueryInterface(__uuidof(IDXGIDevice), (void**)&dxgiDevice);
+    ComPtr<IDXGIAdapter> adapter;
+    dxgiDevice->GetAdapter(&adapter);
+    ComPtr<IDXGIFactory> factory;
+    adapter->GetParent(__uuidof(IDXGIFactory), (void**)&factory);
+    factory->CreateSwapChain(GET_SINGLE(Core)->GetDevice(), &scd, &m_swapChain);
+
+    ComPtr<ID3D11Texture2D> backBuffer;
+    m_swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&backBuffer);
+    GET_SINGLE(Core)->GetDevice()->CreateRenderTargetView(backBuffer.Get(), nullptr, &m_rtv);
 
     ::ShowWindow(m_hWnd, SW_SHOW);
     ::UpdateWindow(m_hWnd);
@@ -105,7 +146,17 @@ RECT SubWindow::GetRect() const
     RECT rc = {};
     if (m_hWnd)
     {
-        ::GetWindowRect(m_hWnd, &rc);
+        ::GetClientRect(m_hWnd, &rc);
+
+        POINT lt = { rc.left, rc.top };
+        POINT rb = { rc.right, rc.bottom };
+        ::ClientToScreen(m_hWnd, &lt);
+        ::ClientToScreen(m_hWnd, &rb);
+
+        rc.left = lt.x;
+        rc.top = lt.y;
+        rc.right = rb.x;
+        rc.bottom = rb.y;
     }
     return rc;
 }
@@ -154,31 +205,6 @@ LRESULT CALLBACK SubWindow::WndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp)
     {
         PAINTSTRUCT ps = {};
         HDC hdc = ::BeginPaint(hWnd, &ps);
-
-        if (self != nullptr && self->m_renderer != nullptr)
-        {
-            HDC mainBackDC = GET_SINGLE(Core)->GetBackDC();
-            
-            self->m_renderer->Render(hdc, self, mainBackDC);
-
-            if (self->IsRevealLens())
-            {
-                 POINT ptSub = {0, 0};
-                 ::ClientToScreen(hWnd, &ptSub);
-                 HWND hMain = GET_SINGLE(Core)->GetHwnd();
-                 POINT ptMain = {0, 0};
-                 ::ClientToScreen(hMain, &ptMain);
-                 
-                 int sx = ptSub.x - ptMain.x;
-                 int sy = ptSub.y - ptMain.y;
-                 
-                 int saved = ::SaveDC(hdc);
-                 ::SetViewportOrgEx(hdc, -sx, -sy, nullptr);
-                 self->m_renderer->RenderLegacy(hdc);
-                 ::RestoreDC(hdc, saved);
-            }
-        }
-
         ::EndPaint(hWnd, &ps);
         return 0;
     }

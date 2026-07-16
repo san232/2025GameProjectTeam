@@ -1,20 +1,24 @@
 #pragma once
 #include "ResourceBase.h"
-class Texture :
-    public ResourceBase
+
+class Texture : public ResourceBase
 {
 public:
     Texture();
     ~Texture();
+
 public:
-    LONG GetWidth() const { return m_bitInfo.bmWidth; }
-    LONG GetHeight() const { return m_bitInfo.bmHeight; }
-    const HDC& GetTextureDC() const { return m_hDC; }
+    LONG GetWidth() const { return m_width; }
+    LONG GetHeight() const { return m_height; }
+    ID3D11ShaderResourceView* GetSRV() const { return m_srv.Get(); }
+
 public:
     void Load(const wstring& _filePath);
+
 private:
-    HBITMAP m_hBit;
-    HDC     m_hDC;
-    BITMAP  m_bitInfo;
+    ComPtr<ID3D11ShaderResourceView> m_srv;
+    ComPtr<ID3D11Texture2D>          m_tex;
+    LONG m_width;
+    LONG m_height;
 };
 

@@ -11,6 +11,7 @@ public:
 	void FixedUpdate(float _fixedDT);
 	void PhysicsSyncColliders();
 	void Render(HDC _hdc);
+	void RenderSubWindows();
 	
 public:
 	void RegisterScene(const wstring& _name, std::shared_ptr<Scene> _scene);

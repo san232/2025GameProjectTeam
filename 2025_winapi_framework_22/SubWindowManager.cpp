@@ -146,7 +146,7 @@ void SubWindowManager::Render()
 {
     if (m_subWindow && m_subWindow->IsActive() && m_subWindow->GetHWnd())
     {
-        ::InvalidateRect(m_subWindow->GetHWnd(), nullptr, FALSE);
+        if (m_renderer) m_renderer->Render(m_subWindow);
     }
 }
 

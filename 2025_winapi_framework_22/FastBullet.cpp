@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "SpriteRenderer.h"
 #include "FastBullet.h"
 #include "Collider.h"
 #include "ResourceManager.h"
@@ -36,19 +37,11 @@ void FastBullet::Render(HDC _hdc)
 		LONG width = m_pTex->GetWidth();
 		LONG height = m_pTex->GetHeight();
 
-		::TransparentBlt(_hdc
-			, (int)(pos.x - size.x / 2)
-			, (int)(pos.y - size.y / 2)
-			, size.x
-			, size.y
-			, m_pTex->GetTextureDC()
-			, 0, 0, width, height,
-			RGB(255, 0, 255));
+		GET_SINGLE(SpriteRenderer)->Draw(m_pTex->GetSRV(), (float)((int)(pos.x - size.x / 2)), (float)((int)(pos.y - size.y / 2)), (float)(size.x), (float)(size.y), (float)(0), (float)(0), (float)(width), (float)(height), (float)(width), (float)(height));
 	}
 	else
 	{
-		GDISelector brush(_hdc, BrushType::RED);
-		ELLIPSE_RENDER(_hdc, pos.x, pos.y, size.x, size.y);
+		GET_SINGLE(SpriteRenderer)->DrawFilledRect(pos.x - size.x / 2.0f, pos.y - size.y / 2.0f, size.x, size.y, XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f));
 	}
 
 	ComponentRender(_hdc);

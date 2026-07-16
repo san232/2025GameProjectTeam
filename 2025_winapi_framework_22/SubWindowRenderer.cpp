@@ -2,115 +2,114 @@
 #include "SubWindowRenderer.h"
 #include "SubWindow.h"
 #include "Scene.h"
-#include "Object.h"
 #include "Core.h"
-
-#pragma comment(lib, "msimg32.lib")
+#include "SpriteRenderer.h"
 
 SubWindowRenderer::SubWindowRenderer(HWND inMainWindow, Scene* inScene)
     : mainWindow(inMainWindow)
     , scene(inScene)
-    , m_memDC(nullptr)
-    , m_hColorBitmap(nullptr)
-    , m_lastColor(0xFFFFFFFF)
 {
 }
 
 SubWindowRenderer::~SubWindowRenderer()
 {
-    if (m_hColorBitmap)
-        ::DeleteObject(m_hColorBitmap);
-    if (m_memDC)
-        ::DeleteDC(m_memDC);
 }
 
-void SubWindowRenderer::Render(HDC subDC, SubWindow* subWin, HDC mainBackDC)
+void SubWindowRenderer::Render(SubWindow* subWin)
 {
     if (!subWin || !subWin->IsActive()) return;
-    
+
+    auto context = GET_SINGLE(Core)->GetContext();
+    auto rtv = subWin->GetRTV();
+    auto swapChain = subWin->GetSwapChain();
+    if (!rtv || !swapChain) return;
+
     POINT mainPtTL = { 0, 0 };
     ::ClientToScreen(mainWindow, &mainPtTL);
-    
-    RECT mainClientRect;
-    ::GetClientRect(mainWindow, &mainClientRect);
-    int mainW = mainClientRect.right - mainClientRect.left;
-    int mainH = mainClientRect.bottom - mainClientRect.top;
+    RECT mainRect;
+    ::GetClientRect(mainWindow, &mainRect);
+    int mainW = mainRect.right - mainRect.left;
+    int mainH = mainRect.bottom - mainRect.top;
 
-    RECT mainScreenRect = {
-        mainPtTL.x,
-        mainPtTL.y,
-        mainPtTL.x + mainW,
-        mainPtTL.y + mainH
-    };
-
-    RECT subClientRect;
-    ::GetClientRect(subWin->GetHWnd(), &subClientRect);
-    POINT subPtTL = { subClientRect.left, subClientRect.top };
-    POINT subPtBR = { subClientRect.right, subClientRect.bottom };
+    POINT subPtTL = { 0, 0 };
     ::ClientToScreen(subWin->GetHWnd(), &subPtTL);
-    ::ClientToScreen(subWin->GetHWnd(), &subPtBR);
-    RECT subScreenRect = { subPtTL.x, subPtTL.y, subPtBR.x, subPtBR.y };
+    RECT subClient;
+    ::GetClientRect(subWin->GetHWnd(), &subClient);
+    int w = subClient.right - subClient.left;
+    int h = subClient.bottom - subClient.top;
+    if (mainW <= 0 || mainH <= 0 || w <= 0 || h <= 0)
+        return;
 
-    int subW = subClientRect.right - subClientRect.left;
-    int subH = subClientRect.bottom - subClientRect.top;
+    ComPtr<ID3D11Texture2D> mainBackBuffer;
+    GET_SINGLE(Core)->GetSwapChain()->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&mainBackBuffer);
+    
+    ComPtr<ID3D11Texture2D> subBackBuffer;
+    swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&subBackBuffer);
 
-    HDC bufferDC = ::CreateCompatibleDC(subDC);
-    HBITMAP bufferBitmap = ::CreateCompatibleBitmap(subDC, subW, subH);
-    HBITMAP oldBitmap = (HBITMAP)::SelectObject(bufferDC, bufferBitmap);
+    int srcX = subPtTL.x - mainPtTL.x;
+    int srcY = subPtTL.y - mainPtTL.y;
 
-    HBRUSH whiteBrush = (HBRUSH)::GetStockObject(WHITE_BRUSH);
-    RECT fullRect = { 0, 0, subW, subH };
-    ::FillRect(bufferDC, &fullRect, whiteBrush);
+    float clearColor[4] = { 1, 1, 1, 1 };
+    context->ClearRenderTargetView(rtv, clearColor);
 
-    RECT intersect;
-    if (::IntersectRect(&intersect, &mainScreenRect, &subScreenRect))
+    if (!subWin->IsRevealLens())
     {
-        int srcX = intersect.left - mainScreenRect.left;
-        int srcY = intersect.top - mainScreenRect.top;
-        
-        int width = intersect.right - intersect.left;
-        int height = intersect.bottom - intersect.top;
+        int copyLeft = max(0, srcX);
+        int copyTop = max(0, srcY);
+        int copyRight = min(mainW, srcX + w);
+        int copyBottom = min(mainH, srcY + h);
 
-        int dstX = intersect.left - subScreenRect.left;
-        int dstY = intersect.top - subScreenRect.top;
+        if (copyRight > copyLeft && copyBottom > copyTop)
+        {
+            UINT dstX = (UINT)(copyLeft - srcX);
+            UINT dstY = (UINT)(copyTop - srcY);
 
-        ::BitBlt(bufferDC, dstX, dstY, width, height, mainBackDC, srcX, srcY, SRCCOPY);
+            D3D11_BOX srcBox = {};
+            srcBox.left = (UINT)copyLeft;
+            srcBox.top = (UINT)copyTop;
+            srcBox.right = (UINT)copyRight;
+            srcBox.bottom = (UINT)copyBottom;
+            srcBox.front = 0;
+            srcBox.back = 1;
+
+            context->CopySubresourceRegion(subBackBuffer.Get(), 0, dstX, dstY, 0, mainBackBuffer.Get(), 0, &srcBox);
+        }
     }
 
-    if (!m_memDC) m_memDC = ::CreateCompatibleDC(subDC);
+    context->OMSetRenderTargets(1, &rtv, nullptr);
 
-    COLORREF curColor = subWin->GetTintColor();
-    if (!m_hColorBitmap || m_lastColor != curColor)
-    {
-        HBITMAP hNewBmp = ::CreateBitmap(1, 1, 1, 32, NULL);
-        HBITMAP oldMemBitmap = (HBITMAP)::SelectObject(m_memDC, hNewBmp);
-        
-        if (m_hColorBitmap) ::DeleteObject(m_hColorBitmap);
-        
-        m_hColorBitmap = hNewBmp;
-        ::SetPixel(m_memDC, 0, 0, curColor);
-        m_lastColor = curColor;
-    }
+    // Setup viewport for subwindow before building the 2D projection.
+    D3D11_VIEWPORT vp = {};
+    vp.Width = (FLOAT)w;
+    vp.Height = (FLOAT)h;
+    vp.MinDepth = 0.0f;
+    vp.MaxDepth = 1.0f;
+    vp.TopLeftX = 0;
+    vp.TopLeftY = 0;
+    context->RSSetViewports(1, &vp);
 
-    BLENDFUNCTION bf;
-    bf.BlendOp = AC_SRC_OVER;
-    bf.BlendFlags = 0;
-    bf.SourceConstantAlpha = (BYTE)(subWin->GetAlpha() * 255);
-    bf.AlphaFormat = 0;
+    GET_SINGLE(SpriteRenderer)->Begin((float)w, (float)h);
+    COLORREF c = subWin->GetTintColor();
+    float r = GetRValue(c) / 255.0f;
+    float g = GetGValue(c) / 255.0f;
+    float b = GetBValue(c) / 255.0f;
+    float a = subWin->GetAlpha();
 
-    ::GdiAlphaBlend(bufferDC, 0, 0, subW, subH, m_memDC, 0, 0, 1, 1, bf);
+    GET_SINGLE(SpriteRenderer)->DrawFilledRect(0, 0, (float)w, (float)h, XMFLOAT4(r, g, b, a));
+    GET_SINGLE(SpriteRenderer)->End();
 
-    ::BitBlt(subDC, 0, 0, subW, subH, bufferDC, 0, 0, SRCCOPY);
+    swapChain->Present(1, 0);
 
-    ::SelectObject(bufferDC, oldBitmap);
-    ::DeleteObject(bufferBitmap);
-    ::DeleteDC(bufferDC);
-}
+    // Restore main render state because SpriteRenderer uses shared DX11 state.
+    auto mainRtv = GET_SINGLE(Core)->GetRenderTargetView();
+    context->OMSetRenderTargets(1, &mainRtv, nullptr);
+    
+    D3D11_VIEWPORT mainVp = {};
+    mainVp.Width = (FLOAT)mainW;
+    mainVp.Height = (FLOAT)mainH;
+    mainVp.MinDepth = 0.0f;
+    mainVp.MaxDepth = 1.0f;
+    context->RSSetViewports(1, &mainVp);
 
-void SubWindowRenderer::RenderLegacy(HDC hdc)
-{
-    if (scene)
-    {
-        scene->Render(hdc);
-    }
+    GET_SINGLE(SpriteRenderer)->Begin((float)mainW, (float)mainH);
 }

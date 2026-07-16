@@ -1,4 +1,5 @@
 ﻿#include "pch.h"
+#include "SpriteRenderer.h"
 #include "Player.h"
 #include "InputManager.h"
 #include "SceneManager.h"
@@ -104,9 +105,7 @@ void Player::RenderExpUI(HDC _hdc)
 	int bottom = WINDOW_HEIGHT - barMarginBottom;
 	int top = bottom - barHeight;
 
-	HPEN oldPen = (HPEN)::SelectObject(_hdc, ::GetStockObject(BLACK_PEN));
-	HBRUSH oldBrush = (HBRUSH)::SelectObject(_hdc, ::GetStockObject(BLACK_BRUSH));
-	::Rectangle(_hdc, left, top, right, bottom);
+	GET_SINGLE(SpriteRenderer)->DrawFilledRect((float)left, (float)top, (float)(right - left), (float)(bottom - top), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f));
 
 	int innerLeft = left + 1;
 	int innerTop = top + 1;
@@ -119,20 +118,13 @@ void Player::RenderExpUI(HDC _hdc)
 
 	if (filledWidth > 0)
 	{
-		GDISelector greenBrush(_hdc, BrushType::GREEN);
-		::Rectangle(_hdc, innerLeft, innerTop, filledRight, innerBottom);
+		GET_SINGLE(SpriteRenderer)->DrawFilledRect((float)innerLeft, (float)innerTop, (float)(filledRight - innerLeft), (float)(innerBottom - innerTop), XMFLOAT4(0.0f, 1.0f, 0.0f, 1.0f));
 	}
 
 	if (filledRight < innerRight)
 	{
-		HBRUSH whiteBrush = (HBRUSH)::GetStockObject(WHITE_BRUSH);
-		HBRUSH prevBrush = (HBRUSH)::SelectObject(_hdc, whiteBrush);
-		::Rectangle(_hdc, filledRight, innerTop, innerRight, innerBottom);
-		::SelectObject(_hdc, prevBrush);
+		GET_SINGLE(SpriteRenderer)->DrawFilledRect((float)filledRight, (float)innerTop, (float)(innerRight - filledRight), (float)(innerBottom - innerTop), XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f));
 	}
-
-	::SelectObject(_hdc, oldBrush);
-	::SelectObject(_hdc, oldPen);
 }
 
 void Player::RenderHpUI(HDC _hdc)
@@ -161,9 +153,7 @@ void Player::RenderHpUI(HDC _hdc)
 	int left = barMarginX;
 	int right = left + 300;
 
-	HPEN oldPen = (HPEN)::SelectObject(_hdc, ::GetStockObject(BLACK_PEN));
-	HBRUSH oldBrush = (HBRUSH)::SelectObject(_hdc, ::GetStockObject(BLACK_BRUSH));
-	::Rectangle(_hdc, left, top, right, bottom);
+	GET_SINGLE(SpriteRenderer)->DrawFilledRect((float)left, (float)top, (float)(right - left), (float)(bottom - top), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f));
 
 	int innerLeft = left + 1;
 	int innerTop = top + 1;
@@ -176,20 +166,13 @@ void Player::RenderHpUI(HDC _hdc)
 
 	if (filledWidth > 0)
 	{
-		GDISelector redBrush(_hdc, BrushType::RED);
-		::Rectangle(_hdc, innerLeft, innerTop, filledRight, innerBottom);
+		GET_SINGLE(SpriteRenderer)->DrawFilledRect((float)innerLeft, (float)innerTop, (float)(filledRight - innerLeft), (float)(innerBottom - innerTop), XMFLOAT4(1.0f, 0.0f, 0.0f, 1.0f));
 	}
 
 	if (filledRight < innerRight)
 	{
-		HBRUSH whiteBrush = (HBRUSH)::GetStockObject(WHITE_BRUSH);
-		HBRUSH prevBrush = (HBRUSH)::SelectObject(_hdc, whiteBrush);
-		::Rectangle(_hdc, filledRight, innerTop, innerRight, innerBottom);
-		::SelectObject(_hdc, prevBrush);
+		GET_SINGLE(SpriteRenderer)->DrawFilledRect((float)filledRight, (float)innerTop, (float)(innerRight - filledRight), (float)(innerBottom - innerTop), XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f));
 	}
-
-	::SelectObject(_hdc, oldBrush);
-	::SelectObject(_hdc, oldPen);
 }
 
 void Player::EnterCollision(Collider* _other)

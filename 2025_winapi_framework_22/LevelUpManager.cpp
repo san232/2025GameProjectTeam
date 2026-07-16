@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "SpriteRenderer.h"
 #include "LevelUpManager.h"
 #include "Player.h"
 #include "SceneManager.h"
@@ -56,10 +57,6 @@ void LevelUpManager::Render(HDC _hdc)
     if (t > 1.f) t = 1.f;
     float yOffset = (1.f - t) * 120.f;
 
-    GDISelector penSelector(_hdc, PenType::BLACK);
-    GDISelector bgBrush(_hdc, BrushType::WHITE);
-    GDISelector fontSelector(_hdc, FontType::TITLE);
-
     float uiW = totalW + 80.f;
     float uiH = panelH + 100.f;
 
@@ -71,20 +68,17 @@ void LevelUpManager::Render(HDC _hdc)
     int uiRight = (int)(uiCx + uiW * 0.5f);
     int uiBottom = (int)(uiCy + uiH * 0.5f);
 
-    Rectangle(_hdc, uiLeft, uiTop, uiRight, uiBottom);
+    GET_SINGLE(SpriteRenderer)->DrawFilledRect((float)uiLeft, (float)uiTop, (float)(uiRight - uiLeft), (float)(uiBottom - uiTop), XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f));
+    GET_SINGLE(SpriteRenderer)->DrawRect((float)uiLeft, (float)uiTop, (float)(uiRight - uiLeft), (float)(uiBottom - uiTop), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f));
 
-    std::wstring info = L"레벨 업! 원하는 카드를 선택하세요!";
+    std::wstring info = L" ! 求 카躍� 究!";
     RECT infoRc;
     infoRc.left = uiLeft;
     infoRc.right = uiRight;
     infoRc.top = uiTop + 10;
     infoRc.bottom = uiTop + 40;
 
-    DrawTextW(_hdc, info.c_str(), (int)info.length(), &infoRc,
-        DT_CENTER | DT_VCENTER | DT_SINGLELINE);
-
-    GDISelector cardBrush(_hdc, BrushType::HOLLOW);
-
+    // Text rendering is disabled until the DX11 font path is implemented.
 
     for (int i = 0; i < cardCount; ++i)
     {
@@ -96,7 +90,7 @@ void LevelUpManager::Render(HDC _hdc)
         int right = (int)(cx + panelW * 0.5f);
         int bottom = (int)(cy + panelH * 0.5f);
 
-        Rectangle(_hdc, left, top, right, bottom);
+        GET_SINGLE(SpriteRenderer)->DrawRect((float)left, (float)top, (float)(right - left), (float)(bottom - top), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f));
 
         Texture* iconTex = m_cardIcons[i];
         if (iconTex)
@@ -110,15 +104,12 @@ void LevelUpManager::Render(HDC _hdc)
             int srcW = (int)iconTex->GetWidth();
             int srcH = (int)iconTex->GetHeight();
 
-            HDC srcDC = iconTex->GetTextureDC();
+            
 
-            TransparentBlt(
-                _hdc,
-                iconDx, iconDy, iconDestW, iconDestH,
-                srcDC,
-                0, 0, srcW, srcH,
-                RGB(255, 0, 255)
-            );
+            GET_SINGLE(SpriteRenderer)->Draw(iconTex->GetSRV(),
+                (float)iconDx, (float)iconDy, (float)iconDestW, (float)iconDestH,
+                0.0f, 0.0f, (float)srcW, (float)srcH,
+                (float)srcW, (float)srcH);
         }
 
         std::wstring title;
@@ -126,23 +117,23 @@ void LevelUpManager::Render(HDC _hdc)
 
         if (i == 0)
         {
-            title = L"체력 완전 회복";
-            desc = L"최대 체력 증가와\n체력 풀회복";
+            title = L"체  회";
+            desc = L"獵 체 \n체 풀회";
         }
         else if (i == 1)
         {
-            title = L"공격력 증가";
-            desc = L"공격력이 증가합니다.";
+            title = L"賦 ";
+            desc = L"賦 爛求.";
         }
         else if (i == 2)
         {
-            title = L"구르기 쿨타임 감소";
-            desc = L"구르기 쿨타임이\n감소합니다.";
+            title = L" 타 ";
+            desc = L" 타\n爛求.";
         }
         else if (i == 3)
         {
-            title = L"공격 쿨타임 감소";
-            desc = L"공격 쿨타임이\n감소합니다.";
+            title = L" 타 ";
+            desc = L" 타\n爛求.";
         }
 
         RECT titleRc;
@@ -151,8 +142,7 @@ void LevelUpManager::Render(HDC _hdc)
         titleRc.top = top + 20 + 70;
         titleRc.bottom = top + 20 + 110;
 
-        DrawTextW(_hdc, title.c_str(), (int)title.length(), &titleRc,
-            DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+        // Text rendering is disabled until the DX11 font path is implemented.
 
         RECT descRc;
         descRc.left = left + 14;
@@ -160,11 +150,10 @@ void LevelUpManager::Render(HDC _hdc)
         descRc.top = top + 20 + 120;
         descRc.bottom = bottom - 60;
 
-        DrawText(_hdc, desc.c_str(), (int)desc.length(), &descRc,
-            DT_CENTER | DT_WORDBREAK);
+        // Text rendering is disabled until the DX11 font path is implemented.
 
         wchar_t keyMsg[16];
-        swprintf_s(keyMsg, L"%d번 키", i + 1);
+        swprintf_s(keyMsg, L"%d 키", i + 1);
 
         RECT keyRc;
         keyRc.left = left;
@@ -172,8 +161,7 @@ void LevelUpManager::Render(HDC _hdc)
         keyRc.top = bottom - 40;
         keyRc.bottom = bottom - 10;
 
-        DrawTextW(_hdc, keyMsg, (int)wcslen(keyMsg), &keyRc,
-            DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+        // Text rendering is disabled until the DX11 font path is implemented.
     }
 }
 

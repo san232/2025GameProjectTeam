@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "SpriteRenderer.h"
 #include "SceneManager.h"
 #include "LCMScene.h"
 #include "LSScene.h"
@@ -101,6 +102,12 @@ void SceneManager::Render(HDC _hdc)
     }
 }
 
+void SceneManager::RenderSubWindows()
+{
+    if (m_curScene)
+        m_curScene->RenderSubWindows();
+}
+
 
 void SceneManager::LoadScene(const wstring& _name)
 {
@@ -137,27 +144,15 @@ void SceneManager::RenderTransition(HDC _hdc)
 {
     RECT rect;
     GetClientRect(GET_SINGLE(Core)->GetHwnd(), &rect);
-    
-    int centerX = (rect.right - rect.left) / 2;
-    int centerY = (rect.bottom - rect.top) / 2;
-     
-    float maxRadius = sqrt(pow(rect.right, 2) + pow(rect.bottom, 2));
-    
+
     float ratio = m_transitionTimer / m_transitionDuration;
     if (ratio > 1.f) ratio = 1.f;
     if (ratio < 0.f) ratio = 0.f;
-    
-    float currentRadius = maxRadius * ratio;
 
-    GDISelector brushSel(_hdc, BrushType::BLACK);
-    HPEN hNullPen = (HPEN)GetStockObject(NULL_PEN);
-    HPEN hOldPen = (HPEN)SelectObject(_hdc, hNullPen);
-
-    Ellipse(_hdc, 
-        centerX - (int)currentRadius, 
-        centerY - (int)currentRadius, 
-        centerX + (int)currentRadius, 
-        centerY + (int)currentRadius);
-
-    SelectObject(_hdc, hOldPen);
+    GET_SINGLE(SpriteRenderer)->DrawFilledRect(
+        0.0f,
+        0.0f,
+        (float)(rect.right - rect.left),
+        (float)(rect.bottom - rect.top),
+        XMFLOAT4(0.0f, 0.0f, 0.0f, ratio));
 }

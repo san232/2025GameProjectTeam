@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "SpriteRenderer.h"
 #include "EnemySpawnManager.h"
 
 #include "GDISelector.h"
@@ -51,8 +52,7 @@ void EnemySpawnManager::Render(HDC _hdc)
 
 	int margin = 25;
 
-	SIZE textSize{};
-	GetTextExtentPoint32(_hdc, text.c_str(), (int)text.length(), &textSize);
+	SIZE textSize{ 95, 28 };
 
 	int paddingX = 20;
 	int paddingY = 12;
@@ -62,17 +62,13 @@ void EnemySpawnManager::Render(HDC _hdc)
 	int left = right - textSize.cx - paddingX * 2;
 	int bottom = top + textSize.cy + paddingY * 2;
 
-	GDISelector brushSelector(_hdc, BrushType::BROWN);
-	GDISelector penSelector(_hdc, PenType::BLACK);
-
-	Rectangle(_hdc, left, top, right, bottom);
-	SetBkMode(_hdc, TRANSPARENT); 
+	GET_SINGLE(SpriteRenderer)->DrawFilledRect((float)left, (float)top, (float)(right - left), (float)(bottom - top), XMFLOAT4(0.647f, 0.165f, 0.165f, 1.0f));
+	GET_SINGLE(SpriteRenderer)->DrawRect((float)left, (float)top, (float)(right - left), (float)(bottom - top), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f));
 
 	int textX = left + paddingX;
 	int textY = top + paddingY;
 
-	GDISelector fontSelector(_hdc, FontType::TITLE);
-	TextOut(_hdc, textX, textY, text.c_str(), (int)text.length());
+// 	TextOut(_hdc, textX, textY, text.c_str(), (int)text.length());
 }
 
 

@@ -12,6 +12,9 @@ public:
     bool Create(HWND parent, SubWindowRenderer* renderer, int width = 160, int height = 160);
     HWND GetHWnd() const { return m_hWnd; }
 
+    IDXGISwapChain* GetSwapChain() const { return m_swapChain.Get(); }
+    ID3D11RenderTargetView* GetRTV() const { return m_rtv.Get(); }
+
     static LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp);
 
     void SetTintColor(COLORREF color, float alpha) { m_tintColor = color; m_alpha = alpha; }
@@ -44,4 +47,7 @@ private:
     ISubWindowEffect* m_effect;
     bool m_isActive;
     bool m_isRevealLens;
+
+    ComPtr<IDXGISwapChain> m_swapChain;
+    ComPtr<ID3D11RenderTargetView> m_rtv;
 };

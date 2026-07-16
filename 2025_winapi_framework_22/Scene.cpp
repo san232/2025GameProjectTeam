@@ -128,3 +128,6 @@ void Scene::Render(HDC _hdc)
 	}
 }
 
+void Scene::RenderSubWindows()
+{
+}

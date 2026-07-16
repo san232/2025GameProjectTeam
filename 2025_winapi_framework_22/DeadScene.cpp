@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "SpriteRenderer.h"
 #include "DeadScene.h"
 #include "Texture.h"
 #include "Core.h"
@@ -64,7 +65,6 @@ void DeadScene::Render(HDC _hdc)
 {
     Scene::Render(_hdc);
 
-    GDISelector fontSelector(_hdc, FontType::TITLE);
     RECT rect;
     ::GetClientRect(GET_SINGLE(Core)->GetHwnd(), &rect);
 
@@ -74,33 +74,20 @@ void DeadScene::Render(HDC _hdc)
         int texWidth = pTex->GetWidth();
         int texHeight = pTex->GetHeight();
 
-        StretchBlt(_hdc, 0, 0, rect.right, rect.bottom,
-            pTex->GetTextureDC(), 0, 0, texWidth, texHeight, SRCCOPY);
-    }
-
-    int oldBkMode = SetBkMode(_hdc, TRANSPARENT);
-
-    {
-        GDISelector brushSel(_hdc, BrushType::LIGHTGRAY);
-        GDISelector penSel(_hdc, PenType::BLACK);
-
-        Rectangle(_hdc, m_btnRetry.left, m_btnRetry.top, m_btnRetry.right, m_btnRetry.bottom);
-        
-        SetTextColor(_hdc, RGB(0, 0, 0));
-        DrawText(_hdc, L"RETRY", -1, &m_btnRetry, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+        GET_SINGLE(SpriteRenderer)->Draw(pTex->GetSRV(), 0, 0, (float)rect.right, (float)rect.bottom, 0, 0, (float)texWidth, (float)texHeight, (float)texWidth, (float)texHeight);
     }
 
     {
-        GDISelector brushSel(_hdc, BrushType::GRAY);
-        GDISelector penSel(_hdc, PenType::BLACK);
-
-        Rectangle(_hdc, m_btnExit.left, m_btnExit.top, m_btnExit.right, m_btnExit.bottom);
-
-        SetTextColor(_hdc, RGB(0, 0, 0));
-        DrawText(_hdc, L"EXIT", -1, &m_btnExit, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+        GET_SINGLE(SpriteRenderer)->DrawFilledRect((float)m_btnRetry.left, (float)m_btnRetry.top, (float)(m_btnRetry.right - m_btnRetry.left), (float)(m_btnRetry.bottom - m_btnRetry.top), XMFLOAT4(0.827f, 0.827f, 0.827f, 1.0f));
+        GET_SINGLE(SpriteRenderer)->DrawRect((float)m_btnRetry.left, (float)m_btnRetry.top, (float)(m_btnRetry.right - m_btnRetry.left), (float)(m_btnRetry.bottom - m_btnRetry.top), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f));
+//         DrawText(_hdc, L"RETRY", -1, &m_btnRetry, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
     }
 
-    SetBkMode(_hdc, oldBkMode);
+    {
+        GET_SINGLE(SpriteRenderer)->DrawFilledRect((float)m_btnExit.left, (float)m_btnExit.top, (float)(m_btnExit.right - m_btnExit.left), (float)(m_btnExit.bottom - m_btnExit.top), XMFLOAT4(0.502f, 0.502f, 0.502f, 1.0f));
+        GET_SINGLE(SpriteRenderer)->DrawRect((float)m_btnExit.left, (float)m_btnExit.top, (float)(m_btnExit.right - m_btnExit.left), (float)(m_btnExit.bottom - m_btnExit.top), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f));
+//         DrawText(_hdc, L"EXIT", -1, &m_btnExit, DT_CENTER | DT_VCENTER | DT_SINGLELINE);
+    }
 }
 
 void DeadScene::Release()

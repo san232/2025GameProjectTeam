@@ -18,6 +18,7 @@ public:
 	virtual void LateUpdate();
 	void FixedUpdate(float _fixedDT);
 	virtual void Render(HDC _hdc);
+	virtual void RenderSubWindows();
 	virtual void Release();
 public:
 	const vector<Object*>& GetLayerObjects(Layer _type) const

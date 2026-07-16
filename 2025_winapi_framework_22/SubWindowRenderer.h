@@ -1,5 +1,5 @@
 #pragma once
-#include <windows.h>
+#include "pch.h"
 
 class Scene;
 class SubWindow;
@@ -9,15 +9,9 @@ public:
     SubWindowRenderer(HWND mainWindow, Scene* scene);
     ~SubWindowRenderer();
 
-    void Render(HDC subDC, SubWindow* subWin, HDC mainBackDC);
-    void RenderLegacy(HDC hdc);
-
+    void Render(SubWindow* subWin);
 
 private:
     HWND mainWindow;
     Scene* scene;
-
-    HDC m_memDC;
-    HBITMAP m_hColorBitmap;
-    COLORREF m_lastColor;
 };

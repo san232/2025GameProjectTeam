@@ -1,7 +1,7 @@
 #pragma once
-// ¿ÜºÎ¿¡¼­ »ý¼º °¡´É? X
-// inst ºÎ¸¦ ¶§¸¶´Ù »ý¼ºµÇ¾î¾ß ÇØ? ¾Æ´Ï¸é ÀÏÄ¡µÇ¾î¾ßÇØ? => ¶È°°Àº ³ð
-// ¾ðÁ¦µçÁö ºÎ¸¦ ¼ö ÀÖ¾î¾ßµÅ? => #include 
+// ï¿½ÜºÎ¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½? X
+// inst ï¿½Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ ï¿½ï¿½? ï¿½Æ´Ï¸ï¿½ ï¿½ï¿½Ä¡ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½? => ï¿½È°ï¿½ï¿½ï¿½ ï¿½ï¿½
+// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î¸ï¿½ ï¿½ï¿½ ï¿½Ö¾ï¿½ßµï¿½? => #include 
 //#include "Defines.h"
 //#include "Object.h"
 class Core
@@ -11,20 +11,26 @@ public:
 	bool Init(HWND _hWnd);
 	void GameLoop();
 	void CleanUp();
-public:
-	const HDC& GetMainDC() const { return m_hDC; }
-	const HDC& GetBackDC() const { return m_hBackDC; }
+
+	// DX11 Accessors
+	ID3D11Device* GetDevice() const { return m_device.Get(); }
+	ID3D11DeviceContext* GetContext() const { return m_context.Get(); }
+	IDXGISwapChain* GetSwapChain() const { return m_swapChain.Get(); }
+	ID3D11RenderTargetView* GetRenderTargetView() const { return m_rtv.Get(); }
 	const HWND& GetHwnd() const { return m_hWnd; }
+
 private:
 	void MainUpdate();
 	void MainRender();
-private:
-	HDC  m_hDC;
-	HWND m_hWnd;
-	//Object m_obj;
 
-	HBITMAP m_hBackBit; 
-	HDC  m_hBackDC;
+private:
+	HWND m_hWnd;
+
+	// DX11 Objects
+	ComPtr<ID3D11Device> m_device;
+	ComPtr<ID3D11DeviceContext> m_context;
+	ComPtr<IDXGISwapChain> m_swapChain;
+	ComPtr<ID3D11RenderTargetView> m_rtv;
 };
 
 

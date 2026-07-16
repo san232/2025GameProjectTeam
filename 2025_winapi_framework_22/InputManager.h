@@ -59,10 +59,10 @@ private:
 	VK_RETURN, VK_TAB, VK_ESCAPE,
 	VK_LBUTTON, VK_RBUTTON,'1','2','3','4'};
 
-	POINT m_mousePos;
-	POINT m_mouseScreenPos;
-	POINT m_prevMousePos;
-	POINT m_mouseDelta;
+	POINT m_mousePos{};
+	POINT m_mouseScreenPos{};
+	POINT m_prevMousePos{};
+	POINT m_mouseDelta{};
 
 
 };

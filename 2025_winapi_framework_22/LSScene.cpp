@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "SpriteRenderer.h"
 #include "LSScene.h"
 #include "WindowManager.h"
 #include "SubWindowManager.h"
@@ -45,7 +46,6 @@ void LSScene::Update()
             }
         }
         subWindowManager->Update(fDT, entities);
-        subWindowManager->Render();
     }
 }
 
@@ -60,11 +60,16 @@ void LSScene::Render(HDC _hdc)
         int texWidth = pTex->GetWidth();
         int texHeight = pTex->GetHeight();
         
-        StretchBlt(_hdc, 0, 0, rect.right, rect.bottom, 
-                   pTex->GetTextureDC(), 0, 0, texWidth, texHeight, SRCCOPY);
+        GET_SINGLE(SpriteRenderer)->Draw(pTex->GetSRV(), 0, 0, (float)rect.right, (float)rect.bottom, 0, 0, (float)texWidth, (float)texHeight, (float)texWidth, (float)texHeight);
     }
 
     Scene::Render(_hdc);
+}
+
+void LSScene::RenderSubWindows()
+{
+    if (subWindowManager)
+        subWindowManager->Render();
 }
 
 LSScene::~LSScene()
